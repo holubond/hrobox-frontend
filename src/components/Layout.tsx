@@ -1,26 +1,26 @@
 import React, { FC } from 'react';
 
 import {
-  Header, Box, ButtonInvisible, Link
+  Header, Box, Link
 } from '@primer/components';
-import logo from '../assets/logo.png';
+import Logo from '../assets/logo.png';
 
 const Layout: FC = ({ children }) => (
   <>
     <Header>
       <Header.Item>
         <Link href="/">
-          <img src={logo} height="30" alt="logo" />
+          <img src={Logo} height="30" alt="logo" />
         </Link>
       </Header.Item>
       <Box sx={{ flexGrow: 1 }} />
       <Header.Item>
         <Link href="/games">
-          <ButtonInvisible>List of Games</ButtonInvisible>
+          List of Games
         </Link>
       </Header.Item>
       <Header.Item>
-        <ButtonInvisible>Login</ButtonInvisible>
+        Login
       </Header.Item>
     </Header>
     <Box
