@@ -16,7 +16,7 @@ const Layout: FC = ({ children }) => (
       <Box sx={{ flexGrow: 1 }} />
       <Header.Item>
         <Link href="/games">
-          <ButtonInvisible>Logo</ButtonInvisible>
+          <ButtonInvisible>List of Games</ButtonInvisible>
         </Link>
       </Header.Item>
       <Header.Item>
