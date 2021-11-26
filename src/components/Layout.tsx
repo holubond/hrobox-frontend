@@ -7,10 +7,10 @@ import Logo from '../assets/logo.png';
 
 const Layout: FC = ({ children }) => (
   <>
-    <Header>
+    <Header padding="4px">
       <Header.Item>
-        <Link href="/">
-          <img src={Logo} height="60" alt="logo" />
+        <Link href="/" lineHeight="0">
+          <img src={Logo} height="54" alt="logo" />
         </Link>
       </Header.Item>
       <Box sx={{ flexGrow: 1 }} />
