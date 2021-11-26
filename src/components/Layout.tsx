@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import {
-  Header, Box, Link
+  Header, Box
 } from '@primer/components';
 import Logo from '../assets/logo.png';
 
@@ -9,15 +9,15 @@ const Layout: FC = ({ children }) => (
   <>
     <Header padding="4px">
       <Header.Item>
-        <Link href="/" lineHeight="0">
+        <Header.Link href="/" lineHeight="0">
           <img src={Logo} height="54" alt="logo" />
-        </Link>
+        </Header.Link>
       </Header.Item>
       <Box sx={{ flexGrow: 1 }} />
       <Header.Item>
-        <Link href="/games">
+        <Header.Link href="/games">
           List of Games
-        </Link>
+        </Header.Link>
       </Header.Item>
       <Header.Item>
         Login
