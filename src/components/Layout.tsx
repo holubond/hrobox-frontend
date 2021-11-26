@@ -10,7 +10,7 @@ const Layout: FC = ({ children }) => (
     <Header>
       <Header.Item>
         <Link href="/">
-          <img src={Logo} height="30" alt="logo" />
+          <img src={Logo} height="60" alt="logo" />
         </Link>
       </Header.Item>
       <Box sx={{ flexGrow: 1 }} />
