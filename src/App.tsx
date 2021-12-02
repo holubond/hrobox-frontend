@@ -5,14 +5,17 @@ import React from 'react';
 
 import './App.css';
 import Layout from './components/Layout';
+import { LanguageProvider } from './hooks/useTranslation';
 
 const App = () => (
   <ThemeProvider>
-    <BrowserRouter>
-      <Layout>
-        main container
-      </Layout>
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Layout>
+          main container
+        </Layout>
+      </BrowserRouter>
+    </LanguageProvider>
   </ThemeProvider>
 );
 
