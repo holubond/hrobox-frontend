@@ -26,7 +26,7 @@ const Layout: FC = ({ children }) => {
         <Header.Item>
           {user.jwt === '' ? (
             <LoginDialog />
-          ) : (<Button onClick={() => { setUser({ jwt: '', role: '', lang: '' }); }}>Logout</Button>)}
+          ) : (<Button onClick={() => { setUser({ jwt: '', role: '' }); }}>Logout</Button>)}
         </Header.Item>
       </Header>
       <Box

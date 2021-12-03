@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import React, { FC, useEffect, useState } from 'react';
 
 import {
@@ -40,7 +39,6 @@ const LoginDialog: FC = () => {
             }}
             onSubmit={(values) => {
               setLoading(true);
-              // axios.post('http://the-internet.herokuapp.com/status_codes/500', {
               axios.post('https://hrobox-backend.herokuapp.com/api/auth/login', {
                 email: values.email,
                 password: values.password
@@ -48,9 +46,9 @@ const LoginDialog: FC = () => {
                 .then((response) => {
                   setUserIn({
                     jwt: response.data.jwt,
-                    role: response.data.role,
-                    lang: response.data.lang
+                    role: response.data.role
                   });
+                  // TODO: setLanguageContextState to response.data.lang
                 })
                 .catch((error) => {
                   // eslint-disable-next-line no-alert
