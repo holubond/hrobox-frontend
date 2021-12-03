@@ -16,10 +16,8 @@ type LanguageState = [Languages, Dispatch<SetStateAction<Languages>>];
 
 const LanguageContext = createContext<LanguageState>(undefined as never);
 
-// Wrapped context provider
 export const LanguageProvider: FC = ({ children }) => {
-  // We can improve this by saving and loading the initial state from local storage
-  const languageState = useState<Languages>('cs');
+  const languageState = useState<Languages>((localStorage.getItem('lang') === null) ? 'cs' : localStorage.getItem('lang') as Languages);
   return (
     <LanguageContext.Provider value={languageState}>
       {children}
@@ -27,10 +25,8 @@ export const LanguageProvider: FC = ({ children }) => {
   );
 };
 
-// Only used by language switch
 export const useLanguage = () => useContext(LanguageContext);
 
-// Convenience hook for localizing translations
 export const useTranslation = () => {
   const [language] = useContext(LanguageContext);
   return (key: LocalizationKeys) => localization[language][key];
