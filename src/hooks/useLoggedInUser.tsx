@@ -2,7 +2,7 @@ import React, {
   createContext, Dispatch, FC, SetStateAction, useContext, useState
 } from 'react';
 
-type Role = 'Admin'|'Verified user'|'Unverified user'|'Banned user'|undefined;
+type Role = 'Banned' | 'NotVerified' | 'Verified' | 'Admin' | undefined;
 type User = {
   jwt: string,
   role: Role
