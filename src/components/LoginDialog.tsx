@@ -50,10 +50,10 @@ const LoginDialog: FC = () => {
                   });
                   localStorage.setItem('jwt', response.data.jwt);
                   localStorage.setItem('role', response.data.role);
-                  localStorage.setItem('lang', response.data.lang);
+                  // TODO: set langContext to response.data.lang
                 })
                 .catch((error) => {
-                  alert(error);
+                  alert(error.data.message);
                 }).finally(() => {
                   setLoading(false);
                 });
