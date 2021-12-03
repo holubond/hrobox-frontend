@@ -17,18 +17,24 @@ const Layout: FC = ({ children }) => {
             <img src={Logo} height="54" alt="logo" />
           </Header.Link>
         </Header.Item>
+
         <Box sx={{ flexGrow: 1 }} />
+
         <Header.Item>
           <Header.Link href="/games">
             List of Games
           </Header.Link>
         </Header.Item>
+
         <Header.Item>
-          {user.jwt === '' ? (
-            <LoginDialog />
-          ) : (<Button onClick={() => { setUser({ jwt: '', role: '' }); }}>Logout</Button>)}
+          {
+            user.jwt === ''
+              ? <LoginDialog />
+              : <Button onClick={() => { setUser({ jwt: '', role: '' }); }}>Logout</Button>
+          }
         </Header.Item>
       </Header>
+
       <Box
         maxWidth="sm"
         sx={{
@@ -43,7 +49,6 @@ const Layout: FC = ({ children }) => {
       >
         {children}
       </Box>
-
     </>
   );
 };
