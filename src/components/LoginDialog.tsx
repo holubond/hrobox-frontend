@@ -51,7 +51,6 @@ const LoginDialog: FC = () => {
                   // TODO: setLanguageContextState to response.data.lang
                 })
                 .catch((error) => {
-                  // eslint-disable-next-line no-alert
                   alert(error);
                 }).finally(() => {
                   setLoading(false);
