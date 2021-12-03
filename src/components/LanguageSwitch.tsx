@@ -20,6 +20,7 @@ const LanguageSwitch = () => {
             role="button"
             onClick={() => {
               setLanguage('cs');
+              localStorage.setItem('lang', 'cs');
             }}
           />
         </Dropdown.Item>
@@ -29,6 +30,7 @@ const LanguageSwitch = () => {
             role="button"
             onClick={() => {
               setLanguage('en');
+              localStorage.setItem('lang', 'en');
             }}
           />
         </Dropdown.Item>
