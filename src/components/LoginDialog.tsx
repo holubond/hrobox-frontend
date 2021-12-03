@@ -48,7 +48,9 @@ const LoginDialog: FC = () => {
                     jwt: response.data.jwt,
                     role: response.data.role
                   });
-                  // TODO: setLanguageContextState to response.data.lang
+                  localStorage.setItem('jwt', response.data.jwt);
+                  localStorage.setItem('role', response.data.role);
+                  localStorage.setItem('lang', response.data.lang);
                 })
                 .catch((error) => {
                   alert(error);
