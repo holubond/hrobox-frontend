@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import {
   Header, Box, Button
 } from '@primer/components';
+import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -13,24 +14,24 @@ const Layout: FC = ({ children }) => {
     <>
       <Header padding="4px">
         <Header.Item>
-          <Header.Link href="/" lineHeight="0">
+          <Link to="/">
             <img src={Logo} height="54" alt="logo" />
-          </Header.Link>
+          </Link>
         </Header.Item>
 
         <Box sx={{ flexGrow: 1 }} />
 
         <Header.Item>
-          <Header.Link href="/games">
+          <Link to="/games">
             List of Games
-          </Header.Link>
+          </Link>
         </Header.Item>
 
         <Header.Item>
           {
             user.jwt === ''
               ? <LoginDialog />
-              : <Button onClick={() => { setUser({ jwt: '', role: '' }); }}>Logout</Button>
+              : <Button onClick={() => { setUser({ jwt: '', role: undefined }); }}>Logout</Button>
           }
         </Header.Item>
       </Header>
