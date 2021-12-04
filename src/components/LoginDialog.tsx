@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Link, Spinner
+  Dialog, Box, Button, Link, Spinner, Header, FormGroup
 } from '@primer/components';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import routeTo from '../utils/routeTo';
 
 const LoginDialog: FC = () => {
   const [, setUserIn] = useLoggedInUser();
@@ -14,6 +15,27 @@ const LoginDialog: FC = () => {
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
 
+  const submit = (values: any) => {
+    setLoading(true);
+    axios.post(routeTo('/api/auth/login'), {
+      email: values.email,
+      password: values.password
+    })
+      .then((response) => {
+        setUserIn({
+          jwt: response.data.jwt,
+          role: response.data.role
+        });
+        localStorage.setItem('jwt', response.data.jwt);
+        localStorage.setItem('role', response.data.role);
+        // TODO: set langContext to response.data.lang
+      })
+      .catch((error) => {
+        alert(error.data.message);
+      }).finally(() => {
+        setLoading(false);
+      });
+  };
   const user = {
     email: '',
     password: ''
@@ -22,9 +44,9 @@ const LoginDialog: FC = () => {
   }, [loading]);
   return (
     <>
-      <Button ref={returnFocusRef} onClick={() => setOpen(true)}>
+      <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
         Login
-      </Button>
+      </Header.Link>
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}
@@ -38,46 +60,33 @@ const LoginDialog: FC = () => {
               ...user
             }}
             onSubmit={(values) => {
-              setLoading(true);
-              axios.post('https://hrobox-backend.herokuapp.com/api/auth/login', {
-                email: values.email,
-                password: values.password
-              })
-                .then((response) => {
-                  setUserIn({
-                    jwt: response.data.jwt,
-                    role: response.data.role
-                  });
-                  localStorage.setItem('jwt', response.data.jwt);
-                  localStorage.setItem('role', response.data.role);
-                  // TODO: set langContext to response.data.lang
-                })
-                .catch((error) => {
-                  alert(error.data.message);
-                }).finally(() => {
-                  setLoading(false);
-                });
+              submit(values);
             }}
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-                <Box color="black">
-                  Email
-                </Box>
-                <Field
-                  name="email"
-                  component="input"
-                  type="email"
-                  placeholder="email"
-                />
-                <Box color="black">
-                  Password
-                </Box>
-                <Field
-                  name="password"
-                  component="input"
-                  type="password"
-                  placeholder="password"
-                />
+                <FormGroup>
+                  <FormGroup.Label color="Black">
+                    Email
+                  </FormGroup.Label>
+                  <Field
+                    name="email"
+                    component="input"
+                    type="email"
+                    placeholder="email"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <FormGroup.Label color="Black">
+                    Password
+                  </FormGroup.Label>
+                  <Field
+                    name="password"
+                    component="input"
+                    type="password"
+                    placeholder="password"
+                  />
+                </FormGroup>
+
                 <Box display="flex" flexWrap="nowrap">
                   <Link href="/#">
                     Do you need to register?
