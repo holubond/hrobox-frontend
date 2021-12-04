@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import {
-  Header, Box, Button
+  Header, Box
 } from '@primer/components';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
@@ -22,7 +22,7 @@ const Layout: FC = ({ children }) => {
         <Box sx={{ flexGrow: 1 }} />
 
         <Header.Item>
-          <Link to="/games">
+          <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/games">
             List of Games
           </Link>
         </Header.Item>
@@ -31,7 +31,16 @@ const Layout: FC = ({ children }) => {
           {
             user.jwt === ''
               ? <LoginDialog />
-              : <Button onClick={() => { setUser({ jwt: '', role: undefined }); }}>Logout</Button>
+              : (
+                <Header.Link onClick={() => {
+                  setUser({ jwt: '', role: undefined });
+                  localStorage.removeItem('jwt');
+                  localStorage.removeItem('role');
+                }}
+                >
+                  Logout
+                </Header.Link>
+              )
           }
         </Header.Item>
       </Header>

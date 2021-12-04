@@ -13,8 +13,7 @@ const UserContext = createContext<UserState>(undefined as never);
 
 export const UserProvider: FC = ({ children }) => {
   const userState = useState<User>(
-    // eslint-disable-next-line space-in-parens
-    (localStorage.getItem('jwt') === null )
+    ( localStorage.getItem('jwt') === null )
       ? { jwt: '', role: undefined }
       : { jwt: localStorage.getItem('jwt') as string, role: localStorage.getItem('role') as Role }
   );
