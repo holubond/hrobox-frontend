@@ -4,34 +4,45 @@ import React, { useEffect } from 'react';
 import Flag from 'react-flagkit';
 
 import { useLanguage } from '../hooks/useTranslation';
+import localization from '../localization';
 
 const LanguageSwitch = () => {
+  type Languages = keyof typeof localization;
   const [selectedLang, setLanguage] = useLanguage();
+  const clickEvent = (language: Languages) => {
+    setLanguage(language);
+    localStorage.setItem('lang', language);
+  };
   useEffect(() => {
 
   }, [selectedLang]);
   return (
     <>
-      <Dropdown.Button>{selectedLang === 'cs' ? <Flag country="CZ" /> : <Flag country="GB" />}</Dropdown.Button>
+      <summary>
+        {selectedLang === 'cs' ? <Flag country="CZ" /> : <Flag country="GB" />}
+        <Dropdown.Caret />
+      </summary>
       <Dropdown.Menu direction="sw" sx={{ width: 55 }}>
-        <Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => {
+            clickEvent('cs');
+          }}
+          sx={{ cursor: 'pointer' }}
+        >
           <Flag
             country="CZ"
             role="button"
-            onClick={() => {
-              setLanguage('cs');
-              localStorage.setItem('lang', 'cs');
-            }}
           />
         </Dropdown.Item>
-        <Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => {
+            clickEvent('en');
+          }}
+          sx={{ cursor: 'pointer' }}
+        >
           <Flag
             country="GB"
             role="button"
-            onClick={() => {
-              setLanguage('en');
-              localStorage.setItem('lang', 'en');
-            }}
           />
         </Dropdown.Item>
       </Dropdown.Menu>
