@@ -9,11 +9,15 @@ const handle500 = (message: string) => {
   alert(message);
 };
 
-const handleErrors = (error) => {
-  if (error.status === '403') {
-    handle403();
-  } else if (error.status === '500') {
-    handle500(error.message);
+const handleErrors = (error: any) => {
+  switch (error.response.status) {
+    case 403:
+      handle403();
+      break;
+    case 500:
+      handle500(error.response.data.message);
+      break;
+    default:
   }
 };
 export default handleErrors;
