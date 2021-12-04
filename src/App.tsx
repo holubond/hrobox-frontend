@@ -5,14 +5,17 @@ import React from 'react';
 
 import './App.css';
 import Layout from './components/Layout';
+import { UserProvider } from './hooks/useLoggedInUser';
 
 const App = () => (
   <ThemeProvider>
-    <BrowserRouter>
-      <Layout>
-        main container
-      </Layout>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Layout>
+          main container
+        </Layout>
+      </BrowserRouter>
+    </UserProvider>
   </ThemeProvider>
 );
 
