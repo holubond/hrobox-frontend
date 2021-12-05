@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import HelpDialog from './HelpDialog';
 
 const Layout: FC = ({ children }) => {
   const [user, setUser] = useLoggedInUser();
@@ -19,6 +20,9 @@ const Layout: FC = ({ children }) => {
           </Link>
         </Header.Item>
 
+        <Header.Item>
+          <HelpDialog />
+        </Header.Item>
         <Box sx={{ flexGrow: 1 }} />
 
         <Header.Item>
