@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import { useTranslation } from '../hooks/useTranslation';
 import LanguageSwitch from './LanguageSwitch';
-import LoginDialog from './LoginDialog';
+import LoginDialog from './myDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const Layout: FC = ({ children }) => {
