@@ -5,9 +5,10 @@ import {
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
-import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
@@ -20,12 +21,14 @@ const LoginDialog: FC = () => {
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
 
+  const history = useHistory();
   const [, setUserIn] = useLoggedInUser();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [, setLanguage] = useLanguage();
+
   useEffect(() => {
   }, [loading]);
 
@@ -76,6 +79,7 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
+    history.push('/role');
   };
 
   return (

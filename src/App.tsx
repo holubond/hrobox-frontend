@@ -7,6 +7,7 @@ import './App.css';
 import Layout from './components/Layout';
 import { LanguageProvider } from './hooks/useTranslation';
 import { UserProvider } from './hooks/useLoggedInUser';
+import Routes from './components/routes';
 
 const App = () => (
   <ThemeProvider>
@@ -14,7 +15,7 @@ const App = () => (
       <UserProvider>
         <BrowserRouter>
           <Layout>
-            main container
+            <Routes />
           </Layout>
         </BrowserRouter>
       </UserProvider>
