@@ -34,7 +34,7 @@ const Role = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ textAlign: 'center' }}>
       {user.role === 'Banned' ? (
         <Text>
           {trans('We are sorry but your account was banned!')}
@@ -46,7 +46,9 @@ const Role = () => {
               {trans('We are waiting for admins to verif your account.')}
             </Text>
           </Box>
-          <Button variant="large" onClick={submit}>{trans('Refresh')}</Button>
+          <Button variant="large" onClick={submit} sx={{ marginTop: '10px' }}>
+            {trans('Refresh')}
+          </Button>
         </>
       )}
     </Box>
