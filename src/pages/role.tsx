@@ -9,7 +9,6 @@ const Role = () => {
   const [user, setUserIn] = useLoggedInUser();
 
   const submit = () => {
-    console.log('LALA');
     axios.post(routeTo('/api/user/me/role'), {}, { headers: { Authorization: user.jwt } })
       .then((response) => {
         setUserIn({
@@ -21,7 +20,6 @@ const Role = () => {
         // TODO: set langContext to response.data.lang
       })
       .catch((error) => {
-        console.log('CATCH');
         handleErrors(error);
       });
   };
