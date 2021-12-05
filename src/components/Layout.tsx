@@ -11,8 +11,8 @@ import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const Layout: FC = ({ children }) => {
-    const trans = useTranslation();
-    const [user, setUser] = useLoggedInUser();
+  const trans = useTranslation();
+  const [user, setUser] = useLoggedInUser();
 
   return (
     <>
@@ -22,15 +22,15 @@ const Layout: FC = ({ children }) => {
             <img src={Logo} height="54" alt="logo" />
           </Link>
         </Header.Item>
-        
+
         <Box sx={{ flexGrow: 1 }} />
-        
+
         <Header.Item>
           <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/games">
             {trans('Games')}
           </Link>
         </Header.Item>
-        
+
         <Header.Item>
           {
             user.jwt === ''
@@ -46,6 +46,12 @@ const Layout: FC = ({ children }) => {
                 </Header.Link>
               )
           }
+        </Header.Item>
+
+        <Header.Item>
+          <Dropdown>
+            <LanguageSwitch />
+          </Dropdown>
         </Header.Item>
       </Header>
 

@@ -10,7 +10,7 @@ import { UserProvider } from './hooks/useLoggedInUser';
 
 const App = () => (
   <ThemeProvider>
-    <LanguageProvider>  
+    <LanguageProvider>
       <UserProvider>
         <BrowserRouter>
           <Layout>
