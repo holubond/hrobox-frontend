@@ -1,0 +1,128 @@
+import React, { FC, useEffect, useState } from 'react';
+
+import {
+  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+} from '@primer/components';
+import Joi from 'joi';
+import axios from 'axios';
+import ValidatedFormGroup from './ValidatedFormGroup';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import routeTo from '../utils/routeTo';
+import handleErrors from '../utils/handleErrors';
+
+const HelpDialog: FC = () => {
+  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error('Toto pole musí obsahovat validní emailovou adresu'));
+  const MESSAGE_SCHEMA = Joi.string().min(1).required().error(() => new Error('Zpráva nesmí být prázdná'));
+
+  const [isOpen, setOpen] = useState(false);
+  const returnFocusRef = React.useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [userIn] = useLoggedInUser();
+
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageError, setMessageError] = useState('');
+
+  useEffect(() => {
+  }, [loading]);
+
+  const submit = (values: any) => {
+    values.preventDefault();
+    setLoading(true);
+
+    const emailValidationError = EMAIL_SCHEMA.validate(email);
+
+    const errors: string[] = [];
+
+    if (emailValidationError.error) {
+      setEmailError(emailValidationError.error.message);
+      errors.push(emailValidationError.error.message);
+    } else {
+      setEmailError('');
+    }
+
+    const messageValidationError = MESSAGE_SCHEMA.validate(message);
+    if (messageValidationError.error) {
+      setMessageError(messageValidationError.error.message);
+      errors.push(messageValidationError.error.message);
+    } else {
+      setMessageError('');
+    }
+
+    if (errors.length !== 0) {
+      setLoading(false);
+      return;
+    }
+
+    let data;
+    let headers;
+    if (userIn.jwt === '') {
+      data = { email, message };
+      headers = { Authorization: '' };
+    } else {
+      data = { message };
+      headers = { Authorization: `Bearer ${userIn.jwt}` };
+    }
+    axios.post(routeTo('/api/support'), data, { headers })
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        handleErrors(error);
+      }).finally(() => {
+        setLoading(false);
+      });
+
+    console.log('params valid');
+  };
+
+  return (
+    <>
+      <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
+        Help
+      </Header.Link>
+
+      <Dialog
+        returnFocusRef={returnFocusRef}
+        isOpen={isOpen}
+        onDismiss={() => setOpen(false)}
+        aria-labelledby="header-id"
+      >
+        <Dialog.Header id="header-id">Contact support</Dialog.Header>
+
+        <Box p={3}>
+
+          <form onSubmit={submit}>
+            {userIn.jwt === '' ? (
+              <ValidatedFormGroup message={emailError}>
+                <FormGroup.Label>
+                  myEmail
+                </FormGroup.Label>
+                <TextInput
+                  value={email}
+                  onChange={(e: any) => setEmail(e.target.value)}
+                />
+              </ValidatedFormGroup>
+            ) : ('')}
+            <ValidatedFormGroup message={messageError}>
+              <FormGroup.Label>
+                message
+              </FormGroup.Label>
+              <TextInput
+                name="message"
+                value={message}
+                onChange={(e: any) => setMessage(e.target.value)}
+              />
+            </ValidatedFormGroup>
+
+            {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
+          </form>
+
+        </Box>
+      </Dialog>
+
+    </>
+  );
+};
+export default HelpDialog;
