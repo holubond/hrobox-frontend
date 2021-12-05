@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+  Dialog, Box, Button, Spinner, FormGroup, TextInput, Link
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -61,10 +61,9 @@ const PasswordRenewal: FC = () => {
 
   return (
     <>
-      <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
+      <Link as="button" onClick={() => setOpen(true)} href="/">
         {trans('ForgPassword')}
-      </Header.Link>
-
+      </Link>
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}

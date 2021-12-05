@@ -11,6 +11,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
+import PasswordRenewal from './PasswordRenewal';
 
 const LoginDialog: FC = () => {
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error('Toto pole musí obsahovat validní emailovou adresu'));
@@ -115,6 +116,8 @@ const LoginDialog: FC = () => {
                 onChange={(e: any) => setPassword(e.target.value)}
               />
             </ValidatedFormGroup>
+
+            <PasswordRenewal />
 
             {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
           </form>
