@@ -1,96 +1,127 @@
-import {
-  Box, Button, Dialog, FormGroup, Header, Spinner
-} from '@primer/components';
-import axios from 'axios';
 import React, { FC, useEffect, useState } from 'react';
-import { Field, Form } from 'react-final-form';
+
+import {
+  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+} from '@primer/components';
+import Joi from 'joi';
+import axios from 'axios';
+import ValidatedFormGroup from './ValidatedFormGroup';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
+import handleErrors from '../utils/handleErrors';
+import { useTranslation } from '../hooks/useTranslation';
 
 const HelpDialog: FC = () => {
-  const [userIn] = useLoggedInUser();
+  const trans = useTranslation();
+
+  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
+  const MESSAGE_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrMessage')));
+
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
+  const [userIn] = useLoggedInUser();
+
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageError, setMessageError] = useState('');
+
+  useEffect(() => {
+  }, [loading]);
+
   const submit = (values: any) => {
+    values.preventDefault();
     setLoading(true);
+
+    const emailValidationError = EMAIL_SCHEMA.validate(email);
+    const errors: string[] = [];
+
+    if (emailValidationError.error && userIn.jwt === '') {
+      setEmailError(emailValidationError.error.message);
+      errors.push(emailValidationError.error.message);
+    } else {
+      setEmailError('');
+    }
+
+    const messageValidationError = MESSAGE_SCHEMA.validate(message);
+    if (messageValidationError.error) {
+      setMessageError(messageValidationError.error.message);
+      errors.push(messageValidationError.error.message);
+    } else {
+      setMessageError('');
+    }
+
+    if (errors.length !== 0) {
+      setLoading(false);
+      return;
+    }
+
     let data;
     let headers;
     if (userIn.jwt === '') {
-      data = { email: values.email, message: values.message };
-      headers = { 'Content-Type': 'application/json', Authorization: '' };
+      data = { email, message };
+      headers = { Authorization: '' };
     } else {
-      data = { message: values.message };
-      headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${userIn.jwt}` };
+      data = { message };
+      headers = { Authorization: `Bearer ${userIn.jwt}` };
     }
     axios.post(routeTo('/api/support'), data, { headers })
       .then((response) => {
         alert(response.data.message);
       })
       .catch((error) => {
-        alert(error);
-        // todo: handle error
+        handleErrors(error);
       }).finally(() => {
         setLoading(false);
       });
   };
 
-  useEffect(() => {
-  }, [loading]);
   return (
     <>
       <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
-        Help
+        {trans('Help')}
       </Header.Link>
+
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">Contact Support</Dialog.Header>
-        <Box p={3}>
-          <Form
-            onSubmit={(values) => {
-              submit(values);
-            }}
-            render={({ handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                {userIn.jwt === '' ? (
-                  <FormGroup>
-                    <FormGroup.Label color="Black">
-                      Email
-                    </FormGroup.Label>
-                    <Field
-                      name="email"
-                      component="input"
-                      type="email"
-                      placeholder="email"
-                    />
-                  </FormGroup>
-                ) : ('')}
-                <FormGroup>
-                  <FormGroup.Label color="Black">
-                    Message
-                  </FormGroup.Label>
-                  <Field
-                    name="message"
-                    component="input"
-                    type="text"
-                    placeholder="text"
-                  />
-                </FormGroup>
+        <Dialog.Header id="header-id">{trans('ContactSupport')}</Dialog.Header>
 
-                <Box display="flex" flexWrap="nowrap" sx={{ paddingBlockStart: 15 }}>
-                  <Box sx={{ flexGrow: 0.15 }} />
-                  {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
-                </Box>
-              </form>
-            )}
-          />
+        <Box p={3}>
+          <form onSubmit={submit}>
+            {userIn.jwt === '' ? (
+              <ValidatedFormGroup message={emailError}>
+                <FormGroup.Label>
+                  Email
+                </FormGroup.Label>
+                <TextInput
+                  value={email}
+                  onChange={(e: any) => setEmail(e.target.value)}
+                />
+              </ValidatedFormGroup>
+            ) : ('')}
+            <ValidatedFormGroup message={messageError}>
+              <FormGroup.Label>
+                {trans('Message')}
+              </FormGroup.Label>
+              <TextInput
+                name="message"
+                value={message}
+                onChange={(e: any) => setMessage(e.target.value)}
+              />
+            </ValidatedFormGroup>
+
+            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
+          </form>
+
         </Box>
       </Dialog>
-    </ >
+
+    </>
   );
 };
 export default HelpDialog;
