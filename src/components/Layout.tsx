@@ -9,7 +9,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import LanguageSwitch from './LanguageSwitch';
 import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
-import HelpDialogControlled from './HelpDialogControlled';
+import HelpDialog from './HelpDialog';
 
 const Layout: FC = ({ children }) => {
   const trans = useTranslation();
@@ -25,7 +25,7 @@ const Layout: FC = ({ children }) => {
         </Header.Item>
 
         <Header.Item>
-          <HelpDialogControlled />
+          <HelpDialog />
         </Header.Item>
         <Box sx={{ flexGrow: 1 }} />
 
