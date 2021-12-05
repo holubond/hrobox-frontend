@@ -76,8 +76,6 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
-
-    console.log('params valid');
   };
 
   return (
