@@ -1,9 +1,9 @@
 import {
-  Box, Button, Dialog, Header, Spinner
+  Box, Button, Dialog, FormGroup, Header, Spinner
 } from '@primer/components';
 import axios from 'axios';
 import React, { FC, useEffect, useState } from 'react';
-import { Form } from 'react-final-form';
+import { Field, Form } from 'react-final-form';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
 
@@ -12,18 +12,16 @@ const HelpDialog: FC = () => {
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
   const submit = (values: any) => {
     setLoading(true);
     let data;
     let headers;
     if (userIn.jwt === '') {
       data = { email: values.email, message: values.message };
-      headers = { 'Content-Type': 'application/json', Authorisation: '' };
+      headers = { 'Content-Type': 'application/json', Authorization: '' };
     } else {
       data = { message: values.message };
-      headers = { 'Content-Type': 'application/json', Authorisation: `Bearer ${userIn.jwt}` };
+      headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${userIn.jwt}` };
     }
     axios.post(routeTo('/api/support'), data, { headers })
       .then((response) => {
@@ -59,9 +57,29 @@ const HelpDialog: FC = () => {
             render={({ handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 {userIn.jwt === '' ? (
-                  <input value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <FormGroup>
+                    <FormGroup.Label color="Black">
+                      Email
+                    </FormGroup.Label>
+                    <Field
+                      name="email"
+                      component="input"
+                      type="email"
+                      placeholder="email"
+                    />
+                  </FormGroup>
                 ) : ('')}
-                <input value={message} onChange={(e) => setMessage(e.target.value)} />
+                <FormGroup>
+                  <FormGroup.Label color="Black">
+                    Message
+                  </FormGroup.Label>
+                  <Field
+                    name="message"
+                    component="input"
+                    type="text"
+                    placeholder="text"
+                  />
+                </FormGroup>
 
                 <Box display="flex" flexWrap="nowrap" sx={{ paddingBlockStart: 15 }}>
                   <Box sx={{ flexGrow: 0.15 }} />
