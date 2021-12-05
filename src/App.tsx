@@ -6,15 +6,18 @@ import React from 'react';
 import './App.css';
 import Layout from './components/Layout';
 import { LanguageProvider } from './hooks/useTranslation';
+import { UserProvider } from './hooks/useLoggedInUser';
 
 const App = () => (
   <ThemeProvider>
-    <LanguageProvider>
-      <BrowserRouter>
-        <Layout>
-          main container
-        </Layout>
-      </BrowserRouter>
+    <LanguageProvider>  
+      <UserProvider>
+        <BrowserRouter>
+          <Layout>
+            main container
+          </Layout>
+        </BrowserRouter>
+      </UserProvider>
     </LanguageProvider>
   </ThemeProvider>
 );
