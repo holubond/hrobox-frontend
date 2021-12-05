@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const handle403 = () => {
-  const navigate = useNavigate();
-  navigate('/role');
+  const navigate = useHistory();
+  navigate.push('/role');
 };
 
 const handle500 = (message: string) => {
