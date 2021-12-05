@@ -9,10 +9,13 @@ import ValidatedFormGroup from './ValidatedFormGroup';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
+import { useTranslation } from '../hooks/useTranslation';
 
 const HelpDialog: FC = () => {
-  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error('Toto pole musí obsahovat validní emailovou adresu'));
-  const MESSAGE_SCHEMA = Joi.string().min(1).required().error(() => new Error('Zpráva nesmí být prázdná'));
+  const trans = useTranslation();
+
+  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
+  const MESSAGE_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrMessage')));
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
@@ -80,7 +83,7 @@ const HelpDialog: FC = () => {
   return (
     <>
       <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
-        Help
+        {trans('Help')}
       </Header.Link>
 
       <Dialog
@@ -89,7 +92,7 @@ const HelpDialog: FC = () => {
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">Contact support</Dialog.Header>
+        <Dialog.Header id="header-id">{trans('ContactSupport')}</Dialog.Header>
 
         <Box p={3}>
 
@@ -97,7 +100,7 @@ const HelpDialog: FC = () => {
             {userIn.jwt === '' ? (
               <ValidatedFormGroup message={emailError}>
                 <FormGroup.Label>
-                  myEmail
+                  Email
                 </FormGroup.Label>
                 <TextInput
                   value={email}
@@ -107,7 +110,7 @@ const HelpDialog: FC = () => {
             ) : ('')}
             <ValidatedFormGroup message={messageError}>
               <FormGroup.Label>
-                message
+                {trans('Message')}
               </FormGroup.Label>
               <TextInput
                 name="message"
@@ -116,7 +119,7 @@ const HelpDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
+            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
           </form>
 
         </Box>
