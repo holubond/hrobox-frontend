@@ -1,10 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import {
   Dialog, Box, Button, Link, Spinner, Header, FormGroup
 } from '@primer/components';
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
@@ -15,6 +16,8 @@ const LoginDialog: FC = () => {
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
+
+  const history = useHistory();
 
   const submit = (values: any) => {
     setLoading(true);
@@ -36,13 +39,13 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
+    history.push('/role');
   };
   const user = {
     email: '',
     password: ''
   };
-  useEffect(() => {
-  }, [loading]);
+
   return (
     <>
       <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
