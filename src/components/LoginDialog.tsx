@@ -9,12 +9,13 @@ import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
-import { useLanguage } from '../hooks/useTranslation';
+import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
 
 const LoginDialog: FC = () => {
-  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error('Toto pole musí obsahovat validní emailovou adresu'));
-  const PASSWORD_SCHEMA = Joi.string().min(6).required().error(() => new Error('Heslo musí být dlouhé alespoň 6 znaků'));
+  const trans = useTranslation();
+  const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
+  const PASSWORD_SCHEMA = Joi.string().min(6).required().error(() => new Error(trans('ErrPassword')));
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
@@ -81,7 +82,7 @@ const LoginDialog: FC = () => {
   return (
     <>
       <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
-        Login
+        {trans('Login')}
       </Header.Link>
 
       <Dialog
@@ -90,14 +91,14 @@ const LoginDialog: FC = () => {
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">Přihlášení</Dialog.Header>
+        <Dialog.Header id="header-id">{trans('Log')}</Dialog.Header>
 
         <Box p={3}>
 
           <form onSubmit={submit}>
             <ValidatedFormGroup message={emailError}>
               <FormGroup.Label>
-                myEmail
+                Email
               </FormGroup.Label>
               <TextInput
                 value={email}
@@ -107,7 +108,7 @@ const LoginDialog: FC = () => {
 
             <ValidatedFormGroup message={passwordError}>
               <FormGroup.Label>
-                myPassword (aspoň 6 znaků)
+                {trans('Password')}
               </FormGroup.Label>
               <TextInput
                 name="myPassword"
@@ -116,7 +117,7 @@ const LoginDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
+            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
           </form>
 
         </Box>

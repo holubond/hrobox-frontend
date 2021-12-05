@@ -1,4 +1,9 @@
 export default {
   Games: 'List of games',
-  Login: 'Login'
+  Login: 'Login',
+  ErrEmail: 'This field must contain valid email adress',
+  Submit: 'Submit',
+  ErrPassword: 'The password must be at least 6 characters long',
+  Log: 'Login',
+  Password: 'Password (at least 6 characters)'
 };
