@@ -45,7 +45,6 @@ const PasswordRenewal: FC = () => {
       return;
     }
 
-    console.log('params valid');
     axios.post(routeTo('/api/auth/forgotPassword'), {
       email
     })
