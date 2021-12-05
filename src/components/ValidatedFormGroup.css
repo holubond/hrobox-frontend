@@ -1,0 +1,22 @@
+
+.errored .error {
+  color: black;
+  background-color: var(--color-canvas-default);
+  background-image: linear-gradient(#ffebe9, #ffebe9);
+  border-color: #f5030366;
+  border: solid #ffc1c0 1px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.errored label {
+  color: #cf222e
+}
+
+.errored span {
+  border: 1px solid #cf222e !important;
+}
+
+.validated-fg>label {
+  color: black;
+}
