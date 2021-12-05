@@ -6,8 +6,9 @@ import Flag from 'react-flagkit';
 import { useLanguage } from '../hooks/useTranslation';
 import localization from '../localization';
 
+export type Languages = keyof typeof localization;
+
 const LanguageSwitch = () => {
-  type Languages = keyof typeof localization;
   const [selectedLang, setLanguage] = useLanguage();
   const clickEvent = (language: Languages) => {
     setLanguage(language);
