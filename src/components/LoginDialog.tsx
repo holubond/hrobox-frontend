@@ -7,6 +7,7 @@ import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
+import handleErrors from '../utils/handleErrors';
 
 const LoginDialog: FC = () => {
   const [, setUserIn] = useLoggedInUser();
@@ -31,7 +32,7 @@ const LoginDialog: FC = () => {
         // TODO: set langContext to response.data.lang
       })
       .catch((error) => {
-        alert(error.data.message);
+        handleErrors(error);
       }).finally(() => {
         setLoading(false);
       });

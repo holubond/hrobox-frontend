@@ -1,16 +1,20 @@
 import React, { FC } from 'react';
 
 import {
-  Header, Box
+  Header, Box, Dropdown
 } from '@primer/components';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
-import LoginDialog from './LoginDialog';
+import { useTranslation } from '../hooks/useTranslation';
+import LanguageSwitch from './LanguageSwitch';
+import LoginDialog from './myDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import HelpDialog from './HelpDialog';
 
 const Layout: FC = ({ children }) => {
+  const trans = useTranslation();
   const [user, setUser] = useLoggedInUser();
+
   return (
     <>
       <Header padding="4px">
@@ -27,7 +31,7 @@ const Layout: FC = ({ children }) => {
 
         <Header.Item>
           <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/games">
-            List of Games
+            {trans('Games')}
           </Link>
         </Header.Item>
 
@@ -46,6 +50,12 @@ const Layout: FC = ({ children }) => {
                 </Header.Link>
               )
           }
+        </Header.Item>
+
+        <Header.Item>
+          <Dropdown>
+            <LanguageSwitch />
+          </Dropdown>
         </Header.Item>
       </Header>
 
