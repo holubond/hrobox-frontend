@@ -6,13 +6,14 @@ import React from 'react';
 import './App.css';
 import Layout from './components/Layout';
 import { UserProvider } from './hooks/useLoggedInUser';
+import Routes from './components/routes';
 
 const App = () => (
   <ThemeProvider>
     <UserProvider>
       <BrowserRouter>
         <Layout>
-          main container
+          <Routes />
         </Layout>
       </BrowserRouter>
     </UserProvider>
