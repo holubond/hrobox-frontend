@@ -20,3 +20,7 @@
 .validated-fg>label {
   color: black;
 }
+
+.validated-fg {
+  display: contents;
+}

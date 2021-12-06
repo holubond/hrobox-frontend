@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, FormGroup, TextInput, Link
+  Dialog, Box, Spinner, FormGroup, TextInput, Link, ButtonPrimary
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -107,12 +107,13 @@ const RegistrationDialog: FC = () => {
 
         <Box p={4}>
 
-          <form onSubmit={submit}>
+          <form onSubmit={submit} className="dialog-form">
             <ValidatedFormGroup message={nameError}>
               <FormGroup.Label>
                 {trans('Name')}
               </FormGroup.Label>
               <TextInput
+                name="name"
                 value={name}
                 onChange={(e: any) => setName(e.target.value)}
               />
@@ -123,6 +124,7 @@ const RegistrationDialog: FC = () => {
                 Email
               </FormGroup.Label>
               <TextInput
+                name="email"
                 value={email}
                 onChange={(e: any) => setEmail(e.target.value)}
               />
@@ -133,13 +135,15 @@ const RegistrationDialog: FC = () => {
                 {trans('Password')}
               </FormGroup.Label>
               <TextInput
-                name="myPassword"
+                name="password"
                 value={password}
                 onChange={(e: any) => setPassword(e.target.value)}
               />
             </ValidatedFormGroup>
 
-            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
+            <Box sx={{ alignSelf: 'flex-end' }}>
+              {loading ? <Spinner color="Black" /> : <ButtonPrimary type="submit">{trans('Submit')}</ButtonPrimary> }
+            </Box>
           </form>
 
         </Box>
