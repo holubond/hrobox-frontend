@@ -36,6 +36,12 @@ const Layout: FC = ({ children }) => {
         </Header.Item>
 
         <Header.Item>
+          <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/tags">
+            Tags
+          </Link>
+        </Header.Item>
+
+        <Header.Item>
           {
             user.jwt === ''
               ? <LoginDialog />
