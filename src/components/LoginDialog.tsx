@@ -12,6 +12,7 @@ import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
+import PasswordRenewal from './PasswordRenewal';
 
 const LoginDialog: FC = () => {
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error('Toto pole musí obsahovat validní emailovou adresu'));
@@ -122,6 +123,8 @@ const LoginDialog: FC = () => {
 
             {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
           </form>
+
+          <PasswordRenewal />
 
         </Box>
       </Dialog>
