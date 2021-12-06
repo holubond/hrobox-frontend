@@ -13,6 +13,7 @@ import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
 import PasswordRenewal from './PasswordRenewal';
+import RegistrationDialog from './RegistrationDialog';
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -125,8 +126,10 @@ const LoginDialog: FC = () => {
             {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
           </form>
 
-          <PasswordRenewal />
-
+          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <PasswordRenewal />
+            <RegistrationDialog />
+          </Box>
         </Box>
       </Dialog>
 
