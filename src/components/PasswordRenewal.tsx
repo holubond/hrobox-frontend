@@ -1,35 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+  Dialog, Box, Button, Spinner, FormGroup, TextInput, Link
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import useLoggedInUser from '../hooks/useLoggedInUser';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
-import { useLanguage, useTranslation } from '../hooks/useTranslation';
-import { Languages } from './LanguageSwitch';
-import PasswordRenewal from './PasswordRenewal';
+import { useTranslation } from '../hooks/useTranslation';
 
-const LoginDialog: FC = () => {
+const PasswordRenewal: FC = () => {
   const trans = useTranslation();
+
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
-  const PASSWORD_SCHEMA = Joi.string().min(6).required().error(() => new Error(trans('ErrPassword')));
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const history = useHistory();
-  const [, setUserIn] = useLoggedInUser();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [, setLanguage] = useLanguage();
 
   useEffect(() => {
   }, [loading]);
@@ -49,54 +40,38 @@ const LoginDialog: FC = () => {
       setEmailError('');
     }
 
-    const passwordValidationError = PASSWORD_SCHEMA.validate(password);
-    if (passwordValidationError.error) {
-      setPasswordError(passwordValidationError.error.message);
-      errors.push(passwordValidationError.error.message);
-    } else {
-      setPasswordError('');
-    }
-
     if (errors.length !== 0) {
       setLoading(false);
       return;
     }
 
-    axios.post(routeTo('/api/auth/login'), {
-      email,
-      password
+    axios.post(routeTo('/api/auth/forgotPassword'), {
+      email
     })
       .then((response) => {
-        setUserIn({
-          jwt: response.data.jwt,
-          role: response.data.role
-        });
-        localStorage.setItem('jwt', response.data.jwt);
-        localStorage.setItem('role', response.data.role);
-        setLanguage(response.data.lang as Languages);
-        localStorage.setItem('lang', response.data.lang as Languages);
+        alert(response.data.message);
       })
       .catch((error) => {
+        alert(error);
         handleErrors(error);
       }).finally(() => {
         setLoading(false);
+        setOpen(false);
       });
-    history.push('/role');
   };
 
   return (
     <>
-      <Header.Link ref={returnFocusRef} onClick={() => setOpen(true)}>
-        {trans('Login')}
-      </Header.Link>
-
+      <Link as="button" onClick={() => setOpen(true)} href="/">
+        {trans('ForgPassword')}
+      </Link>
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">{trans('Log')}</Dialog.Header>
+        <Dialog.Header id="header-id">{trans('Pswdreneval')}</Dialog.Header>
 
         <Box p={3}>
 
@@ -111,21 +86,8 @@ const LoginDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            <ValidatedFormGroup message={passwordError}>
-              <FormGroup.Label>
-                {trans('Password')}
-              </FormGroup.Label>
-              <TextInput
-                name="myPassword"
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)}
-              />
-            </ValidatedFormGroup>
-
             {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
           </form>
-
-          <PasswordRenewal />
 
         </Box>
       </Dialog>
@@ -133,4 +95,4 @@ const LoginDialog: FC = () => {
     </>
   );
 };
-export default LoginDialog;
+export default PasswordRenewal;
