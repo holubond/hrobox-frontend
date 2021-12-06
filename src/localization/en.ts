@@ -17,5 +17,8 @@ export default {
   Refresh: 'Refresh',
   Registration: 'Registration',
   Name: 'Name',
-  Registration_verb: 'Registration'
+  Registration_verb: 'Registration',
+  AddTag: 'Add tag',
+  NameCs: 'Czech name',
+  NameEn: 'English name'
 };

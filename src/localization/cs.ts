@@ -17,5 +17,8 @@ export default {
   Refresh: 'Aktualizovat',
   Registration: 'Registrace',
   Name: 'Jméno',
-  Registration_verb: 'Registrovat se'
+  Registration_verb: 'Registrovat se',
+  AddTag: 'Přidat tag',
+  NameCs: 'Český název',
+  NameEn: 'Anglický název'
 };
