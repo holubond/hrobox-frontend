@@ -5,7 +5,7 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import Joi from 'joi';
 import axios from 'axios';
-import { useLanguage, useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../hooks/useTranslation';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
