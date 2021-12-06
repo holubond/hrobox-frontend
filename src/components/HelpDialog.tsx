@@ -73,6 +73,7 @@ const HelpDialog: FC = () => {
       .catch((error) => {
         handleErrors(error);
       }).finally(() => {
+        setOpen(false);
         setLoading(false);
       });
   };
