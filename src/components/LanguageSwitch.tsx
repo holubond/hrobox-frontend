@@ -1,4 +1,4 @@
-import { Dropdown } from '@primer/components';
+import { Box, Dropdown } from '@primer/components';
 import React, { useEffect } from 'react';
 
 import Flag from 'react-flagkit';
@@ -14,14 +14,17 @@ const LanguageSwitch = () => {
     setLanguage(language);
     localStorage.setItem('lang', language);
   };
+
   useEffect(() => {
 
   }, [selectedLang]);
   return (
-    <>
+    <Dropdown>
       <summary>
-        {selectedLang === 'cs' ? <Flag country="CZ" /> : <Flag country="GB" />}
-        <Dropdown.Caret />
+        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+          {selectedLang === 'cs' ? <Flag country="CZ" /> : <Flag country="GB" />}
+          <Dropdown.Caret />
+        </Box>
       </summary>
       <Dropdown.Menu direction="sw" sx={{ width: 55 }}>
         <Dropdown.Item
@@ -47,7 +50,7 @@ const LanguageSwitch = () => {
           />
         </Dropdown.Item>
       </Dropdown.Menu>
-    </>
+    </Dropdown>
   );
 };
 export default LanguageSwitch;

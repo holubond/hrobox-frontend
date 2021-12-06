@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import {
-  Header, Box, Dropdown
+  Header, Box
 } from '@primer/components';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.png';
@@ -53,9 +53,7 @@ const Layout: FC = ({ children }) => {
         </Header.Item>
 
         <Header.Item>
-          <Dropdown>
-            <LanguageSwitch />
-          </Dropdown>
+          <LanguageSwitch />
         </Header.Item>
       </Header>
 
