@@ -117,10 +117,10 @@ const LoginDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            <PasswordRenewal />
-
             {loading ? <Spinner color="Black" /> : <Button type="submit">Submit</Button> }
           </form>
+
+          <PasswordRenewal />
 
         </Box>
       </Dialog>

@@ -56,6 +56,7 @@ const PasswordRenewal: FC = () => {
         handleErrors(error);
       }).finally(() => {
         setLoading(false);
+        setOpen(false);
       });
   };
 
