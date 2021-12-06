@@ -5,7 +5,7 @@ export default {
   Submit: 'Potvrdit',
   ErrPassword: 'Heslo musí být dlouhé alespoň 6 znaků',
   Log: 'Přihlášení',
-  Password: 'Heslo (aspoň 6 znaků)'
+  Password: 'Heslo (aspoň 6 znaků)',
   ForgPassword: 'Zapomněl/a jsi heslo?',
   Pswdreneval: 'Obnova hesla',
   'We are sorry but your account was banned!': 'Je nám líto, ale byl ti zablokován účet!',
