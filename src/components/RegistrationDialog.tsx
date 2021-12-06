@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Spinner, FormGroup, TextInput, Link, ButtonPrimary
+  Dialog, Box, FormGroup, TextInput, Link
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import SubmitButton from './SubmitButton';
 
 const RegistrationDialog: FC = () => {
   const trans = useTranslation();
@@ -141,9 +142,7 @@ const RegistrationDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            <Box sx={{ alignSelf: 'flex-end' }}>
-              {loading ? <Spinner color="Black" /> : <ButtonPrimary type="submit">{trans('Submit')}</ButtonPrimary> }
-            </Box>
+            <SubmitButton loading={loading} />
           </form>
 
         </Box>
