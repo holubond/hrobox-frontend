@@ -7,8 +7,8 @@ import Joi from 'joi';
 import axios from 'axios';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
-import handleErrors from '../utils/handleErrors';
 import { useTranslation } from '../hooks/useTranslation';
+import handleErrors from '../utils/handleErrors';
 
 const PasswordRenewal: FC = () => {
   const trans = useTranslation();
@@ -52,8 +52,18 @@ const PasswordRenewal: FC = () => {
         alert(response.data.message);
       })
       .catch((error) => {
-        alert(error);
-        handleErrors(error);
+        switch (error.response.status) {
+          case 500:
+            handleErrors(error);
+            break;
+          case 404:
+            alert(trans('User with given email does not exist'));
+            break;
+          case 400:
+            alert('Client-side error (400, bad request)');
+            break;
+          default:
+        }
       }).finally(() => {
         setLoading(false);
         setOpen(false);
