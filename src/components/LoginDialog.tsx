@@ -117,7 +117,6 @@ const LoginDialog: FC = () => {
                 {trans('Password')}
               </FormGroup.Label>
               <TextInput
-                name="myPassword"
                 value={password}
                 onChange={(e: any) => setPassword(e.target.value)}
               />
