@@ -34,12 +34,13 @@ const Layout: FC = ({ children }) => {
             {trans('Games')}
           </Link>
         </Header.Item>
-
-        <Header.Item>
-          <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/tags">
-            Tags
-          </Link>
-        </Header.Item>
+        {user.role === 'Admin' ? (
+          <Header.Item>
+            <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/tags">
+              Tags
+            </Link>
+          </Header.Item>
+        ) : ('')}
 
         <Header.Item>
           {
