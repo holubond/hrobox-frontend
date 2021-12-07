@@ -81,7 +81,7 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
-    history.push('/role');
+    history.push('/');
   };
 
   return (
