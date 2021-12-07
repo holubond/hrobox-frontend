@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   Dialog, Box, FormGroup, TextInput, Link
@@ -65,7 +66,26 @@ const TagDialog: FC = () => {
         window.location.reload();
       })
       .catch((error) => {
-        handleErrors(error);
+        const navigate = useHistory();
+        switch (error.response.status) {
+          case 403:
+            navigate.push('/role');
+            break;
+          case 409:
+            if (error.response.data.message === 'nameEn') {
+              alert(trans('TagExistsEn'));
+            } else {
+              alert(trans('TagExistsCs'));
+            }
+            break;
+          case 400:
+            handleErrors(error);
+            break;
+          case 500:
+            handleErrors(error);
+            break;
+          default:
+        }
       }).finally(() => {
         setLoading(false);
       });

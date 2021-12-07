@@ -20,5 +20,7 @@ export default {
   Registration_verb: 'Registration',
   AddTag: 'Add tag',
   NameCs: 'Czech name',
-  NameEn: 'English name'
+  NameEn: 'English name',
+  TagExistsEn: 'Tag with that english name already exists',
+  TagExistsCs: 'Tag with that czech name already exists'
 };

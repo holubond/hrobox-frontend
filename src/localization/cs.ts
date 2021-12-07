@@ -20,5 +20,7 @@ export default {
   Registration_verb: 'Registrovat se',
   AddTag: 'Přidat tag',
   NameCs: 'Český název',
-  NameEn: 'Anglický název'
+  NameEn: 'Anglický název',
+  TagExistsEn: 'Tag s takovým anglickým názvem již existuje',
+  TagExistsCs: 'Tag s takovým českým názvem již existuje'
 };
