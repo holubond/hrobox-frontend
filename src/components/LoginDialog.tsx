@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput, Link
+  Dialog, Box, Header, FormGroup, TextInput, Link
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
+import SubmitButton from './SubmitButton';
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -121,7 +122,7 @@ const LoginDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
+            <SubmitButton loading={loading} />
           </form>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
