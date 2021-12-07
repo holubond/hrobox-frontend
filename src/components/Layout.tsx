@@ -35,6 +35,13 @@ const Layout: FC = ({ children }) => {
             {trans('Games')}
           </Link>
         </Header.Item>
+        {user.role === 'Admin' ? (
+          <Header.Item>
+            <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/tags">
+              Tags
+            </Link>
+          </Header.Item>
+        ) : ('')}
 
         <Header.Item>
           {
@@ -71,7 +78,7 @@ const Layout: FC = ({ children }) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '100%',
           pt: 8,
           gap: 2
         }}
