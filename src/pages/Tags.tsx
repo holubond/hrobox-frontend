@@ -19,7 +19,6 @@ const Tags = () => {
         setTags(response.data.tags as Tag[]);
       })
       .catch((error) => {
-        console.log(error);
         handleErrors(error);
       }).finally(() => {
 
