@@ -10,7 +10,6 @@ import LanguageSwitch from './LanguageSwitch';
 import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import HelpDialog from './HelpDialog';
-import Tag from './TagDialog';
 
 const Layout: FC = ({ children }) => {
   const trans = useTranslation();
@@ -64,12 +63,6 @@ const Layout: FC = ({ children }) => {
           <LanguageSwitch />
         </Header.Item>
 
-        {user.role === 'Admin'
-          ? (
-            <Header.Item>
-              <Tag />
-            </Header.Item>
-          ) : ('')}
       </Header>
       <Box
         maxWidth="sm"

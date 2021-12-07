@@ -62,6 +62,7 @@ const TagDialog: FC = () => {
     }, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then(() => {
         setOpen(false);
+        window.location.reload();
       })
       .catch((error) => {
         handleErrors(error);

@@ -1,7 +1,10 @@
+import { Box, Header } from '@primer/components';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTable } from 'react-table';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 import { Tag } from '../pages/Tags';
+import TagDialog from './TagDialog';
 
 type Props = {
   tagsData: Tag[]
@@ -9,6 +12,7 @@ type Props = {
 const TagsTable: FC<Props> = ({ tagsData }) => {
   const data: any[] = [];
   const history = useHistory();
+  const [user] = useLoggedInUser();
   tagsData.forEach((element) => data.push({ col1: element.nameCs, col2: element.nameEn }));
 
   const columns = React.useMemo(
@@ -41,53 +45,61 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
     history.push(`/tag/${id}`);
   };
   return (
-    <table
-      {...getTableProps()}
-      style={{
-        border: 'solid 1px black', display: 'block', height: '700px', overflowY: '-moz-hidden-unscrollable'
-      }}
-    >
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: 'solid 3px black',
-                  background: '#24292f',
-                  color: 'white',
-                  fontWeight: 'bold'
-                }}
-              >
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()} onClick={() => rowClick(row.id)}>
-              {row.cells.map((cell) => (
-                <td
-                  {...cell.getCellProps()}
+    <Box>
+      {user.role === 'Admin'
+        ? (
+          <Header.Item sx={{ padding: '20px', fontSize: '20px' }}>
+            <TagDialog />
+          </Header.Item>
+        ) : ('')}
+      <table
+        {...getTableProps()}
+        style={{
+          border: 'solid 1px black', display: 'block', height: '700px', overflowY: '-moz-hidden-unscrollable'
+        }}
+      >
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps()}
                   style={{
-                    padding: '20px',
-                    border: 'solid 2px gray',
-                    background: 'white'
+                    borderBottom: 'solid 3px black',
+                    background: '#24292f',
+                    color: 'white',
+                    fontWeight: 'bold'
                   }}
                 >
-                  {cell.render('Cell')}
-                </td>
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} onClick={() => rowClick(row.id)}>
+                {row.cells.map((cell) => (
+                  <td
+                    {...cell.getCellProps()}
+                    style={{
+                      padding: '20px',
+                      border: 'solid 2px gray',
+                      background: 'white'
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </Box>
   );
 };
 export default TagsTable;
