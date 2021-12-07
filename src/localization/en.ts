@@ -17,5 +17,7 @@ export default {
   Refresh: 'Refresh',
   Registration: 'Registration',
   Name: 'Name',
-  Registration_verb: 'Registration'
+  Registration_verb: 'Registration',
+  'User with given email does not exist': 'User with given email does not exist',
+  'Error on our side': 'Error on our side, please contact support'
 };

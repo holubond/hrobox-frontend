@@ -17,5 +17,7 @@ export default {
   Refresh: 'Aktualizovat',
   Registration: 'Registrace',
   Name: 'Jméno',
-  Registration_verb: 'Registrovat se'
+  Registration_verb: 'Registrovat se',
+  'User with given email does not exist': 'Uživatel s daným emailem neexistuje',
+  'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.'
 };
