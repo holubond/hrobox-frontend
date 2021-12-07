@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { Tag } from '../pages/Tags';
 
@@ -7,6 +8,7 @@ type Props = {
 }
 const TagsTable: FC<Props> = ({ tagsData }) => {
   const data: any[] = [];
+  const history = useHistory();
   tagsData.forEach((element) => data.push({ col1: element.nameCs, col2: element.nameEn }));
 
   const columns = React.useMemo(
@@ -34,6 +36,10 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
     rows,
     prepareRow
   } = useTable({ columns, data });
+
+  const rowClick = (id: string) => {
+    history.push(`/tag/${id}`);
+  };
   return (
     <table
       {...getTableProps()}
@@ -64,7 +70,7 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} onClick={() => rowClick(row.id)}>
               {row.cells.map((cell) => (
                 <td
                   {...cell.getCellProps()}
