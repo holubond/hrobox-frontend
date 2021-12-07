@@ -3,12 +3,18 @@ import React from 'react';
 import Role from '../pages/role';
 import Home from '../pages/Home';
 import Games from '../pages/Games';
+import ResetPass from '../pages/ResetPass';
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={Home} />
     <Route path="/role" exact component={Role} />
     <Route path="/games" exact component={Games} />
+    <Route
+      path="/renewPassword/:resetKey"
+    >
+      <ResetPass />
+    </Route>
   </Switch>
 );
 export default Routes;
