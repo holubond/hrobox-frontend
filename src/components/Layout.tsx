@@ -71,7 +71,7 @@ const Layout: FC = ({ children }) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '100%',
           pt: 8,
           gap: 2
         }}
