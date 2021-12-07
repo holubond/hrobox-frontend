@@ -13,6 +13,7 @@ import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
 import SubmitButton from './SubmitButton';
+import RouterLink from './RouterLink';
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -126,8 +127,12 @@ const LoginDialog: FC = () => {
           </form>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <Link href="/forgot">Zapoměl jste heslo?</Link>
-            <Link href="/registration">Registration</Link>
+            <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
+              Zapoměl jste heslo?
+            </RouterLink>
+            <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
+              Registration
+            </RouterLink>
           </Box>
         </Box>
       </Dialog>
