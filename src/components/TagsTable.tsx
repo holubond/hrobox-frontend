@@ -49,7 +49,7 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
                 {...column.getHeaderProps()}
                 style={{
                   borderBottom: 'solid 3px black',
-                  background: '#2E302F',
+                  background: '#24292f',
                   color: 'white',
                   fontWeight: 'bold'
                 }}
