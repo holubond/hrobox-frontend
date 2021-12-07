@@ -22,5 +22,9 @@ export default {
   NameCs: 'Český název',
   NameEn: 'Anglický název',
   TagExistsEn: 'Tag s takovým anglickým názvem již existuje',
-  TagExistsCs: 'Tag s takovým českým názvem již existuje'
+  TagExistsCs: 'Tag s takovým českým názvem již existuje',
+  'User with given email does not exist': 'Uživatel s daným emailem neexistuje',
+  'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.',
+  userAlreadyExists: 'Uživatel s daným emailem již existuje',
+  WrongPassword: 'Špatné heslo!'
 };
