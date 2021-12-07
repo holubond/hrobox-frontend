@@ -6,13 +6,9 @@ type Props = {
   tagsData: Tag[]
 }
 const TagsTable: FC<Props> = ({ tagsData }) => {
-  console.log('ZACATEk');
-
   const data: any[] = [];
   tagsData.forEach((element) => data.push({ col1: element.nameCs, col2: element.nameEn }));
 
-  console.log(data);
-  console.log('KONEC');
   const columns = React.useMemo(
     () => [
       {
@@ -39,7 +35,12 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
     prepareRow
   } = useTable({ columns, data });
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table
+      {...getTableProps()}
+      style={{
+        border: 'solid 1px black', display: 'block', height: '700px', overflowY: '-moz-hidden-unscrollable'
+      }}
+    >
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -47,9 +48,9 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 3px red',
-                  background: 'aliceblue',
-                  color: 'black',
+                  borderBottom: 'solid 3px black',
+                  background: '#2E302F',
+                  color: 'white',
                   fontWeight: 'bold'
                 }}
               >
@@ -68,9 +69,9 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
                 <td
                   {...cell.getCellProps()}
                   style={{
-                    padding: '10px',
-                    border: 'solid 1px gray',
-                    background: 'papayawhip'
+                    padding: '20px',
+                    border: 'solid 2px gray',
+                    background: 'white'
                   }}
                 >
                   {cell.render('Cell')}
