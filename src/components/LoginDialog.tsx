@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Header, FormGroup, TextInput, Link
+  Dialog, Box, Header, FormGroup, TextInput
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -117,7 +117,6 @@ const LoginDialog: FC = () => {
                 {trans('Password')}
               </FormGroup.Label>
               <TextInput
-                name="myPassword"
                 value={password}
                 onChange={(e: any) => setPassword(e.target.value)}
               />
