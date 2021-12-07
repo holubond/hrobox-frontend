@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput, Link
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -12,8 +12,6 @@ import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
-import PasswordRenewal from './PasswordRenewal';
-import RegistrationDialog from './RegistrationDialog';
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -82,7 +80,7 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
-    history.push('/role');
+    history.push('/');
   };
 
   return (
@@ -127,8 +125,8 @@ const LoginDialog: FC = () => {
           </form>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <PasswordRenewal />
-            <RegistrationDialog />
+            <Link href="/forgot">Zapoměl jste heslo?</Link>
+            <Link href="/registration">Registration</Link>
           </Box>
         </Box>
       </Dialog>
