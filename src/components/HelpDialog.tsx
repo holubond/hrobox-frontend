@@ -110,6 +110,7 @@ const HelpDialog: FC = () => {
                 {trans('Message')}
               </FormGroup.Label>
               <TextInput
+                as="textarea"
                 name="message"
                 value={message}
                 onChange={(e: any) => setMessage(e.target.value)}
