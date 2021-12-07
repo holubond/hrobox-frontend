@@ -19,5 +19,6 @@ export default {
   Name: 'Jméno',
   Registration_verb: 'Registrovat se',
   'User with given email does not exist': 'Uživatel s daným emailem neexistuje',
-  'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.'
+  'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.',
+  userAlreadyExists: 'Uživatel s daným emailem již existuje'
 };

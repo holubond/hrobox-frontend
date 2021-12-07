@@ -57,7 +57,7 @@ const PasswordRenewal: FC = () => {
             handleErrors(error);
             break;
           case 404:
-            alert(trans('User with given email does not exist'));
+            handleErrors(error);
             break;
           case 400:
             alert('Client-side error (400, bad request)');

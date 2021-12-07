@@ -11,6 +11,7 @@ import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import SubmitButton from './SubmitButton';
+import handleErrors from '../utils/handleErrors';
 
 const RegistrationDialog: FC = () => {
   const trans = useTranslation();
@@ -84,7 +85,18 @@ const RegistrationDialog: FC = () => {
         navigate.push('/role');
       })
       .catch((error) => {
-        alert(error.message);
+        switch (error.response.status) {
+          case 409:
+            alert(trans('userAlreadyExists'));
+            break;
+          case 400:
+            handleErrors(error);
+            break;
+          case 500:
+            handleErrors(error);
+            break;
+          default:
+        }
       }).finally(() => {
         setLoading(false);
       });
