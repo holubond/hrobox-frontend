@@ -1,29 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@primer/components';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
+import TagsTable from '../components/TagsTable';
 
-const Home = () => {
-    type Tag ={
-        id: number,
-  nameCs: string,
-  nameEn: string
-    }
-    let tags: Array<Tag>;
-    const getTags = () => {
-      axios.get(routeTo('/api/tags'))
-        .then((response) => {
-          tags.concat(response.data.tags);
-        })
-        .catch((error) => {
-          handleErrors(error);
-        }).finally(() => {
-
-        });
-    };
-    return (
-      <Box>Hej</Box>
-    );
+export type Tag ={
+  id: number,
+  nameEn: string,
+  nameCs: string
 };
-export default Home;
+
+const Tags = () => {
+  const [tags, setTags] = useState<Tag[]>([]);
+  const getTags = () => {
+    axios.get(routeTo('/api/tags'))
+      .then((response) => {
+        setTags(response.data.tags as Tag[]);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleErrors(error);
+      }).finally(() => {
+
+      });
+  };
+  useEffect(() => {
+    getTags();
+  }, []);
+  return (
+    <Box>
+      <TagsTable tagsData={tags} />
+    </Box>
+  );
+};
+export default Tags;
