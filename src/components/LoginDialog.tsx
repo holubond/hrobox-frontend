@@ -78,7 +78,21 @@ const LoginDialog: FC = () => {
         localStorage.setItem('lang', response.data.lang as Languages);
       })
       .catch((error) => {
-        handleErrors(error);
+        switch (error.response.status) {
+          case 404:
+            alert(trans('User with given email does not exist'));
+            break;
+          case 403:
+            alert(trans('WrongPassword'));
+            break;
+          case 400:
+            handleErrors(error);
+            break;
+          case 500:
+            handleErrors(error);
+            break;
+          default:
+        }
       }).finally(() => {
         setLoading(false);
       });
