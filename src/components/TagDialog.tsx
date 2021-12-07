@@ -16,6 +16,7 @@ import handleErrors from '../utils/handleErrors';
 const TagDialog: FC = () => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
+  const navigate = useHistory();
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
 
@@ -66,7 +67,6 @@ const TagDialog: FC = () => {
         window.location.reload();
       })
       .catch((error) => {
-        const navigate = useHistory();
         switch (error.response.status) {
           case 403:
             navigate.push('/role');
