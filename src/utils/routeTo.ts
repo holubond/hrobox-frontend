@@ -1,3 +1,3 @@
-const domain = 'https://hrobox-backend.herokuapp.com';
+const domain = 'http://localhost';
 const routeTo = (endpoint: string) => (domain + endpoint);
 export default routeTo;
