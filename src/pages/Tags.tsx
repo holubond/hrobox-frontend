@@ -31,7 +31,7 @@ const Tags = () => {
   return (
     <Box
       sx={{
-        width: '60%', display: 'flex', flexDirection: 'column'
+        width: '60%', minWidth: 'fit-content', display: 'flex', flexDirection: 'column'
       }}
     >
       <span>
@@ -44,7 +44,7 @@ const Tags = () => {
         <TagDialog />
       </Box>
       <Box>
-        <TagsTable tagsData={tags} />
+        <TagsTable tagsData={tags} reloadTags={getTags} />
       </Box>
     </Box>
   );

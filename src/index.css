@@ -31,6 +31,7 @@ code {
   font-size: 14px;
   display: grid;
   margin-bottom: 20px;
+  min-width: fit-content;
 }
 
 .grid-table-heading {
@@ -61,12 +62,15 @@ code {
 
 .grid-table-row:hover > .grid-item {
   background-color: #f6f8fa;
+  font-weight: 600;
+}
+.grid-table-row-cursor:hover > .grid-item {
   cursor: pointer;
   text-decoration: underline;
 }
 
 .grid-table-row > .grid-item {
-  padding: 8px 15px;
+  padding: 5px 15px;
   margin-top: -1px;
   list-style-type: none;
   border-top-color: #d8dee4;
