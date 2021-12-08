@@ -19,5 +19,16 @@ export default {
   Name: 'Jméno',
   Registration_verb: 'Registrovat se',
   TagsColumnCzechName: 'Český název',
-  TagsColumnEnglishName: 'Anglický název'
+  TagsColumnEnglishName: 'Anglický název',
+  'Name of game': 'Název hry',
+  Duration: 'Doba trvání',
+  'Age groups': 'Věkové skupiny',
+  'Number of players': 'Počet hráčů',
+  Tags: 'Tagy',
+  Author: 'Autor',
+  'Last Change': 'Poslední změna',
+  Kindergarden: 'Školka',
+  School: 'Škola',
+  Teenager: 'Teenager',
+  Adult: 'Dospělý'
 };

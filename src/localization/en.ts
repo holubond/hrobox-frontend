@@ -19,5 +19,16 @@ export default {
   Name: 'Name',
   Registration_verb: 'Registration',
   TagsColumnCzechName: 'Czech name',
-  TagsColumnEnglishName: 'English name'
+  TagsColumnEnglishName: 'English name',
+  'Name of game': 'Name of game',
+  Duration: 'Duration',
+  'Age groups': 'Age groups',
+  'Number of players': 'Number of players',
+  Tags: 'Tags',
+  Author: 'Author',
+  'Last Change': 'Last change',
+  Kindergarden: 'Kindergarden',
+  School: 'School',
+  Teenager: 'Teenager',
+  Adult: 'Adult'
 };
