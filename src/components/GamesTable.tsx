@@ -1,141 +1,89 @@
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTable } from 'react-table';
+import { Box, Label } from '@primer/components';
+import { ChevronRightIcon } from '@primer/octicons-react';
 import { AgeGroup, Game } from '../pages/Games';
 import logo from '../assets/people.svg';
+import { useTranslation } from '../hooks/useTranslation';
 
 type Props = {
   gamesData: Game[]
 }
-const GamesTable: FC<Props> = ({ gamesData }) => {
-  const data: any[] = [];
-  const history = useHistory();
 
-  // eslint-disable-next-line arrow-body-style
-  const mapAgeGr = (ageGroups: AgeGroup[]) => {
-    return ageGroups.map((group) => {
-      if (group === 'K') {
-        return 'Kindergarden';
-      } if (group === 'S') {
-        return 'Student';
-      } if (group === 'T') {
-        return 'Teenager';
-      }
-      return 'Adult';
-    });
+const GamesTable: FC<Props> = ({ gamesData }) => {
+  const trans = useTranslation();
+  const history = useHistory();
+  const mapAgeGr = (ageGroup: AgeGroup) => {
+    if (ageGroup === 'K') {
+      return trans('Kindergarden');
+    } if (ageGroup === 'S') {
+      return trans('School');
+    } if (ageGroup === 'T') {
+      return trans('Teenager');
+    }
+    return trans('Adult');
+  };
+  const mapAgeGrColor = (ageGroup: AgeGroup) => {
+    if (ageGroup === 'K') {
+      return 'Pink';
+    } if (ageGroup === 'S') {
+      return 'Blue';
+    } if (ageGroup === 'T') {
+      return 'Red';
+    }
+    return 'Green';
+  };
+  const reformatDate = (at: string) => {
+    const date = new Date(at);
+    return date.toDateString();
   };
 
-  gamesData.forEach((element) => data.push({
-    col1: element.name,
-    col2: element.duration,
-    col3: mapAgeGr(element.ageGroups),
-    col4: `${element.nrOfPlayers.min}-${element.nrOfPlayers.max}`,
-    col5: 'PH',
-    col6: element.createdBy,
-    col7: element.createdAt
-  }));
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Games',
-        columns: [
-          {
-            Header: 'Game name',
-            accessor: 'col1'
-          },
-          {
-            Header: 'Duration',
-            accessor: 'col2'
-          },
-          {
-            Header: 'Age',
-            accessor: 'col3'
-          },
-          {
-            Header: 'Number of players',
-            accessor: 'col4'
-          },
-          {
-            Header: 'Tags',
-            accessor: 'col5'
-          },
-          {
-            Header: 'Author',
-            accessor: 'col6'
-          },
-          {
-            Header: 'Last update',
-            accessor: 'col7'
-          }
-        ]
-      }
-    ],
-    []
-  );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data });
-
-  const rowClick = (id: string) => {
-    // history.push(`/game/${id}/version/${version}`);
-    history.push(`/game/${id}`);
+  const rowClick = (id: number, version: number) => {
+    history.push(`/game/${id}/version/${version}`);
   };
   return (
-    <table
-      {...getTableProps()}
-      style={{
-        border: 'solid 1px black', display: 'block', height: '700px', overflowY: '-moz-hidden-unscrollable'
-      }}
-    >
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: 'solid 3px black',
-                  background: '#24292f',
-                  color: 'white',
-                  fontWeight: 'bold'
-                }}
-              >
-                {column.render('Header')}
-              </th>
+    <Box className="grid-table" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 4fr 1fr 1fr 40px' }}>
+      <Box className="grid-table-heading">
+        <Box className="grid-item">{trans('Name of game')}</Box>
+        <Box className="grid-item">{trans('Duration')}</Box>
+        <Box className="grid-item">{trans('Age groups')}</Box>
+        <Box className="grid-item">{trans('Number of players')}</Box>
+        <Box className="grid-item">{trans('Tags')}</Box>
+        <Box className="grid-item">{trans('Author')}</Box>
+        <Box className="grid-item">{trans('Last Change')}</Box>
+        <Box className="grid-item" />
+      </Box>
+
+      {gamesData.map( (game) => (
+        <Box className="grid-table-row" onClick={() => rowClick(game.id, game.version)}>
+          <Box className="grid-item">{game.name}</Box>
+          <Box className="grid-item">{game.duration}</Box>
+          <Box className="grid-item">
+            {game.ageGroups.map((group) => (
+              <Label bg={mapAgeGrColor(group)}>{mapAgeGr(group as AgeGroup)}</Label>
             ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()} onClick={() => rowClick(row.id)}>
-              {row.cells.map((cell) => (
-                <td
-                  {...cell.getCellProps()}
-                  style={{
-                    padding: '20px',
-                    border: 'solid 2px gray',
-                    background: 'white'
-                  }}
-                >
-                  {cell.render('Cell')}
-                  {cell.column.id === 'col4' ? (
-                    <img src={logo} height="16" alt="number of players" />
-                  ) : ('')}
-                </td>
-              ))}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          </Box>
+          <Box className="grid-item">
+            {game.nrOfPlayers.min}
+            -
+            {game.nrOfPlayers.max}
+            <img src={logo} height="16" alt="number of players" />
+          </Box>
+          <Box className="grid-item">
+            {game.tags.sort((a, b) => a.localeCompare(b)).map((tag) => (
+              <Label>{tag}</Label>
+            ))}
+            {/* game.tags.map((tag) => (
+              <Label>{tag}</Label>
+            )) */}
+          </Box>
+          <Box className="grid-item">{game.createdBy}</Box>
+          <Box className="grid-item">{reformatDate(game.createdAt)}</Box>
+          <Box className="grid-item"><ChevronRightIcon className="grid-item grid-icon" size={16} /></Box>
+        </Box>
+      ))}
+
+    </Box>
   );
 };
 export default GamesTable;
