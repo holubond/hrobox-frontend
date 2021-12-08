@@ -2,10 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Dialog, Box, FormGroup, TextInput, Link
+  Dialog, Box, FormGroup, TextInput, ButtonPrimary, StyledOcticon
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
+import { PlusIcon } from '@primer/octicons-react';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
@@ -17,8 +18,8 @@ const TagDialog: FC = () => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
   const navigate = useHistory();
-  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
-  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
+  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
+  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
@@ -95,9 +96,10 @@ const TagDialog: FC = () => {
   }, [loading]);
   return (
     <>
-      <Link as="button" onClick={() => setOpen(true)} href="/">
+      <ButtonPrimary onClick={() => setOpen(true)}>
+        <StyledOcticon icon={PlusIcon} size={16} mr={2} />
         {trans('AddTag')}
-      </Link>
+      </ButtonPrimary>
 
       <Dialog
         returnFocusRef={returnFocusRef}
