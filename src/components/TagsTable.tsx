@@ -1,9 +1,8 @@
 import { Box } from '@primer/components';
-import { ChevronRightIcon } from '@primer/octicons-react';
 import React, { FC } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
+import EditTag from './EditTagDialog';
 
 type Props = {
   tagsData: Tag[]
@@ -11,13 +10,9 @@ type Props = {
 
 const TagsTable: FC<Props> = ({ tagsData }) => {
   const trans = useTranslation();
-  const history = useHistory();
 
-  const rowClick = (id: number) => {
-    history.push(`/tag/${id}`);
-  };
   return (
-    <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 50px' }}>
+    <Box className="grid-table" style={{ gridTemplateColumns: '4fr 4fr 1fr' }}>
       <Box className="grid-table-heading">
         <Box className="grid-item">{trans('TagsColumnCzechName')}</Box>
         <Box className="grid-item">{trans('TagsColumnEnglishName')}</Box>
@@ -25,10 +20,12 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
       </Box>
 
       {tagsData.map( (tag) => (
-        <Box className="grid-table-row" onClick={() => rowClick(tag.id)}>
+        <Box className="grid-table-row">
           <Box className="grid-item">{tag.nameCs}</Box>
           <Box className="grid-item">{tag.nameEn}</Box>
-          <Box className="grid-item"><ChevronRightIcon className="grid-item grid-icon" size={16} /></Box>
+          <Box className="grid-item">
+            <EditTag tagsId={tag.id} tagsCsName={tag.nameCs} tagsEnName={tag.nameEn} />
+          </Box>
         </Box>
       ))}
 
