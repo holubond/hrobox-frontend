@@ -4,7 +4,6 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
-import TagDialog from './TagDialog';
 
 type Props = {
   tagsData: Tag[]
