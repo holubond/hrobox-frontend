@@ -14,5 +14,10 @@ export default {
   Pswdreneval: 'Password renewal',
   'We are sorry but your account was banned!': 'We are sorry, but your account has been blocked!',
   'We are waiting for admins to verif your account.': 'We are waiting for the administrators to verify your account.',
-  Refresh: 'Refresh'
+  Refresh: 'Refresh',
+  Registration: 'Registration',
+  Name: 'Name',
+  Registration_verb: 'Registration',
+  TagsColumnCzechName: 'Czech name',
+  TagsColumnEnglishName: 'English name'
 };
