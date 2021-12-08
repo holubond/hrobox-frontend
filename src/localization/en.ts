@@ -30,5 +30,9 @@ export default {
   Kindergarden: 'Kindergarden',
   School: 'School',
   Teenager: 'Teenager',
-  Adult: 'Adult'
+  Adult: 'Adult',
+  K: 'Kindergarden',
+  S: 'School',
+  T: 'Teenager',
+  A: 'Adult'
 };

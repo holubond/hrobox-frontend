@@ -30,5 +30,9 @@ export default {
   Kindergarden: 'Školka',
   School: 'Škola',
   Teenager: 'Teenager',
-  Adult: 'Dospělý'
+  Adult: 'Dospělý',
+  K: 'Školka',
+  S: 'Škola',
+  T: 'Teenager',
+  A: 'Dospělý'
 };
