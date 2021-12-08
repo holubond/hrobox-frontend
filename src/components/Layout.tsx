@@ -10,6 +10,7 @@ import LanguageSwitch from './LanguageSwitch';
 import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import HelpDialog from './HelpDialog';
+import RouterHeaderLink from './RouterHeaderLink';
 
 const Layout: FC = ({ children }) => {
   const trans = useTranslation();
@@ -29,11 +30,15 @@ const Layout: FC = ({ children }) => {
         </Header.Item>
         <Box sx={{ flexGrow: 1 }} />
 
-        <Header.Item>
-          <Link className="Header__HeaderLink-sc-217i47-2 iOqtMu" to="/games">
-            {trans('Games')}
-          </Link>
-        </Header.Item>
+        <RouterHeaderLink to="games">
+          {trans('Games')}
+        </RouterHeaderLink>
+
+        {user.role === 'Admin' ? (
+          <RouterHeaderLink to="/tags">
+            Tags
+          </RouterHeaderLink>
+        ) : ('')}
 
         <Header.Item>
           {
@@ -55,8 +60,8 @@ const Layout: FC = ({ children }) => {
         <Header.Item>
           <LanguageSwitch />
         </Header.Item>
-      </Header>
 
+      </Header>
       <Box
         maxWidth="sm"
         sx={{
@@ -64,7 +69,7 @@ const Layout: FC = ({ children }) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '100%',
           pt: 8,
           gap: 2
         }}

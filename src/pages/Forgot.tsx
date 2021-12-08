@@ -1,22 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
-
-import {
-  Dialog, Box, Button, Spinner, FormGroup, TextInput, Link
-} from '@primer/components';
+import React, { useEffect, useState } from 'react';
+import { Box, FormGroup, TextInput } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
-import ValidatedFormGroup from './ValidatedFormGroup';
-import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
+import routeTo from '../utils/routeTo';
+import ValidatedFormGroup from '../components/ValidatedFormGroup';
+import SubmitButton from '../components/SubmitButton';
 import handleErrors from '../utils/handleErrors';
 
-const PasswordRenewal: FC = () => {
+const Forgot = () => {
   const trans = useTranslation();
-
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
 
-  const [isOpen, setOpen] = useState(false);
-  const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState('');
@@ -66,43 +61,24 @@ const PasswordRenewal: FC = () => {
         }
       }).finally(() => {
         setLoading(false);
-        setOpen(false);
       });
   };
-
   return (
-    <>
-      <Link as="button" onClick={() => setOpen(true)} href="/">
-        {trans('ForgPassword')}
-      </Link>
-      <Dialog
-        returnFocusRef={returnFocusRef}
-        isOpen={isOpen}
-        onDismiss={() => setOpen(false)}
-        aria-labelledby="header-id"
-      >
-        <Dialog.Header id="header-id">{trans('Pswdreneval')}</Dialog.Header>
-
-        <Box p={3}>
-
-          <form onSubmit={submit}>
-            <ValidatedFormGroup message={emailError}>
-              <FormGroup.Label>
-                Email
-              </FormGroup.Label>
-              <TextInput
-                value={email}
-                onChange={(e: any) => setEmail(e.target.value)}
-              />
-            </ValidatedFormGroup>
-
-            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
-          </form>
-
-        </Box>
-      </Dialog>
-
-    </>
+    <Box p={4}>
+      <form onSubmit={submit} className="dialog-form">
+        <ValidatedFormGroup message={emailError}>
+          <FormGroup.Label>
+            Email
+          </FormGroup.Label>
+          <TextInput
+            name="email"
+            value={email}
+            onChange={(e: any) => setEmail(e.target.value)}
+          />
+        </ValidatedFormGroup>
+        <SubmitButton loading={loading} />
+      </form>
+    </Box>
   );
 };
-export default PasswordRenewal;
+export default Forgot;

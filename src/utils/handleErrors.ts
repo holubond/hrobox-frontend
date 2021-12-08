@@ -1,21 +1,18 @@
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 
-const trans = useTranslation();
-
-const handle403 = () => {
-  const navigate = useHistory();
-  navigate.push('/role');
+const handle500 = () => {
+  const trans = useTranslation();
+  alert(trans('Error on our side'));
 };
 
-const handle500 = () => {
-  alert(trans('Error on our side'));
+const handle400 = () => {
+  alert('Client-side error (400, bad request)');
 };
 
 const handleErrors = (error: any) => {
   switch (error.response.status) {
-    case 403:
-      handle403();
+    case 400:
+      handle400();
       break;
     case 500:
       handle500();
