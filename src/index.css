@@ -7,6 +7,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 code {
@@ -17,4 +20,56 @@ code {
 .dialog-form {
   display: flex;
   flex-direction: column;
+}
+
+.grid-table {
+  background-color: #ffffff;
+  border: solid #d0d7de 1px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  border-spacing: 0px;
+  font-size: 14px;
+  display: grid;
+  margin-bottom: 20px;
+}
+
+.grid-table-heading {
+  display: contents;
+}
+
+.grid-table-heading > .grid-item {
+  padding: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border-top: #d0d7de solid 1px;
+  font-weight: 600;
+}
+
+.grid-table-heading :first-child{
+  border-top-left-radius: 6px;
+  border-left: #d0d7de solid 1px;
+}
+
+.grid-table-heading :last-child{
+  border-top-right-radius: 6px;
+  border-right: #d0d7de solid 1px;
+}
+
+.grid-table-row {
+  display: contents;
+}
+
+.grid-table-row:hover > .grid-item {
+  background-color: #f6f8fa;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.grid-table-row > .grid-item {
+  padding: 8px 15px;
+  margin-top: -1px;
+  list-style-type: none;
+  border-top-color: #d8dee4;
+  border-top-style: solid;
+  border-top-width: 1px;
 }
