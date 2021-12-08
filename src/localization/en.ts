@@ -17,5 +17,7 @@ export default {
   Refresh: 'Refresh',
   Registration: 'Registration',
   Name: 'Name',
-  Registration_verb: 'Registration'
+  Registration_verb: 'Registration',
+  TagsColumnCzechName: 'Czech name',
+  TagsColumnEnglishName: 'English name'
 };
