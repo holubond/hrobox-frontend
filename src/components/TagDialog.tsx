@@ -2,10 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Dialog, Box, FormGroup, TextInput, ButtonPrimary
+  Dialog, Box, FormGroup, TextInput, ButtonPrimary, StyledOcticon
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
+import { PlusIcon } from '@primer/octicons-react';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
@@ -96,6 +97,7 @@ const TagDialog: FC = () => {
   return (
     <>
       <ButtonPrimary onClick={() => setOpen(true)}>
+        <StyledOcticon icon={PlusIcon} size={16} mr={2} />
         {trans('AddTag')}
       </ButtonPrimary>
 

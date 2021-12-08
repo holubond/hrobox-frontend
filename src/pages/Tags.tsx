@@ -40,8 +40,8 @@ const Tags = () => {
         {tags.length}
         )
       </span>
-      <Box p={3} sx={{ alignSelf: 'flex-end' }}>
-        <span><TagDialog /></span>
+      <Box sx={{ alignSelf: 'flex-end', padding: '5px 0px' }}>
+        <TagDialog />
       </Box>
       <Box>
         <TagsTable tagsData={tags} />
