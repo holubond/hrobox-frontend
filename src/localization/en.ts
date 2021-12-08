@@ -30,5 +30,9 @@ export default {
   TagsColumnCzechName: 'Czech name',
   TagsColumnEnglishName: 'English name',
   ErrEmptyNameEn: 'The field "English name" must not be empty',
-  ErrEmptyNameCs: 'The field "Czech name" must not be empty'
+  ErrEmptyNameCs: 'The field "Czech name" must not be empty',
+  RemoveTag: 'Remove tag',
+  'Do you really want to delete this tag ? Tag will be removed from all games!': 'Do you really want to delete this tag ? Tag will be removed from all games!',
+  Cancel: 'Cancel',
+  Delete: 'Delete'
 };
