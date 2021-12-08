@@ -11,9 +11,7 @@ type Props = {
 
 const TagsTable: FC<Props> = ({ tagsData }) => {
   const trans = useTranslation();
-  const data: any[] = [];
   const history = useHistory();
-  tagsData.forEach((element) => data.push({ col1: element.nameCs, col2: element.nameEn }));
 
   const rowClick = (id: number) => {
     history.push(`/tag/${id}`);
