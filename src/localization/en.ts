@@ -3,7 +3,7 @@ export default {
   Login: 'Login',
   ErrEmail: 'This field must contain valid email address',
   Submit: 'Submit',
-  ErrMessage: 'This field must not be empty',
+  ErrMessage: 'The field Message must not be empty',
   Message: 'Message',
   Help: 'Help',
   ContactSupport: 'Contact Support',
@@ -28,5 +28,7 @@ export default {
   userAlreadyExists: 'User with given mail already exists',
   WrongPassword: 'Wrong password!',
   TagsColumnCzechName: 'Czech name',
-  TagsColumnEnglishName: 'English name'
+  TagsColumnEnglishName: 'English name',
+  ErrEmptyNameEn: 'The field English name must not be empty',
+  ErrEmptyNameCs: 'The field Czech name must not be empty'
 };

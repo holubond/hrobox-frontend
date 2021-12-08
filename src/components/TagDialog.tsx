@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Dialog, Box, FormGroup, TextInput, Link
+  Dialog, Box, FormGroup, TextInput, ButtonPrimary
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -17,8 +17,8 @@ const TagDialog: FC = () => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
   const navigate = useHistory();
-  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
-  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrPassword')));
+  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
+  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
@@ -95,9 +95,9 @@ const TagDialog: FC = () => {
   }, [loading]);
   return (
     <>
-      <Link as="button" onClick={() => setOpen(true)} href="/">
+      <ButtonPrimary onClick={() => setOpen(true)}>
         {trans('AddTag')}
-      </Link>
+      </ButtonPrimary>
 
       <Dialog
         returnFocusRef={returnFocusRef}

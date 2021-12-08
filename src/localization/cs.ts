@@ -28,5 +28,7 @@ export default {
   userAlreadyExists: 'Uživatel s daným emailem již existuje',
   WrongPassword: 'Špatné heslo!',
   TagsColumnCzechName: 'Český název',
-  TagsColumnEnglishName: 'Anglický název'
+  TagsColumnEnglishName: 'Anglický název',
+  ErrEmptyNameCs: 'Pole Český název nesmí být prázdné',
+  ErrEmptyNameEn: 'Pole Anglický název nesmí být prázdné'
 };
