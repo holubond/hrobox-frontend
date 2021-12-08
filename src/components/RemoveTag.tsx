@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Dialog, Box, ButtonPrimary, StyledOcticon, ButtonDanger, Spinner, Text
+  Dialog, Box, StyledOcticon, ButtonDanger, Spinner, Button
 } from '@primer/components';
 import axios from 'axios';
 import { TrashIcon } from '@primer/octicons-react';
@@ -12,10 +12,11 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
 
 type Props = {
-    tagsId: number
-  }
+    tagsId: number,
+    reloadTags: () => void
+}
 
-const RemoveTag: FC<Props> = ({ tagsId }) => {
+const RemoveTag: FC<Props> = ({ tagsId, reloadTags }) => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
   const navigate = useHistory();
@@ -49,7 +50,7 @@ const RemoveTag: FC<Props> = ({ tagsId }) => {
       }).finally(() => {
         setLoading(false);
         setOpen(false);
-        window.location.reload();
+        reloadTags();
       });
   };
 
@@ -57,8 +58,8 @@ const RemoveTag: FC<Props> = ({ tagsId }) => {
   }, [loading]);
   return (
     <>
-      <ButtonDanger onClick={() => setOpen(true)}>
-        <StyledOcticon icon={TrashIcon} size={15} />
+      <ButtonDanger border-radius="0px" padding="0" width="25px" height="25px" onClick={() => setOpen(true)}>
+        <StyledOcticon align-self="center" icon={TrashIcon} size={15} />
       </ButtonDanger>
 
       <Dialog
@@ -66,28 +67,26 @@ const RemoveTag: FC<Props> = ({ tagsId }) => {
         isOpen={isOpen}
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
-        width="38%"
-        height="20%"
       >
         <Dialog.Header id="header-id">{trans('RemoveTag')}</Dialog.Header>
 
-        <Text sx={{ fontSize: '15px', paddingX: '4%', fontWeight: 'bold' }}>
-          {trans('Do you really want to delete this tag ? Tag will be removed from all games!')}
-        </Text>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ alignSelf: 'center', padding: '20px 4px' }}>
+            {trans('Do you really want to delete this tag ? Tag will be removed from all games!')}
+          </Box>
 
-        <Box p={4} sx={{ display: '-webkit-inline-flex' }}>
+          <Box p={4} sx={{ alignSelf: 'flex-end' }}>
+            <Button marginRight={2} onClick={() => setOpen(false)}>
+              {trans('Cancel')}
+            </Button>
 
-          <ButtonPrimary sx={{ marginX: '90%' }} onClick={() => setOpen(false)}>
-            {trans('Cancel')}
-          </ButtonPrimary>
-
-          {loading ? (<Spinner color="Black" />)
-            : (
-              <ButtonDanger onClick={() => submit(tagsId)}>
-                {trans('Delete')}
-              </ButtonDanger>
-            )}
-
+            {loading ? (<Spinner color="Black" />)
+              : (
+                <ButtonDanger onClick={() => submit(tagsId)}>
+                  {trans('Delete')}
+                </ButtonDanger>
+              )}
+          </Box>
         </Box>
       </Dialog>
 

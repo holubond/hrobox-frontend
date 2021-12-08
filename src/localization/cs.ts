@@ -32,7 +32,7 @@ export default {
   ErrEmptyNameCs: 'Pole "Český název" nesmí být prázdné',
   ErrEmptyNameEn: 'Pole "Anglický název" nesmí být prázdné',
   RemoveTag: 'Odstranit tag',
-  'Do you really want to delete this tag ? Tag will be removed from all games!': 'Opravdu chceš odstranit tag ? Tag bude odebrán ze všech her!',
+  'Do you really want to delete this tag ? Tag will be removed from all games!': 'Opravdu chceš odstranit tag? Tag bude odebrán ze všech her!',
   Cancel: 'Zrušit',
   Delete: 'Smazat'
 };
