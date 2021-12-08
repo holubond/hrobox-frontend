@@ -26,7 +26,7 @@ export default {
   'User with given email does not exist': 'User with given email does not exist',
   'Error on our side': 'Error on our side, please contact support',
   userAlreadyExists: 'User with given mail already exists',
-  WrongPassword: 'Wrong password!'
+  WrongPassword: 'Wrong password!',
   TagsColumnCzechName: 'Czech name',
   TagsColumnEnglishName: 'English name'
 };
