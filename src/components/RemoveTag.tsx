@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import {
   Dialog, Box, StyledOcticon, ButtonDanger, Spinner, Button
@@ -19,7 +18,6 @@ type Props = {
 const RemoveTag: FC<Props> = ({ tagsId, reloadTags }) => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
-  const navigate = useHistory();
 
   const [isOpen, setOpen] = useState(false);
   const returnFocusRef = React.useRef(null);
@@ -33,19 +31,11 @@ const RemoveTag: FC<Props> = ({ tagsId, reloadTags }) => {
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 403:
-            navigate.push('/role');
-            break;
           case 404:
             alert(error.response.data.message);
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);
