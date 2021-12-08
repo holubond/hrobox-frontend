@@ -21,14 +21,14 @@ export default {
   AddTag: 'Add tag',
   NameCs: 'Czech name',
   NameEn: 'English name',
-  TagExistsEn: 'Tag with that english name already exists',
-  TagExistsCs: 'Tag with that czech name already exists',
+  TagExistsEn: 'Tag with this english name already exists',
+  TagExistsCs: 'Tag with this czech name already exists',
   'User with given email does not exist': 'User with given email does not exist',
   'Error on our side': 'Error on our side, please contact support',
   userAlreadyExists: 'User with given mail already exists',
   WrongPassword: 'Wrong password!',
   TagsColumnCzechName: 'Czech name',
   TagsColumnEnglishName: 'English name',
-  ErrEmptyNameEn: 'The field English name must not be empty',
-  ErrEmptyNameCs: 'The field Czech name must not be empty'
+  ErrEmptyNameEn: 'The field "English name" must not be empty',
+  ErrEmptyNameCs: 'The field "Czech name" must not be empty'
 };
