@@ -79,19 +79,14 @@ const LoginDialog: FC = () => {
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 404:
-            alert(trans('User with given email does not exist'));
-            break;
           case 403:
             alert(trans('WrongPassword'));
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
+          case 404:
+            alert(trans('User with given email does not exist'));
             break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);
