@@ -73,9 +73,6 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
             {game.tags.sort((a, b) => a.localeCompare(b)).map((tag) => (
               <Label>{tag}</Label>
             ))}
-            {/* game.tags.map((tag) => (
-              <Label>{tag}</Label>
-            )) */}
           </Box>
           <Box className="grid-item">{game.createdBy}</Box>
           <Box className="grid-item">{reformatDate(game.createdAt)}</Box>
