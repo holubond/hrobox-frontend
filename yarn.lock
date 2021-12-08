@@ -1291,7 +1291,7 @@
 
 "@hapi/hoek@^9.0.0":
   version "9.2.1"
-  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.2.1.tgz#9551142a1980503752536b5050fd99f4a7f13b17"
+  resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.2.1.tgz"
   integrity sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==
 
 "@hapi/joi@^15.1.0":
@@ -1313,7 +1313,7 @@
 
 "@hapi/topo@^5.0.0":
   version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@hapi/topo/-/topo-5.1.0.tgz#dc448e332c6c6e37a4dc02fd84ba8d44b9afb012"
+  resolved "https://registry.npmjs.org/@hapi/topo/-/topo-5.1.0.tgz"
   integrity sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==
   dependencies:
     "@hapi/hoek" "^9.0.0"
@@ -1604,12 +1604,12 @@
 
 "@primer/css@^19.0.0":
   version "19.0.0"
-  resolved "https://registry.yarnpkg.com/@primer/css/-/css-19.0.0.tgz#c03e9d9365e37074f3555a98bdea0e705e1f5bf3"
+  resolved "https://registry.npmjs.org/@primer/css/-/css-19.0.0.tgz"
   integrity sha512-w3/DoQlWBjyyo0scneGkcVHyaIBFjODbmWZoJ1qYHe+eLufPOKNc5Tf/OlxqiYQxGCF8vVb3f/i30z4KfzJzzA==
   dependencies:
     "@primer/primitives" "^7.1.0"
 
-"@primer/octicons-react@^16.1.0":
+"@primer/octicons-react@^16.1.0", "@primer/octicons-react@^16.1.1":
   version "16.1.1"
   resolved "https://registry.yarnpkg.com/@primer/octicons-react/-/octicons-react-16.1.1.tgz#6a9eaffbbf46cb44d344a37a5ff2384973b82d3f"
   integrity sha512-xCxQ5z23ol7yDuJs85Lc4ARzyoay+b3zOhAKkEMU7chk0xi2hT2OnRP23QUudNNDPTGozX268RGYLexUa6P4xw==
@@ -1621,7 +1621,7 @@
 
 "@primer/primitives@^7.1.0":
   version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@primer/primitives/-/primitives-7.2.0.tgz#049fc6d2fef20ea7fa517e583671aa0a8a26e9e9"
+  resolved "https://registry.npmjs.org/@primer/primitives/-/primitives-7.2.0.tgz"
   integrity sha512-7HkPAn7gnCcKPfDrqJc9OCUttPwBcoJRj2JR78obUbCkSfRV4I7cZiMS8tf9rYJ9HV69u+km8ab2Jrf4eOnVBg==
 
 "@radix-ui/react-polymorphic@0.0.14":
@@ -1666,19 +1666,19 @@
 
 "@sideway/address@^4.1.3":
   version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.3.tgz#d93cce5d45c5daec92ad76db492cc2ee3c64ab27"
+  resolved "https://registry.npmjs.org/@sideway/address/-/address-4.1.3.tgz"
   integrity sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
 "@sideway/formula@^3.0.0":
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@sideway/formula/-/formula-3.0.0.tgz#fe158aee32e6bd5de85044be615bc08478a0a13c"
+  resolved "https://registry.npmjs.org/@sideway/formula/-/formula-3.0.0.tgz"
   integrity sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==
 
 "@sideway/pinpoint@^2.0.0":
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
+  resolved "https://registry.npmjs.org/@sideway/pinpoint/-/pinpoint-2.0.0.tgz"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
 "@sinonjs/commons@^1.7.0":
@@ -2160,6 +2160,13 @@
   integrity sha512-RNSXOyb3VyRs/EOGmjBhhGKTbnN6fHWvy5FNLzWfOWOGjgVUKqJZXfpKzLmgoU8h6Hj8mpALj/mbXQASOb92wQ==
   dependencies:
     "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-table@^7.7.8":
+  version "7.7.8"
+  resolved "https://registry.npmjs.org/@types/react-table/-/react-table-7.7.8.tgz"
+  integrity sha512-OMhbPlf+uUGte3M1WdArEKeBkyQ1XJxKvFYs+o1dGGGyaSVIqxPPQmBZ6Skkw0V9y0F/kOY7rnTD8r9GbfpBOg==
+  dependencies:
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17.0.0":
@@ -7282,7 +7289,7 @@ jest@26.6.0:
 
 joi@^17.5.0:
   version "17.5.0"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-17.5.0.tgz#7e66d0004b5045d971cf416a55fb61d33ac6e011"
+  resolved "https://registry.npmjs.org/joi/-/joi-17.5.0.tgz"
   integrity sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==
   dependencies:
     "@hapi/hoek" "^9.0.0"
@@ -9706,7 +9713,7 @@ react-final-form@^6.5.7:
 
 react-flagkit@^2.0.4:
   version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-flagkit/-/react-flagkit-2.0.4.tgz#1b19ca6a20642ee2d9856e7af5c96fb3ba5c3c01"
+  resolved "https://registry.npmjs.org/react-flagkit/-/react-flagkit-2.0.4.tgz"
   integrity sha512-e0Rak6VG1+KemBFqLqTPzFDLYS40lEW1YOpG9s68WDoEoQiC0YPEXDkIGLorNgP6omJztcg/OtcjSqAKM2O1cw==
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
@@ -9818,6 +9825,11 @@ react-scripts@4.0.3:
     workbox-webpack-plugin "5.1.4"
   optionalDependencies:
     fsevents "^2.1.3"
+
+react-table@^7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.7.0.tgz#e2ce14d7fe3a559f7444e9ecfe8231ea8373f912"
+  integrity sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==
 
 react@^17.0.2:
   version "17.0.2"
