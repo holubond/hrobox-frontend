@@ -40,7 +40,7 @@ const Games = () => {
     getAllGames();
   }, []);
   return (
-    <Box>
+    <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
       <GamesTable gamesData={games} />
     </Box>
   );
