@@ -113,7 +113,6 @@ const Games = () => {
       ...selectedTags.length > 0 ? { tags } : {},
       ...players !== undefined ? { players } : {}
     };
-    console.log(JSON.stringify(filter));
     return filter;
   };
 
