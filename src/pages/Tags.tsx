@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@primer/components';
 import axios from 'axios';
+import { Box } from '@primer/components';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import TagsTable from '../components/TagsTable';
@@ -28,7 +28,14 @@ const Tags = () => {
     getTags();
   }, []);
   return (
-    <Box>
+    <Box sx={{ width: '60%', display: 'flex', flexDirection: 'column' }}>
+      <span>
+        Some nice heading (total
+        &nbsp;
+        {tags.length}
+        )
+      </span>
+      <span>buttons</span>
       <TagsTable tagsData={tags} />
     </Box>
   );

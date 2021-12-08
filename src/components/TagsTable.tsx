@@ -1,104 +1,38 @@
-import { Box, Header } from '@primer/components';
+import { Box } from '@primer/components';
+import { ChevronRightIcon } from '@primer/octicons-react';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTable } from 'react-table';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
 import TagDialog from './TagDialog';
 
 type Props = {
   tagsData: Tag[]
 }
+
 const TagsTable: FC<Props> = ({ tagsData }) => {
-  const data: any[] = [];
+  const trans = useTranslation();
   const history = useHistory();
-  const [user] = useLoggedInUser();
-  tagsData.forEach((element) => data.push({ col1: element.nameCs, col2: element.nameEn }));
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Tags',
-        columns: [
-          {
-            Header: 'Czech name',
-            accessor: 'col1'
-          },
-          {
-            Header: 'English name',
-            accessor: 'col2'
-          }
-        ]
-      }
-    ],
-    []
-  );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data });
-
-  const rowClick = (id: string) => {
+  const rowClick = (id: number) => {
     history.push(`/tag/${id}`);
   };
   return (
-    <Box>
-      {user.role === 'Admin'
-        ? (
-          <Header.Item sx={{ padding: '20px', fontSize: '20px' }}>
-            <TagDialog />
-          </Header.Item>
-        ) : ('')}
-      <table
-        {...getTableProps()}
-        style={{
-          border: 'solid 1px black', display: 'block', height: '700px', overflowY: '-moz-hidden-unscrollable'
-        }}
-      >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: 'solid 3px black',
-                    background: '#24292f',
-                    color: 'white',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} onClick={() => rowClick(row.id)}>
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: '20px',
-                      border: 'solid 2px gray',
-                      background: 'white'
-                    }}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 50px' }}>
+      <Box className="grid-table-heading">
+        <Box className="grid-item">{trans('TagsColumnCzechName')}</Box>
+        <Box className="grid-item">{trans('TagsColumnEnglishName')}</Box>
+        <Box className="grid-item" />
+      </Box>
+
+      {tagsData.map( (tag) => (
+        <Box className="grid-table-row" onClick={() => rowClick(tag.id)}>
+          <Box className="grid-item">{tag.nameCs}</Box>
+          <Box className="grid-item">{tag.nameEn}</Box>
+          <Box className="grid-item"><ChevronRightIcon className="grid-item grid-icon" size={16} /></Box>
+        </Box>
+      ))}
+
     </Box>
   );
 };

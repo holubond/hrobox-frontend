@@ -27,4 +27,6 @@ export default {
   'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.',
   userAlreadyExists: 'Uživatel s daným emailem již existuje',
   WrongPassword: 'Špatné heslo!'
+  TagsColumnCzechName: 'Český název',
+  TagsColumnEnglishName: 'Anglický název'
 };

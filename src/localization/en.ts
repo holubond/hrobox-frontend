@@ -27,4 +27,6 @@ export default {
   'Error on our side': 'Error on our side, please contact support',
   userAlreadyExists: 'User with given mail already exists',
   WrongPassword: 'Wrong password!'
+  TagsColumnCzechName: 'Czech name',
+  TagsColumnEnglishName: 'English name'
 };

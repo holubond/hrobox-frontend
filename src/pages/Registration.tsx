@@ -1,18 +1,15 @@
-import React, { FC, useEffect, useState } from 'react';
-
-import {
-  Dialog, Box, FormGroup, TextInput, Link
-} from '@primer/components';
+import React, { useEffect, useState } from 'react';
+import { Box, FormGroup, TextInput } from '@primer/components';
+import { useHistory } from 'react-router-dom';
 import Joi from 'joi';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import ValidatedFormGroup from './ValidatedFormGroup';
-import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
 import useLoggedInUser from '../hooks/useLoggedInUser';
-import SubmitButton from './SubmitButton';
+import routeTo from '../utils/routeTo';
+import ValidatedFormGroup from '../components/ValidatedFormGroup';
+import SubmitButton from '../components/SubmitButton';
 
-const RegistrationDialog: FC = () => {
+const Registration = () => {
   const trans = useTranslation();
   const navigate = useHistory();
 
@@ -20,8 +17,6 @@ const RegistrationDialog: FC = () => {
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
   const PASSWORD_SCHEMA = Joi.string().min(6).required().error(() => new Error(trans('ErrPassword')));
 
-  const [isOpen, setOpen] = useState(false);
-  const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
   const [, setUserIn] = useLoggedInUser();
 
@@ -93,62 +88,44 @@ const RegistrationDialog: FC = () => {
   useEffect(() => {
   }, [loading]);
   return (
-    <>
-      <Link as="button" onClick={() => setOpen(true)} href="/">
-        {trans('Registration_verb')}
-      </Link>
+    <Box p={4}>
+      <form onSubmit={submit} className="dialog-form">
+        <ValidatedFormGroup message={nameError}>
+          <FormGroup.Label>
+            {trans('Name')}
+          </FormGroup.Label>
+          <TextInput
+            name="name"
+            value={name}
+            onChange={(e: any) => setName(e.target.value)}
+          />
+        </ValidatedFormGroup>
 
-      <Dialog
-        returnFocusRef={returnFocusRef}
-        isOpen={isOpen}
-        onDismiss={() => setOpen(false)}
-        aria-labelledby="header-id"
-      >
-        <Dialog.Header id="header-id">{trans('Registration')}</Dialog.Header>
+        <ValidatedFormGroup message={emailError}>
+          <FormGroup.Label>
+            Email
+          </FormGroup.Label>
+          <TextInput
+            name="email"
+            value={email}
+            onChange={(e: any) => setEmail(e.target.value)}
+          />
+        </ValidatedFormGroup>
 
-        <Box p={4}>
+        <ValidatedFormGroup message={passwordError}>
+          <FormGroup.Label>
+            {trans('Password')}
+          </FormGroup.Label>
+          <TextInput
+            name="password"
+            value={password}
+            onChange={(e: any) => setPassword(e.target.value)}
+          />
+        </ValidatedFormGroup>
 
-          <form onSubmit={submit} className="dialog-form">
-            <ValidatedFormGroup message={nameError}>
-              <FormGroup.Label>
-                {trans('Name')}
-              </FormGroup.Label>
-              <TextInput
-                name="name"
-                value={name}
-                onChange={(e: any) => setName(e.target.value)}
-              />
-            </ValidatedFormGroup>
-
-            <ValidatedFormGroup message={emailError}>
-              <FormGroup.Label>
-                Email
-              </FormGroup.Label>
-              <TextInput
-                name="email"
-                value={email}
-                onChange={(e: any) => setEmail(e.target.value)}
-              />
-            </ValidatedFormGroup>
-
-            <ValidatedFormGroup message={passwordError}>
-              <FormGroup.Label>
-                {trans('Password')}
-              </FormGroup.Label>
-              <TextInput
-                name="password"
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)}
-              />
-            </ValidatedFormGroup>
-
-            <SubmitButton loading={loading} />
-          </form>
-
-        </Box>
-      </Dialog>
-
-    </>
+        <SubmitButton loading={loading} />
+      </form>
+    </Box>
   );
 };
-export default RegistrationDialog;
+export default Registration;
