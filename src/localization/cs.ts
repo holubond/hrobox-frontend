@@ -30,5 +30,6 @@ export default {
   TagsColumnCzechName: 'Český název',
   TagsColumnEnglishName: 'Anglický název',
   ErrEmptyNameCs: 'Pole "Český název" nesmí být prázdné',
-  ErrEmptyNameEn: 'Pole "Anglický název" nesmí být prázdné'
+  ErrEmptyNameEn: 'Pole "Anglický název" nesmí být prázdné',
+  Cancel: 'Zrušit'
 };

@@ -30,5 +30,6 @@ export default {
   TagsColumnCzechName: 'Czech name',
   TagsColumnEnglishName: 'English name',
   ErrEmptyNameEn: 'The field "English name" must not be empty',
-  ErrEmptyNameCs: 'The field "Czech name" must not be empty'
+  ErrEmptyNameCs: 'The field "Czech name" must not be empty',
+  Cancel: 'Cancel'
 };
