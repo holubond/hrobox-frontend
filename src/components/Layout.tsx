@@ -60,8 +60,8 @@ const Layout: FC = ({ children }) => {
         <Header.Item>
           <LanguageSwitch />
         </Header.Item>
-      </Header>
 
+      </Header>
       <Box
         maxWidth="sm"
         sx={{

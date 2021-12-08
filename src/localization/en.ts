@@ -18,6 +18,15 @@ export default {
   Registration: 'Registration',
   Name: 'Name',
   Registration_verb: 'Registration',
+  AddTag: 'Add tag',
+  NameCs: 'Czech name',
+  NameEn: 'English name',
+  TagExistsEn: 'Tag with that english name already exists',
+  TagExistsCs: 'Tag with that czech name already exists',
+  'User with given email does not exist': 'User with given email does not exist',
+  'Error on our side': 'Error on our side, please contact support',
+  userAlreadyExists: 'User with given mail already exists',
+  WrongPassword: 'Wrong password!',
   TagsColumnCzechName: 'Czech name',
   TagsColumnEnglishName: 'English name'
 };
