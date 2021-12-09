@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, FormGroup, TextInput } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import routeTo from '../utils/routeTo';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
@@ -13,6 +14,7 @@ const Forgot = () => {
   const EMAIL_SCHEMA = Joi.string().email({ tlds: { allow: false } }).required().error(() => new Error(trans('ErrEmail')));
 
   const [loading, setLoading] = useState(false);
+  const navigate = useHistory();
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -45,6 +47,7 @@ const Forgot = () => {
     })
       .then((response) => {
         alert(response.data.message);
+        navigate.push('/');
       })
       .catch((error) => {
         switch (error.response.status) {
