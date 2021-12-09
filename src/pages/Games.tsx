@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, FormGroup, Label, SelectMenu, Spinner, TextInput
+  Box, Button, FormGroup, SelectMenu, Spinner, TextInput, Token
 } from '@primer/components';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
@@ -13,7 +13,8 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import RouterLink from '../components/RouterLink';
 import { allowedDurations, Duration } from '../model/Duration';
 import SelectValues from '../components/SelectValues';
-import useForceUpdate from '../hooks/useForceUpdate';
+import checked from '../assets/checked.svg';
+import unchecked from '../assets/unchecked.svg';
 import { AgeGroup } from '../model/AgeGroup';
 
 export type Game = {
@@ -49,8 +50,17 @@ const Games = () => {
   const [allTags, setAllTags] = useState<Tag[]>([]);
   const [allRemainingTags, setAllRemainingTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-  const forceUpdate = useForceUpdate();
 
+  const mapAgeGr = (ageGroup: AgeGroup) => {
+    if (ageGroup === 'K') {
+      return trans('Kindergarden');
+    } if (ageGroup === 'S') {
+      return trans('School');
+    } if (ageGroup === 'T') {
+      return trans('Teenager');
+    }
+    return trans('Adult');
+  };
   const clickTag = (tag: Tag) => {
     let newTag = selectedTags;
     if (newTag.find((element) => element === tag) === undefined) {
@@ -58,9 +68,12 @@ const Games = () => {
     } else {
       newTag = newTag.filter((element) => element !== tag);
     }
-    forceUpdate();
-    setSelectedTags(newTag);
+    setSelectedTags([...newTag]);
   };
+  const clickDurDel = (dur: Duration) => setSelectedDurations(
+    selectedDurations.filter((old) => old !== dur)
+  );
+  const clickAgeDel = (age: AgeGroup) => setSelectedAge(selectedAge.filter((old) => old !== age));
 
   const tagFilterChange = (e: any) => {
     let newFilteredTags: Tag[];
@@ -208,13 +221,17 @@ const Games = () => {
                 <SelectMenu.List>
                   {allRemainingTags.map((tag) => (
                     <SelectMenu.Item onClick={(e) => { e.preventDefault(); clickTag(tag); }}>
+                      {selectedTags.includes(tag) ? (
+                        <img src={checked} height="16" alt="selected" />
+                      ) : (
+                        <img src={unchecked} height="16" alt="not selected" />
+                      )}
                       {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
                     </SelectMenu.Item>
                   ))}
                 </SelectMenu.List>
               </SelectMenu.Modal>
             </SelectMenu>
-            {selectedTags.map((tag) => <Label>{selectedLang === 'cs' ? tag.nameCs : tag.nameEn}</Label>)}
           </FormGroup>
 
           {/* Author contain */}
@@ -229,6 +246,35 @@ const Games = () => {
           <SubmitButton loading={loading} />
 
         </form>
+      </Box>
+      <Box sx={{
+        width: '100%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
+      }}
+      >
+        {selectedDurations.map((dur) => (
+          <Token
+            text={dur}
+            onRemove={() => {
+              clickDurDel(dur);
+            }}
+          />
+        ))}
+        {selectedAge.map((age) => (
+          <Token
+            text={mapAgeGr(age as AgeGroup)}
+            onRemove={() => {
+              clickAgeDel(age);
+            }}
+          />
+        ))}
+        {selectedTags.map((tag) => (
+          <Token
+            text={selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
+            onRemove={() => {
+              clickTag(tag);
+            }}
+          />
+        ))}
       </Box>
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
         {loading
