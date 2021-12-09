@@ -15,6 +15,14 @@ import { Languages } from './LanguageSwitch';
 import SubmitButton from './SubmitButton';
 import RouterLink from './RouterLink';
 import PasswordInput from './PasswordInput';
+import { Lang } from '../model/Lang';
+import { UserRole } from '../model/Role';
+
+type ResBody = {
+  jwt: string,
+  role: UserRole,
+  lang: Lang
+};
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -75,14 +83,22 @@ const LoginDialog: FC = () => {
       password
     })
       .then((response) => {
+        const resBody: ResBody = response.data;
         setUserIn({
-          jwt: response.data.jwt,
-          role: response.data.role
+          jwt: resBody.jwt,
+          role: resBody.role
         });
-        localStorage.setItem('jwt', response.data.jwt);
-        localStorage.setItem('role', response.data.role);
-        setLanguage(response.data.lang as Languages);
-        localStorage.setItem('lang', response.data.lang as Languages);
+        localStorage.setItem('jwt', resBody.jwt);
+        localStorage.setItem('role', resBody.role);
+        setLanguage( resBody.lang as Languages);
+        localStorage.setItem('lang', resBody.lang as Languages);
+        setStateToDefault();
+
+        if (resBody.role === 'Banned' || resBody.role === 'NotVerified') {
+          history.push('/role');
+        } else {
+          history.push('/');
+        }
       })
       .catch((error) => {
         switch (error.response.status) {
@@ -96,8 +112,7 @@ const LoginDialog: FC = () => {
             handleErrors(error);
         }
       }).finally(() => {
-        setStateToDefault();
-        history.push('/');
+        setLoading(false);
       });
   };
 
