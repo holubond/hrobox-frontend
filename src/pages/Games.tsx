@@ -9,12 +9,14 @@ import GamesTable from '../components/GamesTable';
 import SubmitButton from '../components/SubmitButton';
 import { Tag } from './Tags';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import RouterLink from '../components/RouterLink';
 import { allowedDurations, Duration } from '../model/Duration';
 import SelectValues from '../components/SelectValues';
 import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
+import { AgeGroup } from '../model/AgeGroup';
 
-export type AgeGroup = 'K' | 'S' | 'T' | 'A';
 export type Game = {
   id: number,
   version: number,
@@ -36,6 +38,7 @@ const Games = () => {
   }, [loading]);
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
+  const [user] = useLoggedInUser();
 
   const [name, setName] = useState('');
   const [players, setPlayers] = useState<number>();
@@ -163,6 +166,11 @@ const Games = () => {
   }, [setSelectedDurations]);
   return (
     <>
+      {(user.role === 'Verified' || user.role === 'Admin') ? (
+        <Box>
+          <RouterLink to="/game/add">{trans('CreateGame')}</RouterLink>
+        </Box>
+      ) : ('')}
       <Box sx={{
         width: '100%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
       }}

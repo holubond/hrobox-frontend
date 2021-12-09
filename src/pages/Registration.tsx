@@ -9,6 +9,7 @@ import handleErrors from '../utils/handleErrors';
 import routeTo from '../utils/routeTo';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
 import SubmitButton from '../components/SubmitButton';
+import PasswordInput from '../components/PasswordInput';
 
 const Registration = () => {
   const trans = useTranslation();
@@ -123,8 +124,7 @@ const Registration = () => {
           <FormGroup.Label>
             {trans('Password')}
           </FormGroup.Label>
-          <TextInput
-            name="password"
+          <PasswordInput
             value={password}
             onChange={(e: any) => setPassword(e.target.value)}
           />

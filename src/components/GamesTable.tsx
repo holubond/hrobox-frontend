@@ -2,14 +2,25 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Label } from '@primer/components';
 import { ChevronRightIcon } from '@primer/octicons-react';
-import { AgeGroup, Game } from '../pages/Games';
+import { Game } from '../pages/Games';
 import logo from '../assets/people.svg';
 import { useTranslation } from '../hooks/useTranslation';
+import { AgeGroup } from '../model/AgeGroup';
 
 type Props = {
   gamesData: Game[]
 }
 
+export const mapAgeGrColor = (ageGroup: AgeGroup) => {
+  if (ageGroup === 'K') {
+    return 'Pink';
+  } if (ageGroup === 'S') {
+    return 'Blue';
+  } if (ageGroup === 'T') {
+    return 'Red';
+  }
+  return 'Green';
+};
 const GamesTable: FC<Props> = ({ gamesData }) => {
   const trans = useTranslation();
   const history = useHistory();
@@ -22,16 +33,6 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
       return trans('Teenager');
     }
     return trans('Adult');
-  };
-  const mapAgeGrColor = (ageGroup: AgeGroup) => {
-    if (ageGroup === 'K') {
-      return 'Pink';
-    } if (ageGroup === 'S') {
-      return 'Blue';
-    } if (ageGroup === 'T') {
-      return 'Red';
-    }
-    return 'Green';
   };
   const reformatDate = (at: string) => {
     const date = new Date(at);
