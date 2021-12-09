@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Box, FormGroup, TextInput, SelectMenu, Button, Label
+  Box, FormGroup, TextInput, Label, Text
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -49,21 +49,11 @@ const CreateGame: FC = () => {
   const [selectedDuration, setSelectedDuration] = useState<string>();
   const ageGroupsAll = ['K', 'S', 'T', 'A'];
   const [selectedAge, setSelectedAge] = useState<AgeGroup[]>([]);
-  const [tagFilter, setTagFilter] = useState('');
   const [allTags, setAllTags] = useState<Tag[]>([]);
-  const [allRemainingTags, setAllRemainingTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   const clickDur = (duration: string) => {
-    let newDur = selectedDuration;
-    if (newDur === undefined) {
-      // set
-      newDur = duration;
-    } else if (newDur === duration) {
-      // reset
-      newDur = undefined;
-    }
-    setSelectedDuration(newDur);
+    setSelectedDuration(duration);
   };
   const clickAge = (age: string) => {
     let newAge = selectedAge;
@@ -72,7 +62,7 @@ const CreateGame: FC = () => {
     } else {
       newAge = newAge.filter((element) => element !== age);
     }
-    setSelectedAge(newAge);
+    setSelectedAge([...newAge]);
   };
   const loadTags = () => {
     axios.get(routeTo('/api/tags'))
@@ -84,7 +74,6 @@ const CreateGame: FC = () => {
           return a.nameEn.localeCompare(b.nameEn);
         });
         setAllTags(tagStrings);
-        setAllRemainingTags(tagStrings);
       })
       .catch((error) => {
         handleErrors(error);
@@ -97,33 +86,9 @@ const CreateGame: FC = () => {
     } else {
       newTag = newTag.filter((element) => element !== tag);
     }
-    setSelectedTags(newTag);
+    setSelectedTags([...newTag]);
   };
-  const tagFilterChange = (e: any) => {
-    let newFilteredTags: Tag[];
-    if ((e.target.value as string).length > tagFilter.length) {
-      setTagFilter(e.target.value);
-      newFilteredTags = allRemainingTags.filter(
-        (tag) => {
-          if (selectedLang === 'cs') {
-            return tag.nameCs.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-          }
-          return tag.nameEn.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-        }
-      );
-    } else {
-      setTagFilter(e.target.value);
-      newFilteredTags = allTags.filter(
-        (tag) => {
-          if (selectedLang === 'cs') {
-            return tag.nameCs.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-          }
-          return tag.nameEn.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-        }
-      );
-    }
-    setAllRemainingTags(newFilteredTags);
-  };
+
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
   const RULES_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRule')));
@@ -330,65 +295,59 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         {/* duration */}
         <ValidatedFormGroup message={durError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Duration')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>{trans('Duration')}</SelectMenu.Header>
-              <SelectMenu.List>
-                {durationAll.map((dur) => (
-                  <SelectMenu.Item onClick={() => clickDur(dur)}>
-                    {dur === selectedDuration ? (
-                      <img src={checked} height="16" alt={dur} />
-                    ) : (
-                      <img src={unchecked} height="16" alt={dur} />
-                    )}
-                    {dur}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
+          <Box>
+            <Text>{trans('Duration')}</Text>
+          </Box>
+          <Box>
+            {durationAll.map((dur) => (
+              <Label variant="xl" onClick={() => clickDur(dur)}>
+                {dur === selectedDuration ? (
+                  <img src={checked} height="16" alt={dur} />
+                ) : (
+                  <img src={unchecked} height="16" alt={dur} />
+                )}
+                {dur}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         {/* Age */}
         <ValidatedFormGroup message={ageError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Age groups')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>{trans('Age groups')}</SelectMenu.Header>
-              <SelectMenu.List>
-                {ageGroupsAll.map((age) => (
-                  <SelectMenu.Item onClick={() => clickAge(age)}>
-                    {selectedAge?.find(
-                      (element) => element === (age as AgeGroup)
-                    ) === undefined ? (
-                      <img src={unchecked} height="16" alt={trans(age as AgeGroup)} />
-                      ) : (
-                        <img src={checked} height="16" alt={trans(age as AgeGroup)} />
-                      )}
-                    {trans(age as AgeGroup)}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
+          <Box>
+            <Text>{trans('Age groups')}</Text>
+          </Box>
+          <Box>
+            {ageGroupsAll.map((age) => (
+              <Label variant="xl" onClick={() => clickAge(age)}>
+                {selectedAge?.find(
+                  (element) => element === (age as AgeGroup)
+                ) === undefined ? (
+                  <img src={unchecked} height="16" alt={trans(age as AgeGroup)} />
+                  ) : (
+                    <img src={checked} height="16" alt={trans(age as AgeGroup)} />
+                  )}
+                {trans(age as AgeGroup)}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         {/* Tags */}
         <ValidatedFormGroup message={tagsError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Tags')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>Tags</SelectMenu.Header>
-              <SelectMenu.Filter placeholder="Filter projects" value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
-              <SelectMenu.List>
-                {allRemainingTags.map((tag) => (
-                  <SelectMenu.Item onClick={() => clickTag(tag)}>
-                    {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
-          {selectedTags.map((tag) => <Label>{selectedLang === 'cs' ? tag.nameCs : tag.nameEn}</Label>)}
+          <Box>
+            <Text>{trans('Tags')}</Text>
+          </Box>
+          <Box>
+            {allTags.map((tag) => (
+              <Label variant="xl" onClick={() => clickTag(tag)}>
+                {selectedTags.includes(tag) ? (
+                  <img src={checked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
+                ) : (
+                  <img src={unchecked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
+                )}
+                {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         <Box sx={{ display: 'flex' }}>
           <SubmitButton loading={loading} />
