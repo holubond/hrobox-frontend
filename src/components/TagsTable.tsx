@@ -2,7 +2,7 @@ import { Box } from '@primer/components';
 import React, { FC } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
-import EditTag from './EditTagDialog';
+import EditTag from './EditTag';
 import RemoveTag from './RemoveTag';
 
 type Props = {
