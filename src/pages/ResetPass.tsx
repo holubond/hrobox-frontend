@@ -50,7 +50,13 @@ const ResetPass = () => {
         alert(response.data.message);
       })
       .catch((error) => {
-        handleErrors(error);
+        switch (error.response.status) {
+          case 404:
+            alert(error.response.data.message);
+            break;
+          default:
+            handleErrors(error);
+        }
       }).finally(() => {
         setLoading(false);
       });

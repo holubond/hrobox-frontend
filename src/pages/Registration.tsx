@@ -5,6 +5,7 @@ import Joi from 'joi';
 import axios from 'axios';
 import { useTranslation } from '../hooks/useTranslation';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import handleErrors from '../utils/handleErrors';
 import routeTo from '../utils/routeTo';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
 import SubmitButton from '../components/SubmitButton';
@@ -79,7 +80,13 @@ const Registration = () => {
         navigate.push('/role');
       })
       .catch((error) => {
-        alert(error.message);
+        switch (error.response.status) {
+          case 409:
+            alert(trans('userAlreadyExists'));
+            break;
+          default:
+            handleErrors(error);
+        }
       }).finally(() => {
         setLoading(false);
       });

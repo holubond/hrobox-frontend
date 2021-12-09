@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, Button, Spinner, Header, FormGroup, TextInput
+  Dialog, Box, Header, FormGroup, TextInput
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useTranslation } from '../hooks/useTranslation';
+import SubmitButton from './SubmitButton';
 
 const HelpDialog: FC = () => {
   const trans = useTranslation();
@@ -93,7 +94,7 @@ const HelpDialog: FC = () => {
         <Dialog.Header id="header-id">{trans('ContactSupport')}</Dialog.Header>
 
         <Box p={3}>
-          <form onSubmit={submit}>
+          <form onSubmit={submit} className="dialog-form">
             {userIn.jwt === '' ? (
               <ValidatedFormGroup message={emailError}>
                 <FormGroup.Label>
@@ -110,13 +111,15 @@ const HelpDialog: FC = () => {
                 {trans('Message')}
               </FormGroup.Label>
               <TextInput
+                as="textarea"
+                sx={{ display: 'block', boxSizing: 'border-box' }}
                 name="message"
                 value={message}
                 onChange={(e: any) => setMessage(e.target.value)}
               />
             </ValidatedFormGroup>
 
-            {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
+            <SubmitButton loading={loading} />
           </form>
 
         </Box>
