@@ -6,9 +6,9 @@ const handle403 = () => {
   navigate.push('/role');
 };
 
-const handle500 = () => {
+const handle500 = (response: any) => {
   const trans = useTranslation();
-  alert(trans('Error on our side'));
+  alert(trans('Error on our side') + response);
 };
 
 const handle400 = () => {
@@ -17,16 +17,15 @@ const handle400 = () => {
 
 const handleErrors = (error: any) => {
   switch (error.response.status) {
-    case 400:
-      handle400();
-      break;
     case 403:
       handle403();
       break;
     case 500:
-      handle500();
+      handle500(error.response);
       break;
     default:
+      handle400();
   }
+};
 };
 export default handleErrors;
