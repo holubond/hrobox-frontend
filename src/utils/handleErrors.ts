@@ -1,8 +1,8 @@
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 
-const handle400 = () => {
-  alert('Client-side error (400, bad request)');
+const handleDefault = (error: any) => {
+  alert(`Unhandled error ${JSON.stringify(error)}`);
 };
 
 const handle401 = (message: any) => {
@@ -31,7 +31,7 @@ const handleErrors = (error: any) => {
       handle500(error.response.data.message);
       break;
     default:
-      handle400();
+      handleDefault(error);
   }
 };
 
