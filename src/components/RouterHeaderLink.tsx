@@ -3,11 +3,12 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  to: string
+  to: string,
+  onClick?: () => void
 };
 
-const RouterLink: FC<Props> = ({ to, children }) => (
-  <Link to={to} style={{ textDecoration: 'none' }}>
+const RouterLink: FC<Props> = ({ to, onClick, children }) => (
+  <Link onClick={() => { if (onClick) { onClick(); } }} to={to} style={{ textDecoration: 'none' }}>
     <Header.Item>
       <Header.Link>
         {children}
@@ -15,5 +16,9 @@ const RouterLink: FC<Props> = ({ to, children }) => (
     </Header.Item>
   </Link>
 );
+
+RouterLink.defaultProps = {
+  onClick: () => {}
+};
 
 export default RouterLink;
