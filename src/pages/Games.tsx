@@ -158,6 +158,9 @@ const Games = () => {
     getAllGames();
   }, []);
   useEffect(() => {
+    getAllGames();
+  }, [selectedLang]);
+  useEffect(() => {
   }, [selectedDuration]);
   return (
     <>
@@ -166,7 +169,7 @@ const Games = () => {
           {/* Name contain */}
           <FormGroup>
             <TextInput
-              placeholder="Name contains"
+              placeholder={trans('Name contains')}
               value={name}
               onChange={(e: any) => setName(e.target.value)}
             />
@@ -174,9 +177,9 @@ const Games = () => {
           {/* duration */}
           <FormGroup>
             <SelectMenu>
-              <Button as="summary">Duration</Button>
+              <Button as="summary">{trans('Duration')}</Button>
               <SelectMenu.Modal>
-                <SelectMenu.Header>Duration</SelectMenu.Header>
+                <SelectMenu.Header>{trans('Duration')}</SelectMenu.Header>
                 <SelectMenu.List>
                   {durationAll.map((dur) => (
                     <SelectMenu.Item onClick={() => clickDur(dur)}>
@@ -197,9 +200,9 @@ const Games = () => {
           {/* Age */}
           <FormGroup>
             <SelectMenu>
-              <Button as="summary">Age groups</Button>
+              <Button as="summary">{trans('Age groups')}</Button>
               <SelectMenu.Modal>
-                <SelectMenu.Header>Age groups</SelectMenu.Header>
+                <SelectMenu.Header>{trans('Age groups')}</SelectMenu.Header>
                 <SelectMenu.List>
                   {ageGroupsAll.map((age) => (
                     <SelectMenu.Item onClick={() => clickAge(age)}>
@@ -220,7 +223,7 @@ const Games = () => {
           {/* number of players */}
           <FormGroup>
             <TextInput
-              placeholder="Number of players"
+              placeholder={trans('Number of players')}
               value={players}
               onChange={(e: any) => setPlayers(e.target.value)}
             />
@@ -228,10 +231,10 @@ const Games = () => {
           {/* Tags */}
           <FormGroup>
             <SelectMenu>
-              <Button as="summary">Tags</Button>
+              <Button as="summary">{trans('Tags')}</Button>
               <SelectMenu.Modal>
-                <SelectMenu.Header>Tags</SelectMenu.Header>
-                <SelectMenu.Filter placeholder="Filter projects" value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
+                <SelectMenu.Header>{trans('Tags')}</SelectMenu.Header>
+                <SelectMenu.Filter placeholder={trans('Filter tags')} value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
                 <SelectMenu.List>
                   {allRemainingTags.map((tag) => (
                     <SelectMenu.Item onClick={() => clickTag(tag)}>
@@ -246,7 +249,7 @@ const Games = () => {
           {/* Author contain */}
           <FormGroup>
             <TextInput
-              placeholder="Author&apos;s name contains"
+              placeholder={trans("Author's name contains")}
               value={author}
               onChange={(e: any) => setAuthor(e.target.value)}
             />

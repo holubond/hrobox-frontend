@@ -34,5 +34,8 @@ export default {
   K: 'Kindergarden',
   S: 'School',
   T: 'Teenager',
-  A: 'Adult'
+  A: 'Adult',
+  'Name contains': 'Name contains',
+  "Author's name contains": "Author's name contains",
+  'Filter tags': 'Filter tags'
 };

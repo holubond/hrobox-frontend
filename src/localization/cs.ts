@@ -34,5 +34,8 @@ export default {
   K: 'Školka',
   S: 'Škola',
   T: 'Teenager',
-  A: 'Dospělý'
+  A: 'Dospělý',
+  'Name contains': 'Jméno obsahuje',
+  "Author's name contains": 'Autorovo jméno obsahuje',
+  'Filter tags': 'Filtr tagů'
 };
