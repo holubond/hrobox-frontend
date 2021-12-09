@@ -31,7 +31,6 @@ export type Game = {
 const Games = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
-  const [loadingSpin, setLoadingSpin] = useState(false);
   useEffect(() => {
   }, [loading]);
   const [selectedLang] = useLanguage();
@@ -116,7 +115,7 @@ const Games = () => {
       });
   };
   const getAllGames = () => {
-    setLoadingSpin(true);
+    setLoading(true);
     axios.post(routeTo('/api/games'), { lang: selectedLang })
       .then((response) => {
         setGames(response.data as Game[]);
@@ -138,7 +137,7 @@ const Games = () => {
       .catch((error) => {
         handleErrors(error);
       }).finally(() => {
-        setLoadingSpin(false);
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -224,7 +223,7 @@ const Games = () => {
         </form>
       </Box>
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
-        {loadingSpin
+        {loading
           ? (
             <Spinner size="large" marginX="50%" marginY="22%" color="Black" />
           )
