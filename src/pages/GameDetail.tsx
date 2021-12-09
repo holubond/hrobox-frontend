@@ -25,7 +25,7 @@ type Game = {
 }
 const GameDetail = () => {
   const { id, version } = useParams<{ id: string, version: string}>();
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [game, setGame] = useState<Game>();
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
