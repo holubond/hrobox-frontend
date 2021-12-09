@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box } from '@primer/components';
+import { Box, Spinner } from '@primer/components';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import TagsTable from '../components/TagsTable';
@@ -14,7 +14,9 @@ export type Tag ={
 
 const Tags = () => {
   const [tags, setTags] = useState<Tag[]>([]);
+  const [loading, setLoading] = useState(false);
   const getTags = () => {
+    setLoading(true);
     axios.get(routeTo('/api/tags'))
       .then((response) => {
         setTags(response.data.tags as Tag[]);
@@ -22,7 +24,7 @@ const Tags = () => {
       .catch((error) => {
         handleErrors(error);
       }).finally(() => {
-
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -44,7 +46,11 @@ const Tags = () => {
         <TagDialog />
       </Box>
       <Box>
-        <TagsTable tagsData={tags} reloadTags={getTags} />
+        {loading
+          ? (
+            <Spinner size="large" marginX="50%" marginY="30%" color="Black" />
+          )
+          : <TagsTable tagsData={tags} reloadTags={getTags} />}
       </Box>
     </Box>
   );
