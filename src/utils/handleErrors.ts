@@ -16,7 +16,7 @@ const handle403 = () => {
 
 const handle500 = (message: any) => {
   const trans = useTranslation();
-  alert(`${trans('Error on our side')} - ${message}`)
+  alert(`${trans('Error on our side')} - ${message}`);
 };
 
 const handleErrors = (error: any) => {
