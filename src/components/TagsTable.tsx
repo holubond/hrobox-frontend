@@ -1,6 +1,6 @@
 import { Box } from '@primer/components';
 import React, { FC } from 'react';
-import { useTranslation } from '../hooks/useTranslation';
+import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
 import EditTag from './EditTag';
 import RemoveTag from './RemoveTag';
@@ -12,6 +12,7 @@ type Props = {
 
 const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
   const trans = useTranslation();
+  const [selectedLang] = useLanguage();
 
   return (
     <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 35px 35px' }}>
@@ -22,7 +23,12 @@ const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
         <Box className="grid-item grid-item-button" />
       </Box>
 
-      {tagsData.map( (tag) => (
+      {tagsData.sort((a, b) => {
+        if (selectedLang === 'cs') {
+          return a.nameCs.localeCompare(b.nameCs);
+        }
+        return a.nameEn.localeCompare(b.nameEn);
+      }).map( (tag) => (
         <Box key={tag.id} className="grid-table-row">
           <Box className="grid-item grid-item-data">{tag.nameCs}</Box>
           <Box className="grid-item grid-item-data">{tag.nameEn}</Box>
