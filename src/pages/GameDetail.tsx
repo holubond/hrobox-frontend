@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Label, Text } from '@primer/components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
@@ -8,8 +8,9 @@ import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { mapAgeGrColor } from '../components/GamesTable';
 import { Duration } from '../model/Duration';
 import { AgeGroup } from '../model/AgeGroup';
+import RouterLink from '../components/RouterLink';
 
-type Game = {
+export type Game = {
   id: number,
   version: number,
   name: string,
@@ -24,12 +25,17 @@ type Game = {
   ageGroups: AgeGroup[],
   tags: string[]
 }
+
 const GameDetail = () => {
   const { id, version } = useParams<{ id: string, version: string}>();
   const [, setLoading] = useState(false);
   const [game, setGame] = useState<Game>();
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
+  const newTo = {
+    pathname: '/game/edit',
+    param1: { game }
+  };
 
   const getDetail = () => {
     setLoading(true);
@@ -108,6 +114,13 @@ const GameDetail = () => {
       ) : (
         ''
       )}
+      <Box>
+        <Link to={newTo}>
+          {trans('CreateGame')}
+          {' '}
+          {game}
+        </Link>
+      </Box>
     </Box>
   );
 };
