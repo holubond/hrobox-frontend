@@ -14,7 +14,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
 import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
-import { AgeGroup } from './Games';
+import { AgeGroup } from '../model/AgeGroup';
 import { Tag } from './Tags';
 
 const CreateGame: FC = () => {
