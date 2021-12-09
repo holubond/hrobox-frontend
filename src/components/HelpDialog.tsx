@@ -111,7 +111,6 @@ const HelpDialog: FC = () => {
                 {trans('Message')}
               </FormGroup.Label>
               <TextInput
-                width="100%"
                 as="textarea"
                 sx={{ display: 'block', boxSizing: 'border-box' }}
                 name="message"
