@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, FormGroup, Label, SelectMenu, TextInput
+  Box, Button, FormGroup, Label, SelectMenu, Spinner, TextInput
 } from '@primer/components';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
@@ -115,6 +115,7 @@ const Games = () => {
       });
   };
   const getAllGames = () => {
+    setLoading(true);
     axios.post(routeTo('/api/games'), { lang: selectedLang })
       .then((response) => {
         setGames(response.data as Game[]);
@@ -135,6 +136,8 @@ const Games = () => {
       })
       .catch((error) => {
         handleErrors(error);
+      }).finally(() => {
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -220,7 +223,11 @@ const Games = () => {
         </form>
       </Box>
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
-        <GamesTable gamesData={games} />
+        {loading
+          ? (
+            <Spinner size="large" marginX="50%" marginY="22%" color="Black" />
+          )
+          : <GamesTable gamesData={games} /> }
       </Box>
     </>
   );
