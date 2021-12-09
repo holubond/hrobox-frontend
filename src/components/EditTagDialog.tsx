@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import {
-  Dialog, Box, FormGroup, TextInput, StyledOcticon, ButtonOutline, ButtonPrimary, Button
+  Dialog, Box, FormGroup, TextInput, StyledOcticon, ButtonOutline, Button
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -144,13 +144,6 @@ const EditTag: FC<Props> = ({
               </Box>
 
             </Box>
-
-            {/* <Box sx={{ display: 'flex' }}>
-        <ButtonPrimary sx={{ marginX: '21%', alignSelf: 'end' }} onClick={() => setOpen(false)}>
-                {trans('Cancel')}
-              </ButtonPrimary>
-              <SubmitButton loading={loading} />
-            </Box> */}
           </form>
 
         </Box>
