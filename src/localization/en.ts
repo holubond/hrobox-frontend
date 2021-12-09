@@ -36,5 +36,9 @@ export default {
   T: 'Teenager',
   A: 'Adult',
   minutes: 'minutes',
-  'Duration of the game': 'Duration of the game'
+  'Duration of the game': 'Duration of the game',
+  ErrEmptyNameCs: 'The field "Czech name" must not be empty',
+  ErrEmptyNameEn: 'Pole "Český název" nesmí být prázdné',
+  ErrEmptyRuleCs: 'Pole "Český název" nesmí být prázdné',
+  ErrEmptyRuleEn: 'Pole "Český název" nesmí být prázdné'
 };
