@@ -30,7 +30,7 @@ const Layout: FC = ({ children }) => {
         </Header.Item>
         <Box sx={{ flexGrow: 1 }} />
 
-        <RouterHeaderLink to="games">
+        <RouterHeaderLink to="/games">
           {trans('Games')}
         </RouterHeaderLink>
 
