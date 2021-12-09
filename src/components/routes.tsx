@@ -8,6 +8,7 @@ import TagDetail from '../pages/TagDetail';
 import ResetPass from '../pages/ResetPass';
 import Registration from '../pages/Registration';
 import Forgot from '../pages/Forgot';
+import GameDetail from '../pages/GameDetail';
 
 const Routes = () => (
   <Switch>
@@ -26,6 +27,11 @@ const Routes = () => (
       path="/renewPassword/:resetKey"
     >
       <ResetPass />
+    </Route>
+    <Route
+      path="/games/:id/version/:version"
+    >
+      <GameDetail />
     </Route>
   </Switch>
 );
