@@ -14,6 +14,7 @@ import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { Languages } from './LanguageSwitch';
 import SubmitButton from './SubmitButton';
 import RouterLink from './RouterLink';
+import PasswordInput from './PasswordInput';
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -125,10 +126,7 @@ const LoginDialog: FC = () => {
               <FormGroup.Label>
                 {trans('Password')}
               </FormGroup.Label>
-              <TextInput
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)}
-              />
+              <PasswordInput value={password} onChange={(e: any) => setPassword(e.target.value)} />
             </ValidatedFormGroup>
 
             <SubmitButton loading={loading} />

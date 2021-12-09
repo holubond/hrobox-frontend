@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, FormGroup, Spinner, TextInput
+  Box, Button, FormGroup, Spinner
 } from '@primer/components';
 import { useHistory, useParams } from 'react-router-dom';
 import Joi from 'joi';
@@ -9,6 +9,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
+import PasswordInput from '../components/PasswordInput';
 
 const ResetPass = () => {
   const trans = useTranslation();
@@ -70,8 +71,7 @@ const ResetPass = () => {
           <FormGroup.Label>
             {trans('Password')}
           </FormGroup.Label>
-          <TextInput
-            name="myPassword"
+          <PasswordInput
             value={password}
             onChange={(e: any) => setPassword(e.target.value)}
           />
