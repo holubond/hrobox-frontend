@@ -11,6 +11,7 @@ import LoginDialog from './LoginDialog';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import HelpDialog from './HelpDialog';
 import RouterHeaderLink from './RouterHeaderLink';
+import RouterLink from './RouterLink';
 
 const Layout: FC = ({ children }) => {
   const trans = useTranslation();
@@ -20,9 +21,9 @@ const Layout: FC = ({ children }) => {
     <>
       <Header padding="4px">
         <Header.Item>
-          <Link to="/">
+          <RouterLink to="/">
             <img src={Logo} height="54" alt="logo" />
-          </Link>
+          </RouterLink>
         </Header.Item>
 
         <Header.Item>
