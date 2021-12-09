@@ -78,7 +78,16 @@ const LoginDialog: FC = () => {
         localStorage.setItem('lang', response.data.lang as Languages);
       })
       .catch((error) => {
-        handleErrors(error);
+        switch (error.response.status) {
+          case 403:
+            alert(trans('WrongPassword'));
+            break;
+          case 404:
+            alert(trans('User with given email does not exist'));
+            break;
+          default:
+            handleErrors(error);
+        }
       }).finally(() => {
         setLoading(false);
       });
@@ -127,10 +136,10 @@ const LoginDialog: FC = () => {
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
             <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
-              Zapoměl jste heslo?
+              {trans('ForgPassword')}
             </RouterLink>
             <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
-              Registration
+              {trans('Registration')}
             </RouterLink>
           </Box>
         </Box>

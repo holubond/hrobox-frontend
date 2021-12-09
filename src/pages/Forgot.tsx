@@ -47,8 +47,13 @@ const Forgot = () => {
         alert(response.data.message);
       })
       .catch((error) => {
-        alert(error);
-        handleErrors(error);
+        switch (error.response.status) {
+          case 404:
+            alert(trans('User with given email does not exist'));
+            break;
+          default:
+            handleErrors(error);
+        }
       }).finally(() => {
         setLoading(false);
       });
