@@ -4,6 +4,7 @@ import { Box } from '@primer/components';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import TagsTable from '../components/TagsTable';
+import TagDialog from '../components/TagDialog';
 
 export type Tag ={
   id: number,
@@ -28,15 +29,23 @@ const Tags = () => {
     getTags();
   }, []);
   return (
-    <Box sx={{ width: '60%', display: 'flex', flexDirection: 'column' }}>
+    <Box
+      sx={{
+        width: '60%', minWidth: 'fit-content', display: 'flex', flexDirection: 'column'
+      }}
+    >
       <span>
         Some nice heading (total
         &nbsp;
         {tags.length}
         )
       </span>
-      <span>buttons</span>
-      <TagsTable tagsData={tags} />
+      <Box sx={{ alignSelf: 'flex-end', padding: '5px 0px' }}>
+        <TagDialog />
+      </Box>
+      <Box>
+        <TagsTable tagsData={tags} reloadTags={getTags} />
+      </Box>
     </Box>
   );
 };

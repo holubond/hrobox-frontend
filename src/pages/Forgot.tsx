@@ -47,8 +47,18 @@ const Forgot = () => {
         alert(response.data.message);
       })
       .catch((error) => {
-        alert(error);
-        handleErrors(error);
+        switch (error.response.status) {
+          case 500:
+            handleErrors(error);
+            break;
+          case 404:
+            alert(trans('User with given email does not exist'));
+            break;
+          case 400:
+            alert('Client-side error (400, bad request)');
+            break;
+          default:
+        }
       }).finally(() => {
         setLoading(false);
       });
