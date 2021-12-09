@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import {
   Dialog, Box, Header, FormGroup, TextInput
@@ -33,8 +33,14 @@ const LoginDialog: FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [, setLanguage] = useLanguage();
 
-  useEffect(() => {
-  }, [loading]);
+  const setStateToDefault = () => {
+    setEmail('');
+    setEmailError('');
+    setPassword('');
+    setPasswordError('');
+    setLoading(false);
+    setOpen(false);
+  };
 
   const submit = (e: any) => {
     e.preventDefault();
@@ -90,9 +96,9 @@ const LoginDialog: FC = () => {
             handleErrors(error);
         }
       }).finally(() => {
-        setLoading(false);
+        setStateToDefault();
+        history.push('/');
       });
-    history.push('/');
   };
 
   return (
@@ -104,14 +110,14 @@ const LoginDialog: FC = () => {
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}
-        onDismiss={() => setOpen(false)}
+        onDismiss={() => setStateToDefault()}
         aria-labelledby="header-id"
       >
         <Dialog.Header id="header-id">{trans('Log')}</Dialog.Header>
 
         <Box p={3}>
 
-          <form onSubmit={submit}>
+          <form onSubmit={submit} className="dialog-form">
             <ValidatedFormGroup message={emailError}>
               <FormGroup.Label>
                 Email
@@ -127,19 +133,19 @@ const LoginDialog: FC = () => {
                 {trans('Password')}
               </FormGroup.Label>
               <PasswordInput value={password} onChange={(e: any) => setPassword(e.target.value)} />
+              <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
+                {trans('ForgPassword')}
+              </RouterLink>
             </ValidatedFormGroup>
 
-            <SubmitButton loading={loading} />
-          </form>
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
-              {trans('ForgPassword')}
-            </RouterLink>
             <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
               {trans('Registration')}
             </RouterLink>
-          </Box>
+            <SubmitButton loading={loading}>
+              {trans('Login')}
+            </SubmitButton>
+          </form>
+
         </Box>
       </Dialog>
 

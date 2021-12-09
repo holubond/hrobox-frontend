@@ -15,7 +15,7 @@ export default {
   'We are sorry but your account was banned!': 'Je nám líto, ale byl ti zablokován účet!',
   'We are waiting for admins to verif your account.': 'Čekáme na to, až administrátoři ověří tvůj účet!',
   Refresh: 'Aktualizovat',
-  Registration: 'Registrace',
+  Registration: 'Potřebuješ si vytvořit účet?',
   Name: 'Jméno',
   Registration_verb: 'Registrovat se',
   AddTag: 'Přidat tag',
