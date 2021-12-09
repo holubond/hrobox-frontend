@@ -84,13 +84,8 @@ const Registration = () => {
           case 409:
             alert(trans('userAlreadyExists'));
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);

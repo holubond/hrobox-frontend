@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import {
   Dialog, Box, FormGroup, TextInput, ButtonPrimary, StyledOcticon
@@ -17,7 +16,6 @@ import handleErrors from '../utils/handleErrors';
 const TagDialog: FC = () => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
-  const navigate = useHistory();
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
@@ -78,7 +76,6 @@ const TagDialog: FC = () => {
             break;
           default:
             handleErrors(error);
-            break;
         }
       }).finally(() => {
         setLoading(false);
