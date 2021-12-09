@@ -105,8 +105,8 @@ const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
   }, [loading]);
   return (
     <>
-      <ButtonOutline onClick={() => setOpen(true)}>
-        <StyledOcticon icon={PencilIcon} size={15} />
+      <ButtonOutline border-radius="0px" padding="0" width="25px" height="25px" onClick={() => setOpen(true)}>
+        <StyledOcticon align-self="center" icon={PencilIcon} size={15} />
       </ButtonOutline>
 
       <Dialog

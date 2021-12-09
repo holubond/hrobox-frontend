@@ -70,10 +70,17 @@ code {
 }
 
 .grid-table-row > .grid-item {
-  padding: 5px 15px;
   margin-top: -1px;
   list-style-type: none;
   border-top-color: #d8dee4;
   border-top-style: solid;
   border-top-width: 1px;
+}
+
+.grid-item-data {
+  padding: 5px 15px;
+}
+
+.grid-item-button {
+  padding: 5px;
 }
