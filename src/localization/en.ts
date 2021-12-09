@@ -34,5 +34,7 @@ export default {
   K: 'Kindergarden',
   S: 'School',
   T: 'Teenager',
-  A: 'Adult'
+  A: 'Adult',
+  minutes: 'minutes',
+  'Duration of the game': 'Duration of the game'
 };

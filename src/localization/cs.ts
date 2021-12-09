@@ -34,5 +34,7 @@ export default {
   K: 'Školka',
   S: 'Škola',
   T: 'Teenager',
-  A: 'Dospělý'
+  A: 'Dospělý',
+  minutes: 'minut',
+  'Duration of the game': 'Doba trvání hry'
 };
