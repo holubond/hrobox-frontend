@@ -31,7 +31,7 @@ const SelectValues: FC<Props> = ({
   };
 
   return (
-    <FormGroup>
+    <FormGroup sx={{ margin: '0' }}>
       <SelectMenu>
         <Button as="summary">{header}</Button>
         <SelectMenu.Modal>

@@ -12,6 +12,10 @@ body {
   line-height: 1.5;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -83,4 +87,8 @@ code {
 
 .grid-item-button {
   padding: 5px;
+}
+
+.display-contents {
+  display: contents;
 }

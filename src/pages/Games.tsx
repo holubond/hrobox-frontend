@@ -11,6 +11,7 @@ import { Tag } from './Tags';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { allowedDurations, Duration } from '../model/Duration';
 import SelectValues from '../components/SelectValues';
+import useForceUpdate from '../hooks/useForceUpdate';
 
 export type AgeGroup = 'K' | 'S' | 'T' | 'A';
 export type Game = {
@@ -45,6 +46,7 @@ const Games = () => {
   const [allTags, setAllTags] = useState<Tag[]>([]);
   const [allRemainingTags, setAllRemainingTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const forceUpdate = useForceUpdate();
 
   const clickTag = (tag: Tag) => {
     let newTag = selectedTags;
@@ -53,6 +55,7 @@ const Games = () => {
     } else {
       newTag = newTag.filter((element) => element !== tag);
     }
+    forceUpdate();
     setSelectedTags(newTag);
   };
 
@@ -144,11 +147,13 @@ const Games = () => {
   }, [setSelectedDurations]);
   return (
     <>
-      <Box sx={{ width: '90%', display: 'flex', flexDirection: 'row' }}>
-        <form onSubmit={getFilteredGames}>
-
+      <Box sx={{
+        width: '100%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
+      }}
+      >
+        <form onSubmit={getFilteredGames} className="display-contents">
           {/* Name contain */}
-          <FormGroup>
+          <FormGroup sx={{ margin: '0' }}>
             <TextInput
               placeholder={trans('Name contains')}
               value={name}
@@ -174,7 +179,7 @@ const Games = () => {
           />
 
           {/* number of players */}
-          <FormGroup>
+          <FormGroup sx={{ margin: '0' }}>
             <TextInput
               placeholder={trans('Number of players')}
               value={players}
@@ -183,7 +188,7 @@ const Games = () => {
           </FormGroup>
 
           {/* Tags */}
-          <FormGroup>
+          <FormGroup sx={{ margin: '0' }}>
             <SelectMenu>
               <Button as="summary">{trans('Tags')}</Button>
               <SelectMenu.Modal>
@@ -191,7 +196,7 @@ const Games = () => {
                 <SelectMenu.Filter placeholder={trans('Filter tags')} value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
                 <SelectMenu.List>
                   {allRemainingTags.map((tag) => (
-                    <SelectMenu.Item onClick={() => clickTag(tag)}>
+                    <SelectMenu.Item onClick={(e) => { e.preventDefault(); clickTag(tag); }}>
                       {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
                     </SelectMenu.Item>
                   ))}
@@ -202,14 +207,16 @@ const Games = () => {
           </FormGroup>
 
           {/* Author contain */}
-          <FormGroup>
+          <FormGroup sx={{ margin: '0' }}>
             <TextInput
               placeholder={trans("Author's name contains")}
               value={author}
               onChange={(e: any) => setAuthor(e.target.value)}
             />
           </FormGroup>
+
           <SubmitButton loading={loading} />
+
         </form>
       </Box>
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
