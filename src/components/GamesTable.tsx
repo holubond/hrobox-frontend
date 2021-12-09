@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Label } from '@primer/components';
 import { ChevronRightIcon } from '@primer/octicons-react';
-import { AgeGroup, Game } from '../pages/Games';
+import { Game } from '../pages/Games';
 import logo from '../assets/people.svg';
 import { useTranslation } from '../hooks/useTranslation';
+import { AgeGroup } from '../model/AgeGroup';
 
 type Props = {
   gamesData: Game[]

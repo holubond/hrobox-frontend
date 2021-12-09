@@ -5,8 +5,9 @@ import axios from 'axios';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
-import { AgeGroup, Duration } from './Games';
 import { mapAgeGrColor } from '../components/GamesTable';
+import { Duration } from '../model/Duration';
+import { AgeGroup } from '../model/AgeGroup';
 
 type Game = {
   id: number,

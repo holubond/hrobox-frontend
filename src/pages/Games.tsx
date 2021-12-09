@@ -12,8 +12,8 @@ import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { allowedDurations, Duration } from '../model/Duration';
 import SelectValues from '../components/SelectValues';
 import useForceUpdate from '../hooks/useForceUpdate';
+import { AgeGroup } from '../model/AgeGroup';
 
-export type AgeGroup = 'K' | 'S' | 'T' | 'A';
 export type Game = {
   id: number,
   version: number,
