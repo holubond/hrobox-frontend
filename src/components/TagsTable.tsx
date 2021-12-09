@@ -3,16 +3,18 @@ import React, { FC } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
 import EditTag from './EditTagDialog';
+import RemoveTag from './RemoveTag';
 
 type Props = {
-  tagsData: Tag[]
+  tagsData: Tag[],
+  reloadTags: () => void
 }
 
-const TagsTable: FC<Props> = ({ tagsData }) => {
+const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
   const trans = useTranslation();
 
   return (
-    <Box className="grid-table" style={{ gridTemplateColumns: '4fr 4fr 1fr' }}>
+    <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 55px 55px' }}>
       <Box className="grid-table-heading">
         <Box className="grid-item">{trans('TagsColumnCzechName')}</Box>
         <Box className="grid-item">{trans('TagsColumnEnglishName')}</Box>
@@ -26,9 +28,11 @@ const TagsTable: FC<Props> = ({ tagsData }) => {
           <Box className="grid-item">
             <EditTag tagsId={tag.id} tagsCsName={tag.nameCs} tagsEnName={tag.nameEn} />
           </Box>
+          <Box className="grid-item">
+            <RemoveTag tagsId={tag.id} reloadTags={reloadTags} />
+          </Box>
         </Box>
       ))}
-
     </Box>
   );
 };
