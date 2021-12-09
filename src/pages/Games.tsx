@@ -152,7 +152,7 @@ const Games = () => {
     <>
       {(user.role === 'Verified' || user.role === 'Admin') ? (
         <Box>
-          <RouterLink to="/game/add">Create game</RouterLink>
+          <RouterLink to="/game/add">{trans('CreateGame')}</RouterLink>
         </Box>
       ) : ('')}
       <Box sx={{

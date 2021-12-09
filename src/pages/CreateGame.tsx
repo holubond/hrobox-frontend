@@ -124,15 +124,15 @@ const CreateGame: FC = () => {
     }
     setAllRemainingTags(newFilteredTags);
   };
-  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
-  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
-  const RULES_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRuleCs')));
-  const RULES_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRuleEn')));
-  const MIN_SCHEMA = Joi.number().required().error(() => new Error(trans('ErrEmptyNameCs')));
-  const MAX_SCHEMA = Joi.number().required().error(() => new Error(trans('ErrEmptyNameCs')));
-  const DUR_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
-  const AGE_SCHEMA = Joi.array().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
-  const TAG_SCHEMA = Joi.array().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
+  const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
+  const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
+  const RULES_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRule')));
+  const RULES_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRule')));
+  const MIN_SCHEMA = Joi.number().required().error(() => new Error(trans('ErrMin')));
+  const MAX_SCHEMA = Joi.number().required().error(() => new Error(trans('ErrMax')));
+  const DUR_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrDuration')));
+  const AGE_SCHEMA = Joi.array().min(1).required().error(() => new Error(trans('ErrAge')));
+  const TAG_SCHEMA = Joi.array().min(1).required().error(() => new Error(trans('ErrTag')));
 
   const submit = (e: any) => {
     e.preventDefault();
@@ -268,7 +268,7 @@ const CreateGame: FC = () => {
       <form onSubmit={submit} className="dialog-form">
         <ValidatedFormGroup message={nameCsError}>
           <FormGroup.Label>
-            Name cs
+            {trans('NameCs')}
           </FormGroup.Label>
           <TextInput
             name="nameCs"
@@ -278,7 +278,7 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         <ValidatedFormGroup message={nameEnError}>
           <FormGroup.Label>
-            Name en
+            {trans('NameEn')}
           </FormGroup.Label>
           <TextInput
             name="nameEn"
@@ -288,7 +288,7 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         <ValidatedFormGroup message={ruleCsError}>
           <FormGroup.Label>
-            Rules cs
+            {trans('RulesCs')}
           </FormGroup.Label>
           <TextInput
             as="TextArea"
@@ -299,7 +299,7 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         <ValidatedFormGroup message={ruleEnError}>
           <FormGroup.Label>
-            Rules en
+            {trans('RulesEn')}
           </FormGroup.Label>
           <TextInput
             as="TextArea"
@@ -310,7 +310,7 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         <ValidatedFormGroup message={minError}>
           <FormGroup.Label>
-            Number of players min
+            {trans('NumberOfPlayersMin')}
           </FormGroup.Label>
           <TextInput
             name="min"
@@ -320,7 +320,7 @@ const CreateGame: FC = () => {
         </ValidatedFormGroup>
         <ValidatedFormGroup message={maxError}>
           <FormGroup.Label>
-            Number of players max
+            {trans('NumberOfPlayersMax')}
           </FormGroup.Label>
           <TextInput
             name="max"
@@ -331,9 +331,9 @@ const CreateGame: FC = () => {
         {/* duration */}
         <ValidatedFormGroup message={durError}>
           <SelectMenu>
-            <Button as="summary">Duration</Button>
+            <Button as="summary">{trans('Duration')}</Button>
             <SelectMenu.Modal>
-              <SelectMenu.Header>Duration</SelectMenu.Header>
+              <SelectMenu.Header>{trans('Duration')}</SelectMenu.Header>
               <SelectMenu.List>
                 {durationAll.map((dur) => (
                   <SelectMenu.Item onClick={() => clickDur(dur)}>
@@ -352,9 +352,9 @@ const CreateGame: FC = () => {
         {/* Age */}
         <ValidatedFormGroup message={ageError}>
           <SelectMenu>
-            <Button as="summary">Age groups</Button>
+            <Button as="summary">{trans('Age groups')}</Button>
             <SelectMenu.Modal>
-              <SelectMenu.Header>Age groups</SelectMenu.Header>
+              <SelectMenu.Header>{trans('Age groups')}</SelectMenu.Header>
               <SelectMenu.List>
                 {ageGroupsAll.map((age) => (
                   <SelectMenu.Item onClick={() => clickAge(age)}>
@@ -375,7 +375,7 @@ const CreateGame: FC = () => {
         {/* Tags */}
         <ValidatedFormGroup message={tagsError}>
           <SelectMenu>
-            <Button as="summary">Tags</Button>
+            <Button as="summary">{trans('Tags')}</Button>
             <SelectMenu.Modal>
               <SelectMenu.Header>Tags</SelectMenu.Header>
               <SelectMenu.Filter placeholder="Filter projects" value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
