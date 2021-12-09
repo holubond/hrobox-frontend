@@ -33,6 +33,10 @@ const Role = () => {
     submit();
   }, []);
 
+  if (user.role !== 'Banned' && user.role !== 'NotVerified') {
+    history.push('/');
+  }
+
   return (
     <Box sx={{ textAlign: 'center' }}>
       {user.role === 'Banned' ? (

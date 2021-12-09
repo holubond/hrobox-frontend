@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import {
   Dialog, Box, Header, FormGroup, TextInput
@@ -15,6 +15,14 @@ import { Languages } from './LanguageSwitch';
 import SubmitButton from './SubmitButton';
 import RouterLink from './RouterLink';
 import PasswordInput from './PasswordInput';
+import { Lang } from '../model/Lang';
+import { UserRole } from '../model/Role';
+
+type ResBody = {
+  jwt: string,
+  role: UserRole,
+  lang: Lang
+};
 
 const LoginDialog: FC = () => {
   const trans = useTranslation();
@@ -33,8 +41,14 @@ const LoginDialog: FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [, setLanguage] = useLanguage();
 
-  useEffect(() => {
-  }, [loading]);
+  const setStateToDefault = () => {
+    setEmail('');
+    setEmailError('');
+    setPassword('');
+    setPasswordError('');
+    setLoading(false);
+    setOpen(false);
+  };
 
   const submit = (e: any) => {
     e.preventDefault();
@@ -69,14 +83,22 @@ const LoginDialog: FC = () => {
       password
     })
       .then((response) => {
+        const resBody: ResBody = response.data;
         setUserIn({
-          jwt: response.data.jwt,
-          role: response.data.role
+          jwt: resBody.jwt,
+          role: resBody.role
         });
-        localStorage.setItem('jwt', response.data.jwt);
-        localStorage.setItem('role', response.data.role);
-        setLanguage(response.data.lang as Languages);
-        localStorage.setItem('lang', response.data.lang as Languages);
+        localStorage.setItem('jwt', resBody.jwt);
+        localStorage.setItem('role', resBody.role);
+        setLanguage( resBody.lang as Languages);
+        localStorage.setItem('lang', resBody.lang as Languages);
+        setStateToDefault();
+
+        if (resBody.role === 'Banned' || resBody.role === 'NotVerified') {
+          history.push('/role');
+        } else {
+          history.push('/');
+        }
       })
       .catch((error) => {
         switch (error.response.status) {
@@ -92,7 +114,6 @@ const LoginDialog: FC = () => {
       }).finally(() => {
         setLoading(false);
       });
-    history.push('/');
   };
 
   return (
@@ -104,14 +125,14 @@ const LoginDialog: FC = () => {
       <Dialog
         returnFocusRef={returnFocusRef}
         isOpen={isOpen}
-        onDismiss={() => setOpen(false)}
+        onDismiss={() => setStateToDefault()}
         aria-labelledby="header-id"
       >
         <Dialog.Header id="header-id">{trans('Log')}</Dialog.Header>
 
         <Box p={3}>
 
-          <form onSubmit={submit}>
+          <form onSubmit={submit} className="dialog-form">
             <ValidatedFormGroup message={emailError}>
               <FormGroup.Label>
                 Email
@@ -127,19 +148,19 @@ const LoginDialog: FC = () => {
                 {trans('Password')}
               </FormGroup.Label>
               <PasswordInput value={password} onChange={(e: any) => setPassword(e.target.value)} />
+              <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
+                {trans('ForgPassword')}
+              </RouterLink>
             </ValidatedFormGroup>
 
-            <SubmitButton loading={loading} />
-          </form>
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
-              {trans('ForgPassword')}
-            </RouterLink>
             <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
               {trans('Registration')}
             </RouterLink>
-          </Box>
+            <SubmitButton loading={loading}>
+              {trans('Login')}
+            </SubmitButton>
+          </form>
+
         </Box>
       </Dialog>
 
