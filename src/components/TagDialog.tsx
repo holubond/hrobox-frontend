@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import {
   Dialog, Box, FormGroup, TextInput, ButtonPrimary, StyledOcticon
@@ -17,7 +16,6 @@ import handleErrors from '../utils/handleErrors';
 const TagDialog: FC = () => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
-  const navigate = useHistory();
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
@@ -69,9 +67,6 @@ const TagDialog: FC = () => {
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 403:
-            navigate.push('/role');
-            break;
           case 409:
             if (error.response.data.message === 'nameEn') {
               alert(trans('TagExistsEn'));
@@ -79,13 +74,8 @@ const TagDialog: FC = () => {
               alert(trans('TagExistsCs'));
             }
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);
