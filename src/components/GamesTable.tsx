@@ -40,7 +40,7 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
   };
 
   const rowClick = (id: number, version: number) => {
-    history.push(`/games/${id}/version/${version}`);
+    history.push(`/game/${id}/version/${version}`);
   };
   return (
     <Box className="grid-table" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 4fr 1fr 1fr 40px' }}>

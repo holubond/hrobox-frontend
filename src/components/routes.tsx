@@ -24,7 +24,7 @@ const Routes = () => (
       <ResetPass />
     </Route>
     <Route
-      path="/games/:id/version/:version"
+      path="/game/:id/version/:version"
     >
       <GameDetail />
     </Route>
