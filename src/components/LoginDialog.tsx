@@ -136,10 +136,10 @@ const LoginDialog: FC = () => {
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
             <RouterLink to="/forgot" onClick={() => { setOpen(false); }}>
-              Zapoměl jste heslo?
+              {trans('ForgPassword')}
             </RouterLink>
             <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
-              Registration
+              {trans('Registration')}
             </RouterLink>
           </Box>
         </Box>
