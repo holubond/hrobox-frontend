@@ -10,6 +10,16 @@ type Props = {
   gamesData: Game[]
 }
 
+export const mapAgeGrColor = (ageGroup: AgeGroup) => {
+  if (ageGroup === 'K') {
+    return 'Pink';
+  } if (ageGroup === 'S') {
+    return 'Blue';
+  } if (ageGroup === 'T') {
+    return 'Red';
+  }
+  return 'Green';
+};
 const GamesTable: FC<Props> = ({ gamesData }) => {
   const trans = useTranslation();
   const history = useHistory();
@@ -23,23 +33,13 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
     }
     return trans('Adult');
   };
-  const mapAgeGrColor = (ageGroup: AgeGroup) => {
-    if (ageGroup === 'K') {
-      return 'Pink';
-    } if (ageGroup === 'S') {
-      return 'Blue';
-    } if (ageGroup === 'T') {
-      return 'Red';
-    }
-    return 'Green';
-  };
   const reformatDate = (at: string) => {
     const date = new Date(at);
     return date.toDateString();
   };
 
   const rowClick = (id: number, version: number) => {
-    history.push(`/game/${id}/version/${version}`);
+    history.push(`/games/${id}/version/${version}`);
   };
   return (
     <Box className="grid-table" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 4fr 1fr 1fr 40px' }}>
