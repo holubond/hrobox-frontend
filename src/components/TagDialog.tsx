@@ -69,9 +69,6 @@ const TagDialog: FC = () => {
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 403:
-            navigate.push('/role');
-            break;
           case 409:
             if (error.response.data.message === 'nameEn') {
               alert(trans('TagExistsEn'));
@@ -79,13 +76,9 @@ const TagDialog: FC = () => {
               alert(trans('TagExistsCs'));
             }
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
+            break;
         }
       }).finally(() => {
         setLoading(false);

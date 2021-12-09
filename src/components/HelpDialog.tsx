@@ -71,7 +71,13 @@ const HelpDialog: FC = () => {
         alert(response.data.message);
       })
       .catch((error) => {
-        handleErrors(error);
+        switch(error.response.status) {
+          case 401: 
+            alert(error.response);
+            break;
+          default:
+            handleErrors(error.response.status)
+        }
       }).finally(() => {
         setOpen(false);
         setLoading(false);
