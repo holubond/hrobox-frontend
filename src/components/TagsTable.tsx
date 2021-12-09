@@ -19,6 +19,7 @@ const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
         <Box className="grid-item">{trans('TagsColumnCzechName')}</Box>
         <Box className="grid-item">{trans('TagsColumnEnglishName')}</Box>
         <Box className="grid-item" />
+        <Box className="grid-item" />
       </Box>
 
       {tagsData.map( (tag) => (
