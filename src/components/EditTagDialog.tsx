@@ -75,8 +75,8 @@ const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 403:
-            navigate.push('/role');
+          case 404:
+            alert(error.response.data.message);
             break;
           case 409:
             if (error.response.data.message === 'nameEn') {
@@ -85,16 +85,8 @@ const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
               alert(trans('TagExistsCs'));
             }
             break;
-          case 404:
-            alert(error.response.data.message);
-            break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);
@@ -115,7 +107,7 @@ const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">{trans('AddTag')}</Dialog.Header>
+        <Dialog.Header id="header-id">{trans('EditTag')}</Dialog.Header>
 
         <Box p={4}>
 

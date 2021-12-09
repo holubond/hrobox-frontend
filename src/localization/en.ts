@@ -34,5 +34,6 @@ export default {
   RemoveTag: 'Remove tag',
   'Do you really want to delete this tag ? Tag will be removed from all games!': 'Do you really want to delete this tag? Tag will be removed from all games!',
   Cancel: 'Cancel',
-  Delete: 'Delete'
+  Delete: 'Delete',
+  EditTag: 'Edit tag'
 };
