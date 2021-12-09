@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, FormGroup, Label, SelectMenu, TextInput
+  Box, Button, FormGroup, Label, SelectMenu, Spinner, TextInput
 } from '@primer/components';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
@@ -31,6 +31,7 @@ export type Game = {
 const Games = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingSpin, setLoadingSpin] = useState(false);
   useEffect(() => {
   }, [loading]);
   const [selectedLang] = useLanguage();
@@ -115,6 +116,7 @@ const Games = () => {
       });
   };
   const getAllGames = () => {
+    setLoadingSpin(true);
     axios.post(routeTo('/api/games'), { lang: selectedLang })
       .then((response) => {
         setGames(response.data as Game[]);
@@ -135,6 +137,8 @@ const Games = () => {
       })
       .catch((error) => {
         handleErrors(error);
+      }).finally(() => {
+        setLoadingSpin(false);
       });
   };
   useEffect(() => {
@@ -220,7 +224,11 @@ const Games = () => {
         </form>
       </Box>
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
-        <GamesTable gamesData={games} />
+        {loadingSpin
+          ? (
+            <Spinner size="large" marginX="50%" marginY="22%" color="Black" />
+          )
+          : <GamesTable gamesData={games} /> }
       </Box>
     </>
   );
