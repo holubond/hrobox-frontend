@@ -2,7 +2,6 @@ import { Button, FormGroup, SelectMenu } from '@primer/components';
 import React, { FC } from 'react';
 import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
-import useForceUpdate from '../hooks/useForceUpdate';
 
 type Props = {
   header: string,
@@ -16,8 +15,6 @@ type Props = {
 const SelectValues: FC<Props> = ({
   header, allowedValues, values, setValues, mapValues = () => {}
 }) => {
-  const forceUpdate = useForceUpdate();
-
   const toggleValue = (d: any) => {
     const newDurations = values;
     const index = newDurations.indexOf(d);
@@ -26,8 +23,7 @@ const SelectValues: FC<Props> = ({
     } else {
       newDurations.splice(index, 1);
     }
-    forceUpdate();
-    setValues(newDurations);
+    setValues([...newDurations]);
   };
 
   return (
