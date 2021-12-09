@@ -94,7 +94,7 @@ const HelpDialog: FC = () => {
         <Dialog.Header id="header-id">{trans('ContactSupport')}</Dialog.Header>
 
         <Box p={3}>
-          <form onSubmit={submit}>
+          <form onSubmit={submit} className="dialog-form">
             {userIn.jwt === '' ? (
               <ValidatedFormGroup message={emailError}>
                 <FormGroup.Label>
@@ -111,8 +111,9 @@ const HelpDialog: FC = () => {
                 {trans('Message')}
               </FormGroup.Label>
               <TextInput
-                width="165px"
+                width="100%"
                 as="textarea"
+                sx={{ display: 'block', boxSizing: 'border-box' }}
                 name="message"
                 value={message}
                 onChange={(e: any) => setMessage(e.target.value)}
