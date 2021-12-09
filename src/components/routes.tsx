@@ -9,6 +9,7 @@ import ResetPass from '../pages/ResetPass';
 import Registration from '../pages/Registration';
 import Forgot from '../pages/Forgot';
 import GameDetail from '../pages/GameDetail';
+import CreateGame from '../pages/CreateGame';
 
 const Routes = () => (
   <Switch>
@@ -33,6 +34,7 @@ const Routes = () => (
     >
       <GameDetail />
     </Route>
+    <Route path="/game/add" exact component={CreateGame} />
   </Switch>
 );
 export default Routes;
