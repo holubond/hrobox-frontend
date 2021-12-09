@@ -11,6 +11,8 @@ import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
 import { Tag } from './Tags';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import RouterLink from '../components/RouterLink';
 
 export type AgeGroup = 'K' | 'S' | 'T' | 'A';
 export type Duration = '<15' | '15-30' | '30-60' | '60+';
@@ -35,6 +37,7 @@ const Games = () => {
   }, [loading]);
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
+  const [user] = useLoggedInUser();
 
   const [name, setName] = useState('');
   const [players, setPlayers] = useState<number>();
@@ -119,7 +122,6 @@ const Games = () => {
   const getFilteredGames = (e: any) => {
     e.preventDefault();
     setLoading(true);
-    // const filter = setupFilterPost();
     const filter = setupFilterPost();
     axios.post(routeTo('/api/games'), filter)
       .then((response) => {
@@ -161,6 +163,11 @@ const Games = () => {
   }, [selectedDuration]);
   return (
     <>
+      {(user.role === 'Verified' || user.role === 'Admin') ? (
+        <Box>
+          <RouterLink to="/game/add">Create game</RouterLink>
+        </Box>
+      ) : ('')}
       <Box sx={{ width: '90%', display: 'flex', flexDirection: 'row' }}>
         <form onSubmit={getFilteredGames}>
           {/* Name contain */}
