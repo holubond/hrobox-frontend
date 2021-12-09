@@ -21,12 +21,19 @@ export default {
   AddTag: 'Přidat tag',
   NameCs: 'Český název',
   NameEn: 'Anglický název',
-  TagExistsEn: 'Tag s takovým anglickým názvem již existuje',
-  TagExistsCs: 'Tag s takovým českým názvem již existuje',
+  TagExistsEn: 'Tag s tímto anglickým názvem již existuje',
+  TagExistsCs: 'Tag s tímto českým názvem již existuje',
   'User with given email does not exist': 'Uživatel s daným emailem neexistuje',
   'Error on our side': 'Chyba na naší straně, kontaktuje prosím podporu.',
   userAlreadyExists: 'Uživatel s daným emailem již existuje',
   WrongPassword: 'Špatné heslo!',
   TagsColumnCzechName: 'Český název',
-  TagsColumnEnglishName: 'Anglický název'
+  TagsColumnEnglishName: 'Anglický název',
+  ErrEmptyNameCs: 'Pole "Český název" nesmí být prázdné',
+  ErrEmptyNameEn: 'Pole "Anglický název" nesmí být prázdné',
+  RemoveTag: 'Odstranit tag',
+  'Do you really want to delete this tag ? Tag will be removed from all games!': 'Opravdu chceš odstranit tag? Tag bude odebrán ze všech her!',
+  Cancel: 'Zrušit',
+  Delete: 'Smazat',
+  EditTag: 'Upravit tag'
 };

@@ -1,37 +1,44 @@
 import { Box } from '@primer/components';
-import { ChevronRightIcon } from '@primer/octicons-react';
 import React, { FC } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { Tag } from '../pages/Tags';
+import EditTag from './EditTag';
+import RemoveTag from './RemoveTag';
 
 type Props = {
-  tagsData: Tag[]
+  tagsData: Tag[],
+  reloadTags: () => void
 }
 
-const TagsTable: FC<Props> = ({ tagsData }) => {
+const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
   const trans = useTranslation();
-  const history = useHistory();
 
-  const rowClick = (id: number) => {
-    history.push(`/tag/${id}`);
-  };
   return (
-    <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 50px' }}>
+    <Box className="grid-table" style={{ gridTemplateColumns: '1fr 1fr 35px 35px' }}>
       <Box className="grid-table-heading">
-        <Box className="grid-item">{trans('TagsColumnCzechName')}</Box>
-        <Box className="grid-item">{trans('TagsColumnEnglishName')}</Box>
-        <Box className="grid-item" />
+        <Box className="grid-item grid-item-data">{trans('TagsColumnCzechName')}</Box>
+        <Box className="grid-item grid-item-data">{trans('TagsColumnEnglishName')}</Box>
+        <Box className="grid-item grid-item-button" />
+        <Box className="grid-item grid-item-button" />
       </Box>
 
       {tagsData.map( (tag) => (
-        <Box className="grid-table-row" onClick={() => rowClick(tag.id)}>
-          <Box className="grid-item">{tag.nameCs}</Box>
-          <Box className="grid-item">{tag.nameEn}</Box>
-          <Box className="grid-item"><ChevronRightIcon className="grid-item grid-icon" size={16} /></Box>
+        <Box key={tag.id} className="grid-table-row">
+          <Box className="grid-item grid-item-data">{tag.nameCs}</Box>
+          <Box className="grid-item grid-item-data">{tag.nameEn}</Box>
+          <Box className="grid-item grid-item-button">
+            <EditTag
+              tagsId={tag.id}
+              tagsCsName={tag.nameCs}
+              tagsEnName={tag.nameEn}
+              reloadTags={reloadTags}
+            />
+          </Box>
+          <Box className="grid-item grid-item-button" sx={{ padding: '5px' }}>
+            <RemoveTag tagsId={tag.id} reloadTags={() => { reloadTags(); }} />
+          </Box>
         </Box>
       ))}
-
     </Box>
   );
 };

@@ -29,9 +29,10 @@ const Tags = () => {
     getTags();
   }, []);
   return (
-    <Box sx={{
-      width: '60%', display: 'flex', flexDirection: 'column', fontSize: '20px'
-    }}
+    <Box
+      sx={{
+        width: '60%', minWidth: 'fit-content', display: 'flex', flexDirection: 'column'
+      }}
     >
       <span>
         Some nice heading (total
@@ -39,8 +40,12 @@ const Tags = () => {
         {tags.length}
         )
       </span>
-      <span><TagDialog /></span>
-      <TagsTable tagsData={tags} />
+      <Box sx={{ alignSelf: 'flex-end', padding: '5px 0px' }}>
+        <TagDialog />
+      </Box>
+      <Box>
+        <TagsTable tagsData={tags} reloadTags={getTags} />
+      </Box>
     </Box>
   );
 };

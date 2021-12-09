@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import {
-  Dialog, Box, FormGroup, TextInput, ButtonPrimary, StyledOcticon
+  Dialog, Box, FormGroup, TextInput, StyledOcticon, ButtonOutline, Button
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
-import { PlusIcon } from '@primer/octicons-react';
+import { PencilIcon } from '@primer/octicons-react';
 import ValidatedFormGroup from './ValidatedFormGroup';
 import routeTo from '../utils/routeTo';
 import { useTranslation } from '../hooks/useTranslation';
@@ -14,10 +13,18 @@ import SubmitButton from './SubmitButton';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import handleErrors from '../utils/handleErrors';
 
-const TagDialog: FC = () => {
+type Props = {
+    tagsId: number,
+    tagsCsName: String,
+    tagsEnName: String,
+    reloadTags: () => void
+  }
+
+const EditTag: FC<Props> = ({
+  tagsId, tagsCsName, tagsEnName, reloadTags
+}) => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
-  const navigate = useHistory();
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
@@ -25,9 +32,9 @@ const TagDialog: FC = () => {
   const returnFocusRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const [nameCs, setNameCs] = useState('');
+  const [nameCs, setNameCs] = useState(tagsCsName);
   const [nameCsError, setNameCsError] = useState('');
-  const [nameEn, setNameEn] = useState('');
+  const [nameEn, setNameEn] = useState(tagsEnName);
   const [nameEnError, setNameEnError] = useState('');
 
   const submit = (e: any) => {
@@ -59,18 +66,18 @@ const TagDialog: FC = () => {
       return;
     }
 
-    axios.post(routeTo('/api/tag'), {
-      nameCs,
-      nameEn
+    axios.put(routeTo(`/api/tag/${tagsId}`), {
+      nameEn,
+      nameCs
     }, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then(() => {
         setOpen(false);
-        window.location.reload();
+        reloadTags();
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 403:
-            navigate.push('/role');
+          case 404:
+            alert(error.response.data.message);
             break;
           case 409:
             if (error.response.data.message === 'nameEn') {
@@ -79,13 +86,8 @@ const TagDialog: FC = () => {
               alert(trans('TagExistsCs'));
             }
             break;
-          case 400:
-            handleErrors(error);
-            break;
-          case 500:
-            handleErrors(error);
-            break;
           default:
+            handleErrors(error);
         }
       }).finally(() => {
         setLoading(false);
@@ -96,10 +98,9 @@ const TagDialog: FC = () => {
   }, [loading]);
   return (
     <>
-      <ButtonPrimary onClick={() => setOpen(true)}>
-        <StyledOcticon icon={PlusIcon} size={16} mr={2} />
-        {trans('AddTag')}
-      </ButtonPrimary>
+      <ButtonOutline border-radius="0px" padding="0" width="25px" height="25px" onClick={() => setOpen(true)}>
+        <StyledOcticon align-self="center" icon={PencilIcon} size={15} />
+      </ButtonOutline>
 
       <Dialog
         returnFocusRef={returnFocusRef}
@@ -107,7 +108,7 @@ const TagDialog: FC = () => {
         onDismiss={() => setOpen(false)}
         aria-labelledby="header-id"
       >
-        <Dialog.Header id="header-id">{trans('AddTag')}</Dialog.Header>
+        <Dialog.Header id="header-id">{trans('EditTag')}</Dialog.Header>
 
         <Box p={4}>
 
@@ -134,7 +135,15 @@ const TagDialog: FC = () => {
               />
             </ValidatedFormGroup>
 
-            <SubmitButton loading={loading} />
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', alignSelf: 'flex-end', flexDirection: 'row' }}>
+                <Button marginRight={2} onClick={() => setOpen(false)}>
+                  {trans('Cancel')}
+                </Button>
+                <SubmitButton loading={loading} />
+              </Box>
+
+            </Box>
           </form>
 
         </Box>
@@ -143,4 +152,4 @@ const TagDialog: FC = () => {
     </>
   );
 };
-export default TagDialog;
+export default EditTag;
