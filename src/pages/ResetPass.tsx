@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Box, Button, FormGroup, Spinner
+  Box, FormGroup, Heading, Pagehead
 } from '@primer/components';
 import { useHistory, useParams } from 'react-router-dom';
 import Joi from 'joi';
@@ -10,6 +10,7 @@ import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
 import PasswordInput from '../components/PasswordInput';
+import SubmitButton from '../components/SubmitButton';
 
 const ResetPass = () => {
   const trans = useTranslation();
@@ -21,9 +22,6 @@ const ResetPass = () => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
-  useEffect(() => {
-  }, [loading]);
 
   const submit = (e: any) => {
     e.preventDefault();
@@ -49,6 +47,7 @@ const ResetPass = () => {
     })
       .then((response) => {
         alert(response.data.message);
+        history.push('/');
       })
       .catch((error) => {
         switch (error.response.status) {
@@ -61,15 +60,14 @@ const ResetPass = () => {
       }).finally(() => {
         setLoading(false);
       });
-    history.push('/');
   };
   return (
-    <Box p={3}>
-
-      <form onSubmit={submit}>
+    <Box p={3} maxWidth="440px" width="95%">
+      <Pagehead><Heading>{trans('SetANewPassword')}</Heading></Pagehead>
+      <form onSubmit={submit} className="dialog-form">
         <ValidatedFormGroup message={passwordError}>
           <FormGroup.Label>
-            {trans('Password')}
+            {trans('NewPassword')}
           </FormGroup.Label>
           <PasswordInput
             value={password}
@@ -77,7 +75,7 @@ const ResetPass = () => {
           />
         </ValidatedFormGroup>
 
-        {loading ? <Spinner color="Black" /> : <Button type="submit">{trans('Submit')}</Button> }
+        <SubmitButton loading={loading} />
       </form>
     </Box>
   );
