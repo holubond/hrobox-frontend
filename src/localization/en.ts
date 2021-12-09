@@ -1,4 +1,6 @@
 export default {
+  SetANewPassword: 'Set a new password',
+  NewPassword: 'New password (at least 6 characters)',
   Games: 'List of games',
   Login: 'Login',
   ErrEmail: 'This field must contain valid email address',

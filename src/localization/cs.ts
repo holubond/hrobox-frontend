@@ -1,4 +1,6 @@
 export default {
+  SetANewPassword: 'Změna hesla',
+  NewPassword: 'Nové heslo (aspoň 6 znaků)',
   Games: 'Seznam her',
   Login: 'Přihlásit se',
   ErrEmail: 'Toto pole musí obsahovat validní emailovou adresu',
