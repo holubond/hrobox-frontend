@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import {
   Dialog, Box, FormGroup, TextInput, StyledOcticon, ButtonOutline, ButtonPrimary
@@ -17,13 +16,15 @@ import handleErrors from '../utils/handleErrors';
 type Props = {
     tagsId: number,
     tagsCsName: String,
-    tagsEnName: String
+    tagsEnName: String,
+    reloadTags: () => void
   }
 
-const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
+const EditTag: FC<Props> = ({
+  tagsId, tagsCsName, tagsEnName, reloadTags
+}) => {
   const trans = useTranslation();
   const [user] = useLoggedInUser();
-  const navigate = useHistory();
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameCs')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyNameEn')));
 
@@ -71,7 +72,7 @@ const EditTag: FC<Props> = ({ tagsId, tagsCsName, tagsEnName }) => {
     }, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then(() => {
         setOpen(false);
-        navigate.go(0);
+        reloadTags();
       })
       .catch((error) => {
         switch (error.response.status) {

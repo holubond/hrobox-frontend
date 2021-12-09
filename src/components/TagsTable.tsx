@@ -23,14 +23,19 @@ const TagsTable: FC<Props> = ({ tagsData, reloadTags }) => {
       </Box>
 
       {tagsData.map( (tag) => (
-        <Box className="grid-table-row">
+        <Box key={tag.id} className="grid-table-row">
           <Box className="grid-item grid-item-data">{tag.nameCs}</Box>
           <Box className="grid-item grid-item-data">{tag.nameEn}</Box>
           <Box className="grid-item grid-item-button">
-            <EditTag tagsId={tag.id} tagsCsName={tag.nameCs} tagsEnName={tag.nameEn} />
+            <EditTag
+              tagsId={tag.id}
+              tagsCsName={tag.nameCs}
+              tagsEnName={tag.nameEn}
+              reloadTags={reloadTags}
+            />
           </Box>
           <Box className="grid-item grid-item-button" sx={{ padding: '5px' }}>
-            <RemoveTag tagsId={tag.id} reloadTags={reloadTags} />
+            <RemoveTag tagsId={tag.id} reloadTags={() => { reloadTags(); }} />
           </Box>
         </Box>
       ))}
