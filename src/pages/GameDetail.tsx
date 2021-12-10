@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Label, Text } from '@primer/components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
@@ -32,10 +32,6 @@ const GameDetail = () => {
   const [game, setGame] = useState<Game>();
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
-  const newTo = {
-    pathname: '/game/edit',
-    param1: { game }
-  };
 
   const getDetail = () => {
     setLoading(true);
@@ -115,11 +111,9 @@ const GameDetail = () => {
         ''
       )}
       <Box>
-        <Link to={newTo}>
-          {trans('CreateGame')}
-          {' '}
-          {game}
-        </Link>
+        <RouterLink to={`/game/edit/${id}/version/${version}`}>
+          Edit Game
+        </RouterLink>
       </Box>
     </Box>
   );
