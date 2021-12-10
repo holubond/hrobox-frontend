@@ -1,0 +1,18 @@
+.RouterHeaderLink-wrapper {
+  margin-right: 16px;
+}
+
+.RouterHeaderLink {
+  font-weight: 600;
+  color: #ffffff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 4px;
+}
+
+.RouterHeaderLink:hover {
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
-import { Header } from '@primer/components';
+import { Box } from '@primer/components';
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import './RouterHeaderLink.css';
 
 type Props = {
   to: string,
@@ -8,11 +9,11 @@ type Props = {
 };
 
 const RouterLink: FC<Props> = ({ to, onClick, children }) => (
-  <Link onClick={() => { if (onClick) { onClick(); } }} to={to} style={{ textDecoration: 'none' }}>
-    <Header.Item>
+  <Box className="RouterHeaderLink-wrapper">
+    <Link className="RouterHeaderLink" onClick={() => { if (onClick) { onClick(); } }} to={to}>
       {children}
-    </Header.Item>
-  </Link>
+    </Link>
+  </Box>
 );
 
 RouterLink.defaultProps = {
