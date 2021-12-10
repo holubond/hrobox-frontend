@@ -1,4 +1,5 @@
 export default {
+  Edit: 'Edit',
   EditedThisGame: 'edited this game',
   SetANewPassword: 'Set a new password',
   NewPassword: 'New password (at least 6 characters)',

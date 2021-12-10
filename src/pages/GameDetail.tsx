@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Heading, Label, Pagehead, Spinner, Text
+  Box, Button, Heading, Label, Pagehead, Spinner, Text
 } from '@primer/components';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { PencilIcon } from '@primer/octicons-react';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
@@ -34,6 +35,7 @@ const GameDetail = () => {
   const [game, setGame] = useState<Game>();
   const [selectedLang] = useLanguage();
   const trans = useTranslation();
+  const history = useHistory();
 
   const getDetail = () => {
     setLoading(true);
@@ -71,9 +73,20 @@ const GameDetail = () => {
     >
       <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
         <Pagehead sx={{ width: '100%' }}>
-          <Heading>
-            {game.name}
-          </Heading>
+          <Box sx={{
+            display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between', alignItems: 'flex-end'
+          }}
+          >
+            <Heading>
+              {game.name}
+            </Heading>
+            <Box>
+              <Button onClick={() => { history.push(`/game/edit/${id}/version/${version}`); }}>
+                <PencilIcon size={16} />
+                <Text marginLeft="5px">{trans('Edit')}</Text>
+              </Button>
+            </Box>
+          </Box>
           <Box sx={{ display: 'inline-flex', gap: '5px' }}>
             <Text fontWeight="600">{game.createdBy}</Text>
             <Text>{trans('EditedThisGame')}</Text>
