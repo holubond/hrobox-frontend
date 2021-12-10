@@ -74,7 +74,6 @@ const EditGame: FC = () => {
 
   const initStates = (initgame: Game) => {
     if (initgame) {
-      console.log(JSON.stringify(initgame));
       setNameCs(initgame.nameCs);
       setNameEn(initgame.nameEn);
       setRuleCs(initgame.rulesCs);
@@ -87,13 +86,9 @@ const EditGame: FC = () => {
       if (selectedLang === 'cs') {
         newTag = allTags.filter((element) => initgame.tagsCs.includes(element.nameCs));
       } else {
-        console.log(allTags);
         newTag = allTags.filter((element) => initgame.tagsEn.includes(element.nameEn));
-        console.log(JSON.stringify(newTag));
       }
       setSelectedTags([...newTag]);
-
-      // setSelectedTags(selectedLang === 'cs' ? game.tagsCs : game.tagsEn);
     }
   };
   const clickDur = (duration: string) => {
@@ -117,7 +112,7 @@ const EditGame: FC = () => {
           }
           return a.nameEn.localeCompare(b.nameEn);
         });
-        setAllTags(tagStrings);
+        setAllTags([...tagStrings]);
       })
       .catch((error) => {
         handleErrors(error);
@@ -129,7 +124,6 @@ const EditGame: FC = () => {
     axios.get(routeTo('/api/game') + gameRoute)
       .then((response) => {
         setGame(response.data as Game);
-        initStates(response.data as Game);
       })
       .catch((error) => {
         handleErrors(error);
@@ -165,7 +159,7 @@ const EditGame: FC = () => {
 
     const errors: string[] = [];
 
-    if (nameCsValidationError.error && nameEn.length === 0) {
+    if (nameCsValidationError.error) {
       setNameCsError(nameCsValidationError.error.message);
       errors.push(nameCsValidationError.error.message);
     } else {
@@ -173,7 +167,7 @@ const EditGame: FC = () => {
     }
     const nameEnValidationError = NAME_EN_SCHEMA.validate(nameEn);
 
-    if (nameEnValidationError.error && nameCs.length === 0) {
+    if (nameEnValidationError.error) {
       setNameEnError(nameEnValidationError.error.message);
       errors.push(nameEnValidationError.error.message);
     } else {
@@ -181,7 +175,7 @@ const EditGame: FC = () => {
     }
     const rulesCsValidationError = RULES_CS_SCHEMA.validate(ruleCs);
 
-    if (rulesCsValidationError.error && ruleEn.length === 0) {
+    if (rulesCsValidationError.error) {
       setRuleCsError(rulesCsValidationError.error.message);
       errors.push(rulesCsValidationError.error.message);
     } else {
@@ -189,7 +183,7 @@ const EditGame: FC = () => {
     }
     const rulesEnValidationError = RULES_EN_SCHEMA.validate(ruleEn);
 
-    if (rulesEnValidationError.error && ruleCs.length === 0) {
+    if (rulesEnValidationError.error) {
       setRuleEnError(rulesEnValidationError.error.message);
       errors.push(rulesEnValidationError.error.message);
     } else {
@@ -244,30 +238,26 @@ const EditGame: FC = () => {
       const players = { min, max };
 
       const data = {
+        nameEn,
+        nameCs,
+        rulesEn: ruleEn,
+        rulesCs: ruleCs,
         nrOfPlayers: players,
-        ...nameCs.length > 0 ? { nameCs } : {},
-        ...nameEn.length > 0 ? { nameEn } : {},
-        ...ruleCs.length > 0 ? { rulesCs: ruleCs } : {},
-        ...ruleEn.length > 0 ? { rulesEn: ruleEn } : {},
+        ...{ duration: selectedDuration },
         ...selectedAge.length > 0 ? { ageGroups: selectedAge } : {},
-        ...selectedTags.length > 0 ? { tags: selectedTags.map((el) => el.id) } : {},
-        ...{ duration: selectedDuration }
+        ...selectedTags.length > 0 ? { tags: selectedTags.map((el) => el.id) } : {}
       };
       return data;
     };
     const data = setupDataPost();
-    axios.post(routeTo('/api/game'), data, { headers: { Authorization: `Bearer ${user.jwt}` } })
+    axios.put(`${routeTo('/api/game')}/${id}`, data, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then((response) => {
-        navigate.push(`/games/${response.data.id}/version/${response.data.version}`);
+        navigate.push(`/game/${id}/version/${response.data.version}`);
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 409:
-            if (error.response.data.message === 'nameEn') {
-              alert('exist');
-            } else {
-              alert('exist');
-            }
+          case 400:
+            alert(error.response.data.message);
             break;
           case 404:
             alert(error.response.data.message);
@@ -279,6 +269,9 @@ const EditGame: FC = () => {
         setLoading(false);
       });
   };
+  useEffect(() => {
+    initStates(game as Game);
+  }, [game]);
   useEffect(() => {
     loadTags();
     loadDetail();
@@ -386,9 +379,6 @@ const EditGame: FC = () => {
           </Box>
         </ValidatedFormGroup>
         {/* Tags */}
-        {JSON.stringify(allTags)}
-        KURVA________________________________________________
-        {JSON.stringify(selectedTags)}
         <ValidatedFormGroup message={tagsError}>
           <Box>
             <Text>{trans('Tags')}</Text>
