@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormGroup, TextInput } from '@primer/components';
+import {
+  Box, FormGroup, Heading, Pagehead, TextInput
+} from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +10,7 @@ import routeTo from '../utils/routeTo';
 import ValidatedFormGroup from '../components/ValidatedFormGroup';
 import SubmitButton from '../components/SubmitButton';
 import handleErrors from '../utils/handleErrors';
+import RouterLink from '../components/RouterLink';
 
 const Forgot = () => {
   const trans = useTranslation();
@@ -62,17 +65,21 @@ const Forgot = () => {
       });
   };
   return (
-    <Box p={4}>
+    <Box p={3} maxWidth="440px" width="95%">
+      <Pagehead><Heading>{trans('Pswdreneval')}</Heading></Pagehead>
       <form onSubmit={submit} className="dialog-form">
         <ValidatedFormGroup message={emailError}>
           <FormGroup.Label>
-            Email
+            {trans('EmailForRenewal')}
           </FormGroup.Label>
           <TextInput
             name="email"
             value={email}
             onChange={(e: any) => setEmail(e.target.value)}
           />
+          <RouterLink to="/registration">
+            {trans('DoYouNeedToRegister')}
+          </RouterLink>
         </ValidatedFormGroup>
         <SubmitButton loading={loading} />
       </form>

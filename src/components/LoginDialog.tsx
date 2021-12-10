@@ -154,7 +154,7 @@ const LoginDialog: FC = () => {
             </ValidatedFormGroup>
 
             <RouterLink to="/registration" onClick={() => { setOpen(false); }}>
-              {trans('Registration')}
+              {trans('DoYouNeedToRegister')}
             </RouterLink>
             <SubmitButton loading={loading}>
               {trans('Login')}
