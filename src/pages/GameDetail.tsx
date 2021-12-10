@@ -8,8 +8,9 @@ import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import { mapAgeGrColor } from '../components/GamesTable';
 import { Duration } from '../model/Duration';
 import { AgeGroup } from '../model/AgeGroup';
+import RouterLink from '../components/RouterLink';
 
-type Game = {
+export type Game = {
   id: number,
   version: number,
   name: string,
@@ -24,6 +25,7 @@ type Game = {
   ageGroups: AgeGroup[],
   tags: string[]
 }
+
 const GameDetail = () => {
   const { id, version } = useParams<{ id: string, version: string}>();
   const [, setLoading] = useState(false);
@@ -108,6 +110,11 @@ const GameDetail = () => {
       ) : (
         ''
       )}
+      <Box>
+        <RouterLink to={`/game/edit/${id}/version/${version}`}>
+          Edit Game
+        </RouterLink>
+      </Box>
     </Box>
   );
 };
