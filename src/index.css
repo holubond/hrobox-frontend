@@ -94,3 +94,7 @@ code {
 .display-contents {
   display: contents;
 }
+
+.Label {
+  cursor: pointer;
+}
