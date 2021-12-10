@@ -99,7 +99,7 @@ const GameDetail = () => {
         display: 'flex', flexDirection: 'row', width: '100%', gap: '10px'
       }}
       >
-        <Box minWidth="250px">
+        <Box minWidth="250px" width="100%">
           <Text>{game.rules}</Text>
         </Box>
         <Box sx={{
