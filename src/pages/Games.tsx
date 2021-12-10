@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, FormGroup, SelectMenu, Spinner, TextInput, Token
+  Box, Button, ButtonPrimary, FormGroup, SelectMenu, Spinner, TextInput, Token
 } from '@primer/components';
 import axios from 'axios';
 import { SyncIcon } from '@primer/octicons-react';
+import { useHistory } from 'react-router-dom';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import GamesTable from '../components/GamesTable';
@@ -11,7 +12,6 @@ import SubmitButton from '../components/SubmitButton';
 import { Tag } from './Tags';
 import { useLanguage, useTranslation } from '../hooks/useTranslation';
 import useLoggedInUser from '../hooks/useLoggedInUser';
-import RouterLink from '../components/RouterLink';
 import { allowedDurations, Duration } from '../model/Duration';
 import SelectValues from '../components/SelectValues';
 import checked from '../assets/checked.svg';
@@ -33,6 +33,7 @@ export type Game = {
   tags: string[]
 };
 const Games = () => {
+  const navigate = useHistory();
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -166,13 +167,8 @@ const Games = () => {
   }, [setSelectedDurations]);
   return (
     <>
-      {(user.role === 'Verified' || user.role === 'Admin') ? (
-        <Box>
-          <RouterLink to="/game/add">{trans('CreateGame')}</RouterLink>
-        </Box>
-      ) : ('')}
       <Box sx={{
-        width: '100%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
+        width: '99%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
       }}
       >
         <form onSubmit={getFilteredGames} className="display-contents">
@@ -250,7 +246,7 @@ const Games = () => {
         </form>
       </Box>
       <Box sx={{
-        width: '100%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
+        width: '99%', display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center', alignItems: 'flex-start'
       }}
       >
         {selectedDurations.map((dur) => (
@@ -278,6 +274,16 @@ const Games = () => {
           />
         ))}
       </Box>
+      {(user.role === 'Verified' || user.role === 'Admin') ? (
+        <Box sx={{
+          width: '99%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'
+        }}
+        >
+          <ButtonPrimary onClick={() => { navigate.push('/game/add'); }}>
+            {trans('CreateGame')}
+          </ButtonPrimary>
+        </Box>
+      ) : ('')}
       <Box sx={{ width: '99%', display: 'flex', flexDirection: 'column' }}>
         {loading
           ? (
