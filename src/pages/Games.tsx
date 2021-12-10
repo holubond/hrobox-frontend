@@ -103,7 +103,6 @@ const Games = () => {
   const setupFilterPost = () => {
     const ageGroup = { matchAll: true, values: selectedAge };
     const tags = { matchAll: true, values: selectedTags.map((e) => e.id) };
-
     const filter = {
       lang: selectedLang,
       ...author.length > 0 ? { author } : {},
@@ -111,7 +110,7 @@ const Games = () => {
       ...selectedAge.length > 0 ? { ageGroup } : {},
       ...selectedDurations.length > 0 ? { duration: selectedDurations } : {},
       ...selectedTags.length > 0 ? { tags } : {},
-      ...players !== undefined ? { players } : {}
+      ...players ? { nrOfPlayers: players } : {}
     };
     return filter;
   };

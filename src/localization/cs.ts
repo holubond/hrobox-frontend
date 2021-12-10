@@ -5,6 +5,7 @@ export default {
   NewPassword: 'Nové heslo (aspoň 6 znaků)',
   Games: 'Seznam her',
   Login: 'Přihlásit se',
+  Logout: 'Odhlásit se',
   ErrEmail: 'Toto pole musí obsahovat validní emailovou adresu',
   Submit: 'Potvrdit',
   ErrMessage: 'Zpráva nesmí být prázdná',

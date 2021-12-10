@@ -10,9 +10,7 @@ type Props = {
 const RouterLink: FC<Props> = ({ to, onClick, children }) => (
   <Link onClick={() => { if (onClick) { onClick(); } }} to={to} style={{ textDecoration: 'none' }}>
     <Header.Item>
-      <Header.Link>
-        {children}
-      </Header.Link>
+      {children}
     </Header.Item>
   </Link>
 );

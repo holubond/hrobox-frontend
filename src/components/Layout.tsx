@@ -36,7 +36,7 @@ const Layout: FC = ({ children }) => {
 
         {user.role === 'Admin' ? (
           <RouterHeaderLink to="/tags">
-            Tags
+            {trans('Tags')}
           </RouterHeaderLink>
         ) : ('')}
 
@@ -51,7 +51,7 @@ const Layout: FC = ({ children }) => {
                   localStorage.removeItem('role');
                 }}
                 >
-                  Logout
+                  {trans('Logout')}
                 </Header.Link>
               )
           }

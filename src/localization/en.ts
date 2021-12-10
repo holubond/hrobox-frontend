@@ -5,6 +5,7 @@ export default {
   NewPassword: 'New password (at least 6 characters)',
   Games: 'List of games',
   Login: 'Login',
+  Logout: 'Logout',
   ErrEmail: 'This field must contain valid email address',
   Submit: 'Submit',
   ErrMessage: 'The field Message must not be empty',
