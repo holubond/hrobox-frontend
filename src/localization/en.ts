@@ -1,5 +1,8 @@
 export default {
+  Welcome: 'Welcome to Hrobox!',
+  WelcomeSubtext: 'You may search for games freely, but you need to log in to add/edit a game...',
   EmailForRenewal: 'Email you used for the registration',
+  LetsBegin: 'Let\'s search for some games!',
   Edit: 'Edit',
   EditedThisGame: 'edited this game',
   SetANewPassword: 'Set a new password',

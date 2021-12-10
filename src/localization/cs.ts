@@ -1,5 +1,8 @@
 export default {
+  Welcome: 'Vítej v Hroboxu!',
+  WelcomeSubtext: 'Hry můžeš libovolně vyhledávat, ale pro přidání/úpravy her se musíš přihlásit...',
   EmailForRenewal: 'Email, který jsi použil/a pro registraci',
+  LetsBegin: 'Přejít na hry!',
   Edit: 'Upravit',
   EditedThisGame: 'upravil/a tuto hru',
   SetANewPassword: 'Změna hesla',
