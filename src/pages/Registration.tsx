@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormGroup, TextInput } from '@primer/components';
+import {
+  Box, FormGroup, Heading, Pagehead, TextInput
+} from '@primer/components';
 import { useHistory } from 'react-router-dom';
 import Joi from 'joi';
 import axios from 'axios';
@@ -96,7 +98,8 @@ const Registration = () => {
   useEffect(() => {
   }, [loading]);
   return (
-    <Box p={4}>
+    <Box p={3} maxWidth="440px" width="95%">
+      <Pagehead><Heading>{trans('Registration')}</Heading></Pagehead>
       <form onSubmit={submit} className="dialog-form">
         <ValidatedFormGroup message={nameError}>
           <FormGroup.Label>

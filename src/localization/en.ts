@@ -1,4 +1,5 @@
 export default {
+  EmailForRenewal: 'Email you used for the registration',
   Edit: 'Edit',
   EditedThisGame: 'edited this game',
   SetANewPassword: 'Set a new password',
@@ -19,7 +20,8 @@ export default {
   'We are sorry but your account was banned!': 'We are sorry, but your account has been blocked!',
   'We are waiting for admins to verif your account.': 'We are waiting for the administrators to verify your account.',
   Refresh: 'Refresh',
-  Registration: 'Do you need to create an account?',
+  Registration: 'Registration',
+  DoYouNeedToRegister: 'Do you need to create an account?',
   Name: 'Name',
   Registration_verb: 'Registration',
   AddTag: 'Add tag',
