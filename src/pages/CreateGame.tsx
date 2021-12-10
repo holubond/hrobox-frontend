@@ -200,7 +200,7 @@ const CreateGame: FC = () => {
     const data = setupDataPost();
     axios.post(routeTo('/api/game'), data, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then((response) => {
-        navigate.push(`/games/${response.data.id}/version/${response.data.version}`);
+        navigate.push(`/game/${response.data.id}/version/${response.data.version}`);
       })
       .catch((error) => {
         switch (error.response.status) {
