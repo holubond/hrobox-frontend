@@ -278,7 +278,7 @@ const Games = () => {
           />
         ))}
       </Box>
-      <Box sx={{ width: '90%', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ width: '99%', display: 'flex', flexDirection: 'column' }}>
         {loading
           ? (
             <Spinner size="large" marginX="50%" marginY="22%" color="Black" />

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Label } from '@primer/components';
-import { ChevronRightIcon } from '@primer/octicons-react';
+import { ChevronRightIcon, PeopleIcon, StopwatchIcon } from '@primer/octicons-react';
 import { Game } from '../pages/Games';
-import logo from '../assets/people.svg';
 import { useTranslation } from '../hooks/useTranslation';
 import { AgeGroup } from '../model/AgeGroup';
+import { formatNrOfPlayers, formatTimestampShort } from '../utils/format';
 
 type Props = {
   gamesData: Game[]
@@ -34,17 +34,13 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
     }
     return trans('Adult');
   };
-  const reformatDate = (at: string) => {
-    const date = new Date(at);
-    return date.toDateString();
-  };
 
   const rowClick = (id: number, version: number) => {
     history.push(`/game/${id}/version/${version}`);
   };
   return (
-    <Box className="grid-table" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 4fr 1fr 1fr 40px' }}>
-      <Box className="grid-table-heading">
+    <Box className="grid-table grid-table-clickable" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 4fr 1fr 1fr 40px' }}>
+      <Box key="header" className="grid-table-heading">
         <Box className="grid-item">{trans('Name of game')}</Box>
         <Box className="grid-item">{trans('Duration')}</Box>
         <Box className="grid-item">{trans('Age groups')}</Box>
@@ -56,28 +52,31 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
       </Box>
 
       {gamesData.map( (game) => (
-        <Box className="grid-table-row" onClick={() => rowClick(game.id, game.version)}>
-          <Box className="grid-item">{game.name}</Box>
-          <Box className="grid-item">{game.duration}</Box>
-          <Box className="grid-item">
+        <Box key={game.id} className="grid-table-row grid-table-row-cursor" onClick={() => rowClick(game.id, game.version)}>
+          <Box className="grid-item grid-item-data">{game.name}</Box>
+          <Box className="grid-item grid-item-data">
+            <StopwatchIcon size={16} />
+            {` ${game.duration} m`}
+          </Box>
+          <Box className="grid-item grid-item-data">
             {game.ageGroups.map((group) => (
               <Label bg={mapAgeGrColor(group)}>{mapAgeGr(group as AgeGroup)}</Label>
             ))}
           </Box>
-          <Box className="grid-item">
-            {game.nrOfPlayers.min}
-            -
-            {game.nrOfPlayers.max}
-            <img src={logo} height="16" alt="number of players" />
+          <Box className="grid-item grid-item-data">
+            <PeopleIcon size={16} />
+            {formatNrOfPlayers(game.nrOfPlayers)}
           </Box>
-          <Box className="grid-item">
+          <Box className="grid-item grid-item-data">
             {game.tags.sort((a, b) => a.localeCompare(b)).map((tag) => (
               <Label>{tag}</Label>
             ))}
           </Box>
-          <Box className="grid-item">{game.createdBy}</Box>
-          <Box className="grid-item">{reformatDate(game.createdAt)}</Box>
-          <Box className="grid-item"><ChevronRightIcon className="grid-item grid-icon" size={16} /></Box>
+          <Box className="grid-item grid-item-data">{game.createdBy}</Box>
+          <Box className="grid-item grid-item-data">{formatTimestampShort(game.createdAt)}</Box>
+          <Box className="grid-item grid-item-data">
+            <ChevronRightIcon className="grid-item grid-icon" size={16} />
+          </Box>
         </Box>
       ))}
 

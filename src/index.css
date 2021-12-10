@@ -70,7 +70,6 @@ code {
 }
 .grid-table-row-cursor:hover > .grid-item {
   cursor: pointer;
-  text-decoration: underline;
 }
 
 .grid-table-row > .grid-item {
@@ -79,6 +78,9 @@ code {
   border-top-color: #d8dee4;
   border-top-style: solid;
   border-top-width: 1px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .grid-item-data {
