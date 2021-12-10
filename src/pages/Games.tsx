@@ -3,6 +3,7 @@ import {
   Box, Button, FormGroup, SelectMenu, Spinner, TextInput, Token
 } from '@primer/components';
 import axios from 'axios';
+import { SyncIcon } from '@primer/octicons-react';
 import routeTo from '../utils/routeTo';
 import handleErrors from '../utils/handleErrors';
 import GamesTable from '../components/GamesTable';
@@ -242,7 +243,9 @@ const Games = () => {
             />
           </FormGroup>
 
-          <SubmitButton loading={loading} />
+          <SubmitButton loading={loading}>
+            <SyncIcon size={16} />
+          </SubmitButton>
 
         </form>
       </Box>
