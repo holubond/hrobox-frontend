@@ -1,4 +1,6 @@
 export default {
+  Edit: 'Upravit',
+  EditedThisGame: 'upravil/a tuto hru',
   SetANewPassword: 'Změna hesla',
   NewPassword: 'Nové heslo (aspoň 6 znaků)',
   Games: 'Seznam her',
