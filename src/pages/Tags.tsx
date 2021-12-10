@@ -37,7 +37,7 @@ const Tags = () => {
       }}
     >
       <span>
-        Some nice heading (total
+        (total
         &nbsp;
         {tags.length}
         )
