@@ -216,14 +216,23 @@ const Games = () => {
                 <SelectMenu.Filter placeholder={trans('Filter tags')} value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
                 <SelectMenu.List>
                   {allRemainingTags.map((tag) => (
-                    <SelectMenu.Item onClick={(e) => { e.preventDefault(); clickTag(tag); }}>
-                      {selectedTags.includes(tag) ? (
-                        <img src={checked} height="16" alt="selected" />
-                      ) : (
-                        <img src={unchecked} height="16" alt="not selected" />
-                      )}
-                      {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
-                    </SelectMenu.Item>
+                    <Box sx={{
+                      width: '100%', display: 'flex', flexDirection: 'row', gap: '6px'
+                    }}
+                    >
+                      <SelectMenu.Item onClick={(e) => { e.preventDefault(); clickTag(tag); }}>
+                        <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column' }}>
+                          {selectedTags.includes(tag) ? (
+                            <img src={checked} height="16" alt="selected" />
+                          ) : (
+                            <img src={unchecked} height="16" alt="not selected" />
+                          )}
+                        </Box>
+                        <Box sx={{ width: '80%', display: 'flex', flexDirection: 'column' }}>
+                          {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
+                        </Box>
+                      </SelectMenu.Item>
+                    </Box>
                   ))}
                 </SelectMenu.List>
               </SelectMenu.Modal>

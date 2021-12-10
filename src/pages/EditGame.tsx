@@ -67,7 +67,7 @@ const EditGame: FC = () => {
 
   const durationAll = ['<15', '15-30', '30-60', '60+'];
   const [selectedDuration, setSelectedDuration] = useState<string>();
-  const ageGroupsAll = ['K', 'S', 'T', 'A'];
+  const ageGroupsAll: AgeGroup[] = ['K', 'S', 'T', 'A'];
   const [selectedAge, setSelectedAge] = useState<AgeGroup[]>([]);
   const [allTags, setAllTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
@@ -278,84 +278,117 @@ const EditGame: FC = () => {
   }, []);
   return (
     <Box p={4}>
-
       <form onSubmit={submit} className="dialog-form">
-        <ValidatedFormGroup message={nameCsError}>
-          <FormGroup.Label>
-            {trans('NameCs')}
-          </FormGroup.Label>
-          <TextInput
-            name="nameCs"
-            value={nameCs}
-            onChange={(e: any) => setNameCs(e.target.value)}
-          />
-        </ValidatedFormGroup>
-        <ValidatedFormGroup message={nameEnError}>
-          <FormGroup.Label>
-            {trans('NameEn')}
-          </FormGroup.Label>
-          <TextInput
-            name="nameEn"
-            value={nameEn}
-            onChange={(e: any) => setNameEn(e.target.value)}
-          />
-        </ValidatedFormGroup>
-        <ValidatedFormGroup message={ruleCsError}>
-          <FormGroup.Label>
-            {trans('RulesCs')}
-          </FormGroup.Label>
-          <TextInput
-            name="ruleCs"
-            value={ruleCs}
-            onChange={(e: any) => setRuleCs(e.target.value)}
-          />
-        </ValidatedFormGroup>
-        <ValidatedFormGroup message={ruleEnError}>
-          <FormGroup.Label>
-            {trans('RulesEn')}
-          </FormGroup.Label>
-          <TextInput
-            name="ruleEn"
-            value={ruleEn}
-            onChange={(e: any) => setRuleEn(e.target.value)}
-          />
-        </ValidatedFormGroup>
-        <ValidatedFormGroup message={minError}>
-          <FormGroup.Label>
-            {trans('NumberOfPlayersMin')}
-          </FormGroup.Label>
-          <TextInput
-            name="min"
-            value={min}
-            onChange={(e: any) => setMin(e.target.value)}
-          />
-        </ValidatedFormGroup>
-        <ValidatedFormGroup message={maxError}>
-          <FormGroup.Label>
-            {trans('NumberOfPlayersMax')}
-          </FormGroup.Label>
-          <TextInput
-            name="max"
-            value={max}
-            onChange={(e: any) => setMax(e.target.value)}
-          />
-        </ValidatedFormGroup>
+        <Box sx={{
+          width: '100%', display: 'flex', flexDirection: 'row', gap: '10px'
+        }}
+        >
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={nameCsError}>
+              <FormGroup.Label>
+                {trans('NameCs')}
+              </FormGroup.Label>
+              <TextInput
+                name="nameCs"
+                value={nameCs}
+                onChange={(e: any) => setNameCs(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={nameEnError}>
+              <FormGroup.Label>
+                {trans('NameEn')}
+              </FormGroup.Label>
+              <TextInput
+                name="nameEn"
+                value={nameEn}
+                onChange={(e: any) => setNameEn(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+        </Box>
+        <Box sx={{
+          width: '100%', display: 'flex', flexDirection: 'row', gap: '10px'
+        }}
+        >
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={ruleCsError}>
+              <FormGroup.Label>
+                {trans('RulesCs')}
+              </FormGroup.Label>
+              <TextInput
+                name="ruleCs"
+                value={ruleCs}
+                onChange={(e: any) => setRuleCs(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={ruleEnError}>
+              <FormGroup.Label>
+                {trans('RulesEn')}
+              </FormGroup.Label>
+              <TextInput
+                name="ruleEn"
+                value={ruleEn}
+                onChange={(e: any) => setRuleEn(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+        </Box>
+        <Box sx={{
+          display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '10px'
+        }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={minError}>
+              <FormGroup.Label>
+                {trans('NumberOfPlayersMin')}
+              </FormGroup.Label>
+              <TextInput
+                name="min"
+                value={min}
+                onChange={(e: any) => setMin(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <ValidatedFormGroup message={maxError}>
+              <FormGroup.Label>
+                {trans('NumberOfPlayersMax')}
+              </FormGroup.Label>
+              <TextInput
+                name="max"
+                value={max}
+                onChange={(e: any) => setMax(e.target.value)}
+              />
+            </ValidatedFormGroup>
+          </Box>
+        </Box>
         {/* duration */}
         <ValidatedFormGroup message={durError}>
           <Box>
             <Text>{trans('Duration')}</Text>
           </Box>
           <Box>
-            {durationAll.map((dur) => (
-              <Label variant="xl" onClick={() => clickDur(dur)}>
-                {dur === selectedDuration ? (
-                  <img src={checked} height="16" alt={dur} />
-                ) : (
+            {durationAll.map((dur) => {
+              if (dur === selectedDuration) {
+                return (
+                  <Label variant="xl" className="Label" sx={{ bg: '#2da44e' }} onClick={() => clickDur(dur)}>
+                    <img src={checked} height="16" alt={dur} />
+                    {dur}
+                  </Label>
+                );
+              }
+              return (
+                <Label variant="xl" className="Label" sx={{ bg: '#9fa4ab' }} onClick={() => clickDur(dur)}>
                   <img src={unchecked} height="16" alt={dur} />
-                )}
-                {dur}
-              </Label>
-            ))}
+                  {dur}
+                </Label>
+              );
+            })}
+
           </Box>
         </ValidatedFormGroup>
         {/* Age */}
@@ -364,18 +397,23 @@ const EditGame: FC = () => {
             <Text>{trans('Age groups')}</Text>
           </Box>
           <Box>
-            {ageGroupsAll.map((age) => (
-              <Label variant="xl" onClick={() => clickAge(age)}>
-                {selectedAge?.find(
-                  (element) => element === (age as AgeGroup)
-                ) === undefined ? (
-                  <img src={unchecked} height="16" alt={trans(age as AgeGroup)} />
-                  ) : (
-                    <img src={checked} height="16" alt={trans(age as AgeGroup)} />
-                  )}
-                {trans(age as AgeGroup)}
-              </Label>
-            ))}
+            {ageGroupsAll.map((age) => {
+              const translatedAge = trans(age);
+              if (selectedAge.includes(age)) {
+                return (
+                  <Label variant="xl" className="Label" sx={{ bg: '#2da44e' }} onClick={() => clickAge(age)}>
+                    <img src={checked} height="16" alt={translatedAge} />
+                    {translatedAge}
+                  </Label>
+                );
+              }
+              return (
+                <Label variant="xl" className="Label" sx={{ bg: '#9fa4ab' }} onClick={() => clickAge(age)}>
+                  <img src={unchecked} height="16" alt={translatedAge} />
+                  {translatedAge}
+                </Label>
+              );
+            })}
           </Box>
         </ValidatedFormGroup>
         {/* Tags */}
@@ -384,23 +422,29 @@ const EditGame: FC = () => {
             <Text>{trans('Tags')}</Text>
           </Box>
           <Box>
-            {allTags.map((tag) => (
-              <Label variant="xl" onClick={() => clickTag(tag)}>
-                {selectedTags.includes(tag) ? (
-                  <img src={checked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
-                ) : (
-                  <img src={unchecked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
-                )}
-                {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
-              </Label>
-            ))}
+            {allTags.map((tag) => {
+              const tagName = selectedLang === 'cs' ? tag.nameCs : tag.nameEn;
+              if (selectedTags.includes(tag)) {
+                return (
+                  <Label variant="xl" className="Label" sx={{ bg: '#2da44e' }} onClick={() => clickTag(tag)}>
+                    <img src={checked} height="16" alt={tagName} />
+                    {tagName}
+                  </Label>
+                );
+              }
+              return (
+                <Label variant="xl" className="Label" sx={{ bg: '#9fa4ab' }} onClick={() => clickTag(tag)}>
+                  <img src={unchecked} height="16" alt={tagName} />
+                  {tagName}
+                </Label>
+              );
+            })}
           </Box>
         </ValidatedFormGroup>
         <Box sx={{ display: 'flex' }}>
           <SubmitButton loading={loading} />
         </Box>
       </form>
-
     </Box>
   );
 };
