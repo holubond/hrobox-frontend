@@ -12,7 +12,7 @@ import { Duration } from '../model/Duration';
 import { AgeGroup } from '../model/AgeGroup';
 import { formatNrOfPlayers, formatTimestamp } from '../utils/format';
 
-type Game = {
+export type Game = {
   id: number,
   version: number,
   name: string,

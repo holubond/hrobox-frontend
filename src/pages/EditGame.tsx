@@ -1,5 +1,6 @@
+/* eslint-disable no-trailing-spaces */
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
   Box, FormGroup, TextInput, Label, Text
@@ -16,14 +17,33 @@ import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
 import { AgeGroup } from '../model/AgeGroup';
 import { Tag } from './Tags';
+import { Duration } from '../model/Duration';
 
-const CreateGame: FC = () => {
+type Game = {
+  id: number,
+  version: number,
+  nameCs: string,
+  nameEn: string,
+  createdBy: string,
+  rulesCs: string,
+  rulesEn: string,
+  createdAt: string,
+  nrOfPlayers: {
+    min: number,
+    max: number
+  },
+  duration: Duration,
+  ageGroups: AgeGroup[],
+  tagsCs: string[],
+  tagsEn: string[]
+}
+const EditGame: FC = () => {
+  const { id, version } = useParams<{ id: string, version: string}>();
   const trans = useTranslation();
   const [selectedLang] = useLanguage();
-
+  const [game, setGame] = useState<Game>();
   const [user] = useLoggedInUser();
   const navigate = useHistory();
-
   const [loading, setLoading] = useState(false);
 
   const [nameCs, setNameCs] = useState('');
@@ -52,6 +72,25 @@ const CreateGame: FC = () => {
   const [allTags, setAllTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
+  const initStates = (initgame: Game) => {
+    if (initgame) {
+      setNameCs(initgame.nameCs);
+      setNameEn(initgame.nameEn);
+      setRuleCs(initgame.rulesCs);
+      setRuleEn(initgame.rulesEn);
+      setMin(initgame.nrOfPlayers.min);
+      setMax(initgame.nrOfPlayers.max);
+      setSelectedDuration(initgame.duration);
+      setSelectedAge(initgame.ageGroups);
+      let newTag: Tag[];
+      if (selectedLang === 'cs') {
+        newTag = allTags.filter((element) => initgame.tagsCs.includes(element.nameCs));
+      } else {
+        newTag = allTags.filter((element) => initgame.tagsEn.includes(element.nameEn));
+      }
+      setSelectedTags([...newTag]);
+    }
+  };
   const clickDur = (duration: string) => {
     setSelectedDuration(duration);
   };
@@ -73,10 +112,23 @@ const CreateGame: FC = () => {
           }
           return a.nameEn.localeCompare(b.nameEn);
         });
-        setAllTags(tagStrings);
+        setAllTags([...tagStrings]);
       })
       .catch((error) => {
         handleErrors(error);
+      });
+  };
+  const loadDetail = () => {
+    setLoading(true);
+    const gameRoute = `/${id}/version/${version}`;
+    axios.get(routeTo('/api/game') + gameRoute)
+      .then((response) => {
+        setGame(response.data as Game);
+      })
+      .catch((error) => {
+        handleErrors(error);
+      }).finally(() => {
+        setLoading(false);
       });
   };
   const clickTag = (tag: Tag) => {
@@ -107,7 +159,7 @@ const CreateGame: FC = () => {
 
     const errors: string[] = [];
 
-    if (nameCsValidationError.error && nameEn.length === 0) {
+    if (nameCsValidationError.error) {
       setNameCsError(nameCsValidationError.error.message);
       errors.push(nameCsValidationError.error.message);
     } else {
@@ -115,7 +167,7 @@ const CreateGame: FC = () => {
     }
     const nameEnValidationError = NAME_EN_SCHEMA.validate(nameEn);
 
-    if (nameEnValidationError.error && nameCs.length === 0) {
+    if (nameEnValidationError.error) {
       setNameEnError(nameEnValidationError.error.message);
       errors.push(nameEnValidationError.error.message);
     } else {
@@ -123,7 +175,7 @@ const CreateGame: FC = () => {
     }
     const rulesCsValidationError = RULES_CS_SCHEMA.validate(ruleCs);
 
-    if (rulesCsValidationError.error && ruleEn.length === 0) {
+    if (rulesCsValidationError.error) {
       setRuleCsError(rulesCsValidationError.error.message);
       errors.push(rulesCsValidationError.error.message);
     } else {
@@ -131,7 +183,7 @@ const CreateGame: FC = () => {
     }
     const rulesEnValidationError = RULES_EN_SCHEMA.validate(ruleEn);
 
-    if (rulesEnValidationError.error && ruleCs.length === 0) {
+    if (rulesEnValidationError.error) {
       setRuleEnError(rulesEnValidationError.error.message);
       errors.push(rulesEnValidationError.error.message);
     } else {
@@ -186,30 +238,26 @@ const CreateGame: FC = () => {
       const players = { min, max };
 
       const data = {
+        nameEn,
+        nameCs,
+        rulesEn: ruleEn,
+        rulesCs: ruleCs,
         nrOfPlayers: players,
-        ...nameCs.length > 0 ? { nameCs } : {},
-        ...nameEn.length > 0 ? { nameEn } : {},
-        ...ruleCs.length > 0 ? { rulesCs: ruleCs } : {},
-        ...ruleEn.length > 0 ? { rulesEn: ruleEn } : {},
+        ...{ duration: selectedDuration },
         ...selectedAge.length > 0 ? { ageGroups: selectedAge } : {},
-        ...selectedTags.length > 0 ? { tags: selectedTags.map((el) => el.id) } : {},
-        ...{ duration: selectedDuration }
+        ...selectedTags.length > 0 ? { tags: selectedTags.map((el) => el.id) } : {}
       };
       return data;
     };
     const data = setupDataPost();
-    axios.post(routeTo('/api/game'), data, { headers: { Authorization: `Bearer ${user.jwt}` } })
+    axios.put(`${routeTo('/api/game')}/${id}`, data, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then((response) => {
-        navigate.push(`/games/${response.data.id}/version/${response.data.version}`);
+        navigate.push(`/game/${id}/version/${response.data.version}`);
       })
       .catch((error) => {
         switch (error.response.status) {
-          case 409:
-            if (error.response.data.message === 'nameEn') {
-              alert('exist');
-            } else {
-              alert('exist');
-            }
+          case 400:
+            alert(error.response.data.message);
             break;
           case 404:
             alert(error.response.data.message);
@@ -221,9 +269,12 @@ const CreateGame: FC = () => {
         setLoading(false);
       });
   };
-
+  useEffect(() => {
+    initStates(game as Game);
+  }, [game]);
   useEffect(() => {
     loadTags();
+    loadDetail();
   }, []);
   return (
     <Box p={4}>
@@ -254,7 +305,6 @@ const CreateGame: FC = () => {
             {trans('RulesCs')}
           </FormGroup.Label>
           <TextInput
-            as="TextArea"
             name="ruleCs"
             value={ruleCs}
             onChange={(e: any) => setRuleCs(e.target.value)}
@@ -265,7 +315,6 @@ const CreateGame: FC = () => {
             {trans('RulesEn')}
           </FormGroup.Label>
           <TextInput
-            as="TextArea"
             name="ruleEn"
             value={ruleEn}
             onChange={(e: any) => setRuleEn(e.target.value)}
@@ -355,4 +404,4 @@ const CreateGame: FC = () => {
     </Box>
   );
 };
-export default CreateGame;
+export default EditGame;

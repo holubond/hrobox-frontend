@@ -9,6 +9,7 @@ import Registration from '../pages/Registration';
 import Forgot from '../pages/Forgot';
 import GameDetail from '../pages/GameDetail';
 import CreateGame from '../pages/CreateGame';
+import EditGame from '../pages/EditGame';
 
 const Routes = () => (
   <Switch>
@@ -29,6 +30,9 @@ const Routes = () => (
       <GameDetail />
     </Route>
     <Route path="/game/add" exact component={CreateGame} />
+    <Route path="/game/edit/:id/version/:version">
+      <EditGame />
+    </Route>
   </Switch>
 );
 export default Routes;
