@@ -54,7 +54,12 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
       {gamesData.map( (game) => (
         <Box key={game.id} className="grid-table-row grid-table-row-cursor" onClick={() => rowClick(game.id, game.version)}>
           <Box className="grid-item grid-item-data">{game.name}</Box>
-          <Box className="grid-item grid-item-data">
+          <Box
+            className="grid-item grid-item-data"
+            sx={{
+              width: '100%', display: 'flex', flexDirection: 'row', gap: '10px'
+            }}
+          >
             <StopwatchIcon size={16} />
             {` ${game.duration} m`}
           </Box>
@@ -63,9 +68,18 @@ const GamesTable: FC<Props> = ({ gamesData }) => {
               <Label bg={mapAgeGrColor(group)}>{mapAgeGr(group as AgeGroup)}</Label>
             ))}
           </Box>
-          <Box className="grid-item grid-item-data">
-            <PeopleIcon size={16} />
-            {formatNrOfPlayers(game.nrOfPlayers)}
+          <Box
+            className="grid-item grid-item-data"
+            sx={{
+              width: '100%', display: 'flex', flexDirection: 'row', gap: '10px'
+            }}
+          >
+            <Box>
+              <PeopleIcon size={16} />
+            </Box>
+            <Box>
+              {formatNrOfPlayers(game.nrOfPlayers)}
+            </Box>
           </Box>
           <Box className="grid-item grid-item-data">
             {game.tags.sort((a, b) => a.localeCompare(b)).map((tag) => (
