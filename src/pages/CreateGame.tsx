@@ -225,8 +225,6 @@ const CreateGame: FC = () => {
   useEffect(() => {
     loadTags();
   }, []);
-  useEffect(() => {
-  }, [loading]);
   return (
     <Box p={4}>
 
