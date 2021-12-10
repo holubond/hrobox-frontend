@@ -13,13 +13,13 @@ type Props = {
 
 export const mapAgeGrColor = (ageGroup: AgeGroup) => {
   if (ageGroup === 'K') {
-    return 'Pink';
+    return '#8bc34a';
   } if (ageGroup === 'S') {
-    return 'Blue';
+    return '#2196f3';
   } if (ageGroup === 'T') {
-    return 'Red';
+    return '#f44336';
   }
-  return 'Green';
+  return '#000000';
 };
 const GamesTable: FC<Props> = ({ gamesData }) => {
   const trans = useTranslation();
