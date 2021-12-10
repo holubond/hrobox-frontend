@@ -30,7 +30,9 @@ const Routes = () => (
       <GameDetail />
     </Route>
     <Route path="/game/add" exact component={CreateGame} />
-    <Route path="/game/edit" exact component={EditGame} />
+    <Route path="/game/edit/:id/version/:version">
+      <EditGame />
+    </Route>
   </Switch>
 );
 export default Routes;
