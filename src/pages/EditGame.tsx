@@ -1,8 +1,9 @@
+/* eslint-disable no-trailing-spaces */
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
-  Box, FormGroup, TextInput, SelectMenu, Button, Label
+  Box, FormGroup, TextInput, Label, Text
 } from '@primer/components';
 import Joi from 'joi';
 import axios from 'axios';
@@ -16,36 +17,48 @@ import checked from '../assets/checked.svg';
 import unchecked from '../assets/unchecked.svg';
 import { AgeGroup } from '../model/AgeGroup';
 import { Tag } from './Tags';
-import { Game } from './GameDetail';
+import { Duration } from '../model/Duration';
 
-type Props = {
-    game: Game
-  }
-
-const EditGame: FC<Props> = ({
-  game
-}) => {
+type Game = {
+  id: number,
+  version: number,
+  nameCs: string,
+  nameEn: string,
+  createdBy: string,
+  rulesCs: string,
+  rulesEn: string,
+  createdAt: string,
+  nrOfPlayers: {
+    min: number,
+    max: number
+  },
+  duration: Duration,
+  ageGroups: AgeGroup[],
+  tagsCs: string[],
+  tagsEn: string[]
+}
+const EditGame: FC = () => {
+  const { id, version } = useParams<{ id: string, version: string}>();
   const trans = useTranslation();
   const [selectedLang] = useLanguage();
-
+  const [game, setGame] = useState<Game>();
   const [user] = useLoggedInUser();
   const navigate = useHistory();
-
   const [loading, setLoading] = useState(false);
 
-  const [nameCs, setNameCs] = useState(game.name);
+  const [nameCs, setNameCs] = useState('');
   const [nameCsError, setNameCsError] = useState('');
-  const [nameEn, setNameEn] = useState(game.name);
+  const [nameEn, setNameEn] = useState('');
   const [nameEnError, setNameEnError] = useState('');
 
-  const [ruleCs, setRuleCs] = useState(game.rules);
+  const [ruleCs, setRuleCs] = useState('');
   const [ruleCsError, setRuleCsError] = useState('');
-  const [ruleEn, setRuleEn] = useState(game.rules);
+  const [ruleEn, setRuleEn] = useState('');
   const [ruleEnError, setRuleEnError] = useState('');
 
-  const [min, setMin] = useState<number>(game.nrOfPlayers.min);
+  const [min, setMin] = useState<number>();
   const [minError, setMinError] = useState('');
-  const [max, setMax] = useState<number>(game.nrOfPlayers.max);
+  const [max, setMax] = useState<number>();
   const [maxError, setMaxError] = useState('');
 
   const [durError, setDurError] = useState('');
@@ -56,21 +69,35 @@ const EditGame: FC<Props> = ({
   const [selectedDuration, setSelectedDuration] = useState<string>();
   const ageGroupsAll = ['K', 'S', 'T', 'A'];
   const [selectedAge, setSelectedAge] = useState<AgeGroup[]>([]);
-  const [tagFilter, setTagFilter] = useState('');
   const [allTags, setAllTags] = useState<Tag[]>([]);
-  const [allRemainingTags, setAllRemainingTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
-  const clickDur = (duration: string) => {
-    let newDur = selectedDuration;
-    if (newDur === undefined) {
-      // set
-      newDur = duration;
-    } else if (newDur === duration) {
-      // reset
-      newDur = undefined;
+  const initStates = (initgame: Game) => {
+    if (initgame) {
+      console.log(JSON.stringify(initgame));
+      setNameCs(initgame.nameCs);
+      setNameEn(initgame.nameEn);
+      setRuleCs(initgame.rulesCs);
+      setRuleEn(initgame.rulesEn);
+      setMin(initgame.nrOfPlayers.min);
+      setMax(initgame.nrOfPlayers.max);
+      setSelectedDuration(initgame.duration);
+      setSelectedAge(initgame.ageGroups);
+      let newTag: Tag[];
+      if (selectedLang === 'cs') {
+        newTag = allTags.filter((element) => initgame.tagsCs.includes(element.nameCs));
+      } else {
+        console.log(allTags);
+        newTag = allTags.filter((element) => initgame.tagsEn.includes(element.nameEn));
+        console.log(JSON.stringify(newTag));
+      }
+      setSelectedTags([...newTag]);
+
+      // setSelectedTags(selectedLang === 'cs' ? game.tagsCs : game.tagsEn);
     }
-    setSelectedDuration(newDur);
+  };
+  const clickDur = (duration: string) => {
+    setSelectedDuration(duration);
   };
   const clickAge = (age: string) => {
     let newAge = selectedAge;
@@ -79,7 +106,7 @@ const EditGame: FC<Props> = ({
     } else {
       newAge = newAge.filter((element) => element !== age);
     }
-    setSelectedAge(newAge);
+    setSelectedAge([...newAge]);
   };
   const loadTags = () => {
     axios.get(routeTo('/api/tags'))
@@ -91,10 +118,23 @@ const EditGame: FC<Props> = ({
           return a.nameEn.localeCompare(b.nameEn);
         });
         setAllTags(tagStrings);
-        setAllRemainingTags(tagStrings);
       })
       .catch((error) => {
         handleErrors(error);
+      });
+  };
+  const loadDetail = () => {
+    setLoading(true);
+    const gameRoute = `/${id}/version/${version}`;
+    axios.get(routeTo('/api/game') + gameRoute)
+      .then((response) => {
+        setGame(response.data as Game);
+        initStates(response.data as Game);
+      })
+      .catch((error) => {
+        handleErrors(error);
+      }).finally(() => {
+        setLoading(false);
       });
   };
   const clickTag = (tag: Tag) => {
@@ -104,33 +144,9 @@ const EditGame: FC<Props> = ({
     } else {
       newTag = newTag.filter((element) => element !== tag);
     }
-    setSelectedTags(newTag);
+    setSelectedTags([...newTag]);
   };
-  const tagFilterChange = (e: any) => {
-    let newFilteredTags: Tag[];
-    if ((e.target.value as string).length > tagFilter.length) {
-      setTagFilter(e.target.value);
-      newFilteredTags = allRemainingTags.filter(
-        (tag) => {
-          if (selectedLang === 'cs') {
-            return tag.nameCs.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-          }
-          return tag.nameEn.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-        }
-      );
-    } else {
-      setTagFilter(e.target.value);
-      newFilteredTags = allTags.filter(
-        (tag) => {
-          if (selectedLang === 'cs') {
-            return tag.nameCs.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-          }
-          return tag.nameEn.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0;
-        }
-      );
-    }
-    setAllRemainingTags(newFilteredTags);
-  };
+
   const NAME_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
   const NAME_EN_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyName')));
   const RULES_CS_SCHEMA = Joi.string().min(1).required().error(() => new Error(trans('ErrEmptyRule')));
@@ -240,7 +256,7 @@ const EditGame: FC<Props> = ({
       return data;
     };
     const data = setupDataPost();
-    axios.put(routeTo(`/api/game/${game.id}`), data, { headers: { Authorization: `Bearer ${user.jwt}` } })
+    axios.post(routeTo('/api/game'), data, { headers: { Authorization: `Bearer ${user.jwt}` } })
       .then((response) => {
         navigate.push(`/games/${response.data.id}/version/${response.data.version}`);
       })
@@ -263,12 +279,10 @@ const EditGame: FC<Props> = ({
         setLoading(false);
       });
   };
-
   useEffect(() => {
     loadTags();
+    loadDetail();
   }, []);
-  useEffect(() => {
-  }, [loading]);
   return (
     <Box p={4}>
 
@@ -298,7 +312,6 @@ const EditGame: FC<Props> = ({
             {trans('RulesCs')}
           </FormGroup.Label>
           <TextInput
-            as="TextArea"
             name="ruleCs"
             value={ruleCs}
             onChange={(e: any) => setRuleCs(e.target.value)}
@@ -309,7 +322,6 @@ const EditGame: FC<Props> = ({
             {trans('RulesEn')}
           </FormGroup.Label>
           <TextInput
-            as="TextArea"
             name="ruleEn"
             value={ruleEn}
             onChange={(e: any) => setRuleEn(e.target.value)}
@@ -337,65 +349,62 @@ const EditGame: FC<Props> = ({
         </ValidatedFormGroup>
         {/* duration */}
         <ValidatedFormGroup message={durError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Duration')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>{trans('Duration')}</SelectMenu.Header>
-              <SelectMenu.List>
-                {durationAll.map((dur) => (
-                  <SelectMenu.Item onClick={() => clickDur(dur)}>
-                    {dur === selectedDuration ? (
-                      <img src={checked} height="16" alt={dur} />
-                    ) : (
-                      <img src={unchecked} height="16" alt={dur} />
-                    )}
-                    {dur}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
+          <Box>
+            <Text>{trans('Duration')}</Text>
+          </Box>
+          <Box>
+            {durationAll.map((dur) => (
+              <Label variant="xl" onClick={() => clickDur(dur)}>
+                {dur === selectedDuration ? (
+                  <img src={checked} height="16" alt={dur} />
+                ) : (
+                  <img src={unchecked} height="16" alt={dur} />
+                )}
+                {dur}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         {/* Age */}
         <ValidatedFormGroup message={ageError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Age groups')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>{trans('Age groups')}</SelectMenu.Header>
-              <SelectMenu.List>
-                {ageGroupsAll.map((age) => (
-                  <SelectMenu.Item onClick={() => clickAge(age)}>
-                    {selectedAge?.find(
-                      (element) => element === (age as AgeGroup)
-                    ) === undefined ? (
-                      <img src={unchecked} height="16" alt={trans(age as AgeGroup)} />
-                      ) : (
-                        <img src={checked} height="16" alt={trans(age as AgeGroup)} />
-                      )}
-                    {trans(age as AgeGroup)}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
+          <Box>
+            <Text>{trans('Age groups')}</Text>
+          </Box>
+          <Box>
+            {ageGroupsAll.map((age) => (
+              <Label variant="xl" onClick={() => clickAge(age)}>
+                {selectedAge?.find(
+                  (element) => element === (age as AgeGroup)
+                ) === undefined ? (
+                  <img src={unchecked} height="16" alt={trans(age as AgeGroup)} />
+                  ) : (
+                    <img src={checked} height="16" alt={trans(age as AgeGroup)} />
+                  )}
+                {trans(age as AgeGroup)}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         {/* Tags */}
+        {JSON.stringify(allTags)}
+        KURVA________________________________________________
+        {JSON.stringify(selectedTags)}
         <ValidatedFormGroup message={tagsError}>
-          <SelectMenu>
-            <Button as="summary">{trans('Tags')}</Button>
-            <SelectMenu.Modal>
-              <SelectMenu.Header>Tags</SelectMenu.Header>
-              <SelectMenu.Filter placeholder="Filter projects" value={tagFilter} onChange={(e: any) => tagFilterChange(e)} aria-label="Tags" />
-              <SelectMenu.List>
-                {allRemainingTags.map((tag) => (
-                  <SelectMenu.Item onClick={() => clickTag(tag)}>
-                    {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
-                  </SelectMenu.Item>
-                ))}
-              </SelectMenu.List>
-            </SelectMenu.Modal>
-          </SelectMenu>
-          {selectedTags.map((tag) => <Label>{selectedLang === 'cs' ? tag.nameCs : tag.nameEn}</Label>)}
+          <Box>
+            <Text>{trans('Tags')}</Text>
+          </Box>
+          <Box>
+            {allTags.map((tag) => (
+              <Label variant="xl" onClick={() => clickTag(tag)}>
+                {selectedTags.includes(tag) ? (
+                  <img src={checked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
+                ) : (
+                  <img src={unchecked} height="16" alt={selectedLang === 'cs' ? tag.nameCs : tag.nameEn} />
+                )}
+                {selectedLang === 'cs' ? tag.nameCs : tag.nameEn}
+              </Label>
+            ))}
+          </Box>
         </ValidatedFormGroup>
         <Box sx={{ display: 'flex' }}>
           <SubmitButton loading={loading} />
